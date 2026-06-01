@@ -90,6 +90,16 @@
     .text-navbar {
         @apply font-inter text-[16px] font-light;
     }
+
+    /* =========================
+     UI / Footer
+  ========================= */
+    .text-h3-footer {
+        @apply font-inter text-[14px] font-semibold;
+    }
+     .text-footer {
+        @apply font-inter text-[12px] font-medium;
+    }
 }
 
 :root {

@@ -25,7 +25,7 @@
     </main>
 
     {{-- FOOTER --}}
-    {{-- @include('components.footer') --}}
+    @include('components.footer')
 
 </body>
 
