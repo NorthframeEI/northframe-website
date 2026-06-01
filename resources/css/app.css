@@ -1,9 +1,101 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sora: "Sora", sans-serif;
+    --font-inter: "Inter", sans-serif;
+
+    --color-brand: #2563eb;
+    --color-dark: #0b1220;
+    --color-hover: #3b82f6;
+    --color-surface: #1e293b;
+    --color-primary: #f8fafc;
+    --color-secondary: #64748b;
+    --color-muted: #94a3b8;
+}
+@layer utilities {
+    /* =========================
+     TITRES (Sora)
+  ========================= */
+
+    .text-h1-hero {
+        @apply font-sora text-[48px] font-semibold leading-[120%];
+    }
+
+    .text-h2-hero {
+        @apply font-sora text-[32px] font-semibold leading-[120%];
+    }
+
+    .text-h3-hero {
+        @apply font-sora text-[24px] font-semibold leading-[130%];
+    }
+
+    /* =========================
+     TEXTE (Inter)
+  ========================= */
+    .text-h1 {
+        @apply font-inter text-[48px] font-semibold leading-[120%];
+    }
+
+    .text-h2 {
+        @apply font-inter text-[32px] font-semibold leading-[120%];
+    }
+
+    .text-h3 {
+        @apply font-inter text-[24px] font-semibold leading-[130%];
+    }
+
+    .text-body {
+        @apply font-inter text-[16px] font-normal leading-[150%];
+    }
+
+    .text-body-bold {
+        @apply font-inter text-[16px] font-medium leading-[150%];
+    }
+
+    .text-small {
+        @apply font-inter text-[14px] font-normal leading-[150%];
+    }
+
+    .text-caption {
+        @apply font-inter text-[12px] font-normal leading-[140%];
+    }
+
+    /* =========================
+     UI / INTERFACE
+  ========================= */
+
+    .text-button {
+        @apply font-inter text-[16px] font-medium;
+    }
+
+    .text-label {
+        @apply font-inter text-[14px] font-medium;
+    }
+
+    .text-card-price {
+        @apply font-inter text-[20px] font-semibold;
+    }
+
+    /* =========================
+     UI / Navbar
+  ========================= */
+
+    .text-select {
+        @apply font-inter text-[18px] font-semibold;
+    }
+
+    .text-navbar {
+        @apply font-inter text-[16px] font-light;
+    }
+}
+
+:root {
+    --bg-northframe: linear-gradient(#0b1220 0%, #0e1a33 50%, #070d18 100%);
+}
+
+.bg-northframe {
+    background-image: var(--bg-northframe);
 }
