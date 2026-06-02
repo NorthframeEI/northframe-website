@@ -2,14 +2,14 @@
     <div class="max-w-6xl mx-auto px-6 items-center">
 
         <!--Footer Container-->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+        <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-16 items-start">
 
             <!--Column logo-->
             <div class="flex flex-col gap-4 items-center">
                 <div class="flex items-center gap-3">
-                    <img src="{{ asset('images/logo_footer.svg') }}" alt="Northframe logo" class="h-50 w-50">
+                    <img src="{{ asset('images/logo_footer.svg') }}" alt="Northframe logo" class="h-[100px] w-[100px]">
                 </div>
-                <h3 class="text-h3-footer text-primary">Développeur web freelance spécialisé en sites modernes et
+                <h3 class="text-h3-footer text-primary max-w-md text-center">Développeur web freelance spécialisé en sites modernes et
                     performants.</h3>
                 <p class="text-footer text-secondary">contact@northframe.fr</p>
                 <div class="flex items-center gap-3">
