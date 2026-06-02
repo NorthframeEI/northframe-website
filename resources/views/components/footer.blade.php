@@ -7,7 +7,7 @@
             <!--Column logo-->
             <div class="flex flex-col gap-4 items-center">
                 <div class="flex items-center gap-3">
-                    <img src="{{ asset('images/logo_footer.svg') }}" alt="Northframe logo" class="h-[100px] w-[100px]">
+                    <img src="{{ asset('logos/logo_footer.svg') }}" alt="Northframe logo" class="h-[100px] w-[100px]">
                 </div>
                 <h3 class="text-h3-footer text-primary max-w-md text-center">Développeur web freelance spécialisé en sites modernes et
                     performants.</h3>
@@ -39,10 +39,13 @@
                         Navigation
                     </p>
                     <ul class="list-disc pl-5 space-y-1 text-h3-footer text-primary">
-                        <li><a href="#" class="hover:opacity-70 transition">
+                        <li><a href="#services" class="hover:opacity-70 transition">
+                                Services
+                            </a></li>
+                        <li><a href="#portfolio" class="hover:opacity-70 transition">
                                 Portfolio
                             </a></li>
-                        <li><a href="#" class="hover:opacity-70 transition">
+                        <li><a href="#process" class="hover:opacity-70 transition">
                                 Process
                             </a></li>
                         <li><a href="#" class="hover:opacity-70 transition">

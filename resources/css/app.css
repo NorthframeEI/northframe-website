@@ -21,15 +21,15 @@
   ========================= */
 
     .text-h1-hero {
-        @apply font-sora text-[48px] font-semibold leading-[120%];
+        @apply font-sora text-[32px] lg:text-[48px] font-semibold leading-[120%];
     }
 
     .text-h2-hero {
-        @apply font-sora text-[32px] font-semibold leading-[120%];
+        @apply font-sora text-[16px] lg:text-[32px] font-semibold leading-[120%];
     }
 
     .text-h3-hero {
-        @apply font-sora text-[24px] font-semibold leading-[130%];
+        @apply font-sora text-[14px] lg:text-[24px] font-semibold leading-[130%];
     }
 
     /* =========================
@@ -63,6 +63,10 @@
         @apply font-inter text-[12px] font-normal leading-[140%];
     }
 
+    .text-button{
+        @apply font-inter text-[14px] font-semibold;
+    }
+
     /* =========================
      UI / INTERFACE
   ========================= */
@@ -73,6 +77,10 @@
 
     .text-label {
         @apply font-inter text-[14px] font-medium;
+    }
+
+    .text-card-title {
+        @apply font-inter text-[16px] font-semibold;
     }
 
     .text-card-price {
@@ -97,7 +105,7 @@
     .text-h3-footer {
         @apply font-inter text-[14px] font-semibold;
     }
-     .text-footer {
+    .text-footer {
         @apply font-inter text-[12px] font-medium;
     }
 }

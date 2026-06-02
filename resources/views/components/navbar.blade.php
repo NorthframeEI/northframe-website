@@ -1,17 +1,17 @@
-<nav class="fixed top-0 w-full h-[56px] md:h-[72px]">
+<nav class="sticky top-0 w-full h-[56px] md:h-[72px]">
 
     <div class="flex items-center justify-between w-full px-4">
 
         <!-- LOGO -->
         <a href="/" class="flex items-center">
-            <img src="{{ asset('images/logo_navbar.svg') }}" class="h-[36px] md:h-[68px]" alt="Northframe Logo">
+            <img src="{{ asset('logos/logo_navbar.svg') }}" class="h-[36px] md:h-[68px]" alt="Northframe Logo">
         </a>
 
         <!-- MENU (desktop only inline) -->
         <div class="hidden md:flex items-center space-x-8">
-            <a href="#" class="text-primary text-select">Services</a>
-            <a href="#" class="text-primary">Portfolio</a>
-            <a href="#" class="text-primary">Process</a>
+            <a href="#services" class="text-primary text-select transition-all">Services</a>
+            <a href="#portfolio" class="text-primary">Portfolio</a>
+            <a href="#process" class="text-primary">Process</a>
             <a href="#" class="text-primary">Contact</a>
         </div>
 
@@ -41,7 +41,7 @@
 
         <div class="flex flex-col space-y-4">
 
-            <a href="#" class="text-primary">Services</a>
+            <a href="#services" class="text-primary">Services</a>
             <a href="#" class="text-primary">Portfolio</a>
             <a href="#" class="text-primary">Process</a>
             <a href="#" class="text-primary">Contact</a>
