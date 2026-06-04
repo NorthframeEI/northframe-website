@@ -24,7 +24,7 @@
         <div class="flex items-center space-x-3 p-2 md:p-0">
 
             <!-- CTA desktop -->
-            <a href="#"
+            <a href="/contact"
                 class="hidden md:block text-brand outline-solid rounded-[10px] outline-brand text-label px-3 py-2 h-[38px] cursor-pointer hover:text-hover hover:outline-hover">
                 Démarrer un projet
             </a>
@@ -51,7 +51,7 @@
             <a href="#process" class="text-primary">Process</a>
             <a href="#ctaFinal" class="text-primary">Contact</a>
 
-            <a href="#"
+            <a href="/contact"
                 class="self-center text-brand outline-solid rounded-[10px] outline-brand text-sm px-3 py-2 h-[38px] mt-4">
                 Démarrer un projet
             </a>
