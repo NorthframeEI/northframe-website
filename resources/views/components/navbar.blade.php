@@ -1,10 +1,15 @@
-<nav class="sticky top-0 w-full h-[56px] md:h-[72px]">
+<nav class="sticky top-0 w-full h-[56px] md:h-[72px]" id="navbar">
 
     <div class="flex items-center justify-between w-full px-4">
 
         <!-- LOGO -->
-        <a href="/" class="flex items-center">
-            <img src="{{ asset('logos/logo_navbar.svg') }}" class="h-[36px] md:h-[68px]" alt="Northframe Logo">
+        <a href="/" class="relative flex items-center group">
+            <img src="{{ asset('logos/logo_navbar.svg') }}"
+                class="h-[36px] md:h-[68px] transition-opacity duration-1000 group-hover:opacity-0" alt="Northframe Logo">
+
+            <img src="{{ asset('logos/logo_navbar_hover.svg') }}"
+                class="absolute h-[36px] md:h-[68px] opacity-0 transition-opacity duration-1000 group-hover:opacity-100"
+                alt="Northframe Logo">
         </a>
 
         <!-- MENU (desktop only inline) -->
@@ -39,7 +44,7 @@
     <div id="menu"
         class="opacity-0 pointer-events-none translate-y-2 transition-all duration-300 md:hidden w-full px-4 pt-4 bg-surface">
 
-        <div class="flex flex-col space-y-4">
+        <div class="flex flex-col space-y-4 pb-3">
 
             <a href="#services" class="text-primary">Services</a>
             <a href="#portfolio" class="text-primary">Portfolio</a>
