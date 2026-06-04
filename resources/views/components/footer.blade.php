@@ -48,7 +48,7 @@
                         <li><a href="#process" class="hover:opacity-70 transition">
                                 Process
                             </a></li>
-                        <li><a href="#" class="hover:opacity-70 transition">
+                        <li><a href="#ctaFinal" class="hover:opacity-70 transition">
                                 Contact
                             </a></li>
                     </ul>

@@ -12,7 +12,7 @@
             <a href="#services" class="text-primary text-select transition-all">Services</a>
             <a href="#portfolio" class="text-primary">Portfolio</a>
             <a href="#process" class="text-primary">Process</a>
-            <a href="#" class="text-primary">Contact</a>
+            <a href="#ctaFinal" class="text-primary">Contact</a>
         </div>
 
         <!-- CTA + BURGER -->
@@ -42,9 +42,9 @@
         <div class="flex flex-col space-y-4">
 
             <a href="#services" class="text-primary">Services</a>
-            <a href="#" class="text-primary">Portfolio</a>
-            <a href="#" class="text-primary">Process</a>
-            <a href="#" class="text-primary">Contact</a>
+            <a href="#portfolio" class="text-primary">Portfolio</a>
+            <a href="#process" class="text-primary">Process</a>
+            <a href="#ctaFinal" class="text-primary">Contact</a>
 
             <a href="#"
                 class="self-center text-brand outline-solid rounded-[10px] outline-brand text-sm px-3 py-2 h-[38px] mt-4">

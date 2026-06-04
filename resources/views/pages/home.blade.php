@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     <!--Hero Section -->
     <section id="hero">
         <div class="max-w-[1242px] mx-auto px-6">
@@ -23,12 +22,12 @@
                     <div class="flex gap-[10px] px-[10px] py-[10px]">
 
                         <a href="#portfolio"
-                            class="bg-brand hover:bg-hover text-primary text-button rounded-[10px] flex items-center justify-center px-[12px] h-[48px] transition-all duration-200">
+                            class="bg-brand hover:bg-hover text-primary text-button rounded-[10px] flex items-center justify-center px-[12px] h-[48px] transition-all duration-200 whitespace-nowrap">
                             Voir mes projets
                         </a>
 
                         <a href="#"
-                            class="border-2 border-secondary hover:border-hover text-primary hover:text-hover text-button rounded-[10px] flex items-center justify-center px-[12px] h-[48px transition-all duration-200">
+                            class="border-2 border-secondary hover:border-hover text-primary hover:text-hover text-button rounded-[10px] flex items-center justify-center px-[12px] h-[48px transition-all duration-200 whitespace-nowrap">
                             Démarrer un projet
                         </a>
 
@@ -212,9 +211,84 @@
         <h3 class="text-h3 text-secondary text-center">
             De la première discussion à la mise en ligne, chaque étape est claire et structurée.
         </h3>
-        <div class="flex flex-wrap justify-center gap-[10px] pt-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-[10px] justify-center mx-auto w-fit pt-3">
+            <div
+                class="w-[240px] h-[240px] rounded-[12px] bg-surface shadow-lg p-[12px] border border-primary/5 flex flex-col justify-between">
 
-            
+                <div class="flex flex-col gap-[10px]">
+                    <p class="text-brand/70 text-small">[01]</p>
+                    <div class="text-card-title text-primary ">Analyse du besoin</div>
+                </div>
+                <p class="text-button text-muted">
+                    Nous échangeons sur votre projet afin de comprendre vos besoins, vos objectifs et les
+                    fonctionnalités attendues.
+                </p>
+                <div class="flex-1"></div>
+                <img class="w-[24px] h-[24px] self-start" src="{{ asset('icon/message-circle.svg') }}"
+                    alt="Analyse du besoin">
+
+            </div>
+            <div
+                class="w-[240px] h-[240px] rounded-[12px] bg-surface shadow-lg p-[12px] border border-primary/5 flex flex-col justify-between">
+
+                <div class="flex flex-col gap-[10px]">
+                    <p class="text-brand/70 text-small">[02]</p>
+                    <div class="text-card-title text-primary ">Conception</div>
+                </div>
+                <p class="text-button text-muted">
+                    Je crée la structure et le design de votre site en mettant l’accent sur l’expérience utilisateur et la
+                    clarté.
+                </p>
+                <div class="flex-1"></div>
+                <img class="w-[24px] h-[24px] self-start" src="{{ asset('icon/panels-top-left.svg') }}" alt="Conception">
+            </div>
+            <div
+                class="w-[240px] h-[240px] rounded-[12px] bg-surface shadow-lg p-[12px] border border-primary/5 flex flex-col justify-between">
+
+                <div class="flex flex-col gap-[10px]">
+                    <p class="text-brand/70 text-small">[03]</p>
+                    <div class="text-card-title text-primary ">Développement</div>
+                </div>
+                <p class="text-button text-muted">
+                    Intégration et développement du site avec des technologies modernes, rapides et adaptées à votre projet.
+                </p>
+                <div class="flex-1"></div>
+                <img class="w-[24px] h-[24px] self-start" src="{{ asset('icon/square-code.svg') }}" alt="Développement">
+            </div>
+            <div
+                class="w-[240px] h-[240px] rounded-[12px] bg-surface shadow-lg p-[12px] border border-primary/5 flex flex-col justify-between">
+
+                <div class="flex flex-col gap-[10px]">
+                    <p class="text-brand/70 text-small">[04]</p>
+                    <div class="text-card-title text-primary ">Mise en ligne</div>
+                </div>
+                <p class="text-button text-muted">
+                    Mise en ligne du site et vérifications finales pour garantir un fonctionnement optimal.
+                </p>
+                <div class="flex-1"></div>
+                <img class="w-[24px] h-[24px] self-start" src="{{ asset('icon/circle-check.svg') }}" alt="Mise en ligne">
+            </div>
+
         </div>
+    </section>
+
+    <!--CTA Final Section-->
+    <section id="ctaFinal" class="p-[10px] scroll-mt-20">
+        <h2 class="text-h2 text-primary text-center">
+            Vous avez un projet ?
+        </h2>
+        <h3 class="text-h3 text-secondary text-center">
+            Répondez à quelques questions et je vous recontacte rapidement pour discuter de votre besoin.
+        </h3>
+        <div class="flex gap-[10px] px-[10px] py-[10px] justify-center">
+
+                        <a href="#"
+                            class="bg-brand hover:bg-hover text-primary text-button rounded-[10px] flex items-center justify-center px-[12px] h-[48px] transition-all duration-200 whitespace-nowrap">
+                            Démarrer un projet
+                        </a>
+
+                        
+
+                    </div>
     </section>
 @endsection
