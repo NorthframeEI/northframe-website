@@ -1,4 +1,6 @@
+import initTemplateSelect from "./showHideTemplateSelect";
 document.addEventListener("DOMContentLoaded", () => {
+    initTemplateSelect();
     const burger = document.getElementById("burger");
     const menu = document.getElementById("menu");
     const navbar = document.getElementById("navbar");

@@ -26,7 +26,7 @@
                             Voir mes projets
                         </a>
 
-                        <a href="#"
+                        <a href="{{ route('contact')}}"
                             class="border-2 border-secondary hover:border-hover text-primary hover:text-hover text-button rounded-[10px] flex items-center justify-center px-[12px] h-[48px transition-all duration-200 whitespace-nowrap">
                             Démarrer un projet
                         </a>
@@ -82,7 +82,7 @@
                         À partir de 1100€
                     </p>
                     <div class="flex gap-[10px] px-[10px] py-[10px]">
-                        <a href="#"
+                        <a href="{{ route('contact', ['projet' => 'vitrine']) }}"
                             class="flex items-center justify-center w-fit mx-auto bg-brand hover:bg-hover text-primary text-button  cursor-pointer rounded-[10px] gap-[10px]  px-[12px] h-[48px] transition-all duration-200">Choisir
                             cette offre</a>
                     </div>
@@ -118,11 +118,11 @@
                         À partir de 700€
                     </p>
                     <div class="flex gap-[10px] px-[10px] py-[10px] justify-center">
-                        <a href="#"
+                        <a href="{{ route('contact', ['projet' => 'landing']) }}"
                             class="flex items-center justify-center bg-brand hover:bg-hover text-primary text-button  cursor-pointer rounded-[10px] gap-[10px]  px-[12px] h-[48px] transition-all duration-200 whitespace-nowrap">
                             Choisir cette offre
                         </a>
-                        <a href="#"
+                        <a href="{{ route('template') }}"
                             class="flex items-center justify-center border border-secondary hover:border-hover text-primary hover:text-hover text-button  cursor-pointer rounded-[10px] gap-[10px]  px-[12px] h-[48px] transition-all duration-200 whitespace-nowrap">
                             Voir les templates
                         </a>

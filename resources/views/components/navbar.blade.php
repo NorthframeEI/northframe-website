@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between w-full px-4">
 
         <!-- LOGO -->
-        <a href="/" class="relative flex items-center group">
+        <a href="{{ route('home') }}" class="relative flex items-center group">
             <img src="{{ asset('logos/logo_navbar.svg') }}"
                 class="h-[36px] md:h-[68px] transition-opacity duration-1000 group-hover:opacity-0" alt="Northframe Logo">
 
@@ -24,7 +24,7 @@
         <div class="flex items-center space-x-3 p-2 md:p-0">
 
             <!-- CTA desktop -->
-            <a href="/contact"
+            <a href="{{ route('contact') }}"
                 class="hidden md:block text-brand outline-solid rounded-[10px] outline-brand text-label px-3 py-2 h-[38px] cursor-pointer hover:text-hover hover:outline-hover">
                 Démarrer un projet
             </a>
@@ -51,7 +51,7 @@
             <a href="#process" class="text-primary">Process</a>
             <a href="#ctaFinal" class="text-primary">Contact</a>
 
-            <a href="/contact"
+            <a href="{{ route('contact') }}"
                 class="self-center text-brand outline-solid rounded-[10px] outline-brand text-sm px-3 py-2 h-[38px] mt-4">
                 Démarrer un projet
             </a>

@@ -63,8 +63,16 @@
         @apply font-inter text-[12px] font-normal leading-[140%];
     }
 
-    .text-button{
-        @apply font-inter text-[14px] font-semibold;
+    .text-button-inter{
+        @apply font-inter text-[16px] font-semibold;
+    }
+
+    .text-regular{
+        @apply font-inter text-[18px] font-normal;
+    }
+
+    .text-medium-20{
+        @apply font-inter text-[20px] font-medium;
     }
 
     /* =========================
@@ -96,7 +104,7 @@
     }
 
     .text-navbar {
-        @apply font-inter text-[16px] font-light;
+        @apply font-inter text-[16px] font-normal;
     }
 
     /* =========================
@@ -116,4 +124,12 @@
 
 .bg-northframe {
     background-image: var(--bg-northframe);
+}
+
+@layer base {
+    select {
+        appearance: auto;
+        -webkit-appearance: auto;
+        background-image: none;
+    }
 }

@@ -56,7 +56,7 @@
                 <div class="flex items-center">
 
                     <!-- CTA desktop -->
-                    <a href="#"
+                    <a href="{{route('contact')}}"
                         class="block text-brand outline-solid rounded-[10px] outline-brand text-label px-3 py-2 h-[38px] cursor-pointer hover:text-hover hover:outline-hover">
                         Démarrer un projet
                     </a>
