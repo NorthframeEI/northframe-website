@@ -1,4 +1,4 @@
-<nav class="sticky top-0 w-full h-[56px] md:h-[72px]" id="navbar">
+<nav class="sticky z-50 top-0 w-full h-[56px] md:h-[72px]" id="navbar">
 
     <div class="flex items-center justify-between w-full px-4">
 
@@ -13,11 +13,13 @@
         </a>
 
         <!-- MENU (desktop only inline) -->
-        <div class="hidden md:flex items-center space-x-8">
-            <a href="#services" class="text-primary text-select transition-all">Services</a>
-            <a href="#portfolio" class="text-primary">Portfolio</a>
-            <a href="#process" class="text-primary">Process</a>
-            <a href="#ctaFinal" class="text-primary">Contact</a>
+        <div class="hidden md:flex items-center space-x-8 relative">
+
+            <span id="nav-pill"></span>
+            <a href="{{route('home')}}#services" class="nav-item">Services</a>
+            <a href="{{route('home')}}#portfolio" class="nav-item">Portfolio</a>
+            <a href="{{route('home')}}#process" class="nav-item">Process</a>
+            <a href="{{route('home')}}#ctaFinal" class="nav-item">Contact</a>
         </div>
 
         <!-- CTA + BURGER -->
@@ -46,10 +48,10 @@
 
         <div class="flex flex-col space-y-4 pb-3">
 
-            <a href="#services" class="text-primary">Services</a>
-            <a href="#portfolio" class="text-primary">Portfolio</a>
-            <a href="#process" class="text-primary">Process</a>
-            <a href="#ctaFinal" class="text-primary">Contact</a>
+            <a href="{{route('home')}}#services" class="text-primary">Services</a>
+            <a href="{{route('home')}}#portfolio" class="text-primary">Portfolio</a>
+            <a href="{{route('home')}}#process" class="text-primary">Process</a>
+            <a href="{{route('home')}}#ctaFinal" class="text-primary">Contact</a>
 
             <a href="{{ route('contact') }}"
                 class="self-center text-brand outline-solid rounded-[10px] outline-brand text-sm px-3 py-2 h-[38px] mt-4">

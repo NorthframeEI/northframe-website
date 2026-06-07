@@ -63,15 +63,15 @@
         @apply font-inter text-[12px] font-normal leading-[140%];
     }
 
-    .text-button-inter{
+    .text-button-inter {
         @apply font-inter text-[16px] font-semibold;
     }
 
-    .text-regular{
+    .text-regular {
         @apply font-inter text-[18px] font-normal;
     }
 
-    .text-medium-20{
+    .text-medium-20 {
         @apply font-inter text-[20px] font-medium;
     }
 
@@ -99,12 +99,36 @@
      UI / Navbar
   ========================= */
 
-    .text-select {
-        @apply font-inter text-[18px] font-semibold;
+    .nav-item {
+        @apply relative inline-flex items-center font-inter text-[16px] font-normal text-primary transition cursor-pointer;
+        min-height: 40px;
+        z-index: 1;
     }
 
-    .text-navbar {
-        @apply font-inter text-[16px] font-normal;
+    /* active text state */
+    .nav-item.nav-active {
+        @apply text-primary font-semibold text-[18px];
+    }
+    #nav-pill {
+        position: absolute;
+        bottom: -6px;
+        left: 0;
+
+        width: 18px;
+        height: 4px;
+        border-radius: 999px;
+
+        background-color: var(--color-brand);
+        box-shadow: 0 0 12px rgba(37, 99, 235, 0.6);
+
+        opacity: 0;
+        transform: translateX(0);
+
+        transition:
+            transform 350ms cubic-bezier(0.4, 0, 0.2, 1),
+            opacity 200ms ease;
+
+        pointer-events: none;
     }
 
     /* =========================
@@ -116,6 +140,10 @@
     .text-footer {
         @apply font-inter text-[12px] font-medium;
     }
+
+    /* =========================
+    Class active
+  ========================= */
 }
 
 :root {
@@ -132,4 +160,12 @@
         -webkit-appearance: auto;
         background-image: none;
     }
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+section {
+    scroll-margin-top: 90px;
 }

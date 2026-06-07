@@ -39,16 +39,16 @@
                         Navigation
                     </p>
                     <ul class="list-disc pl-5 space-y-1 text-h3-footer text-primary">
-                        <li><a href="#services" class="hover:opacity-70 transition">
+                        <li><a href="{{route('home')}}#services" class="hover:opacity-70 transition">
                                 Services
                             </a></li>
-                        <li><a href="#portfolio" class="hover:opacity-70 transition">
+                        <li><a href="{{route('home')}}#portfolio" class="hover:opacity-70 transition">
                                 Portfolio
                             </a></li>
-                        <li><a href="#process" class="hover:opacity-70 transition">
+                        <li><a href="{{route('home')}}#process" class="hover:opacity-70 transition">
                                 Process
                             </a></li>
-                        <li><a href="#ctaFinal" class="hover:opacity-70 transition">
+                        <li><a href="{{route('home')}}#ctaFinal" class="hover:opacity-70 transition">
                                 Contact
                             </a></li>
                     </ul>

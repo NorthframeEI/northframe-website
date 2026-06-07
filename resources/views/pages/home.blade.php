@@ -26,7 +26,7 @@
                             Voir mes projets
                         </a>
 
-                        <a href="{{ route('contact')}}"
+                        <a href="{{ route('contact') }}"
                             class="border-2 border-secondary hover:border-hover text-primary hover:text-hover text-button rounded-[10px] flex items-center justify-center px-[12px] h-[48px transition-all duration-200 whitespace-nowrap">
                             Démarrer un projet
                         </a>
@@ -204,7 +204,7 @@
         </div>
     </section>
     <!--Process Section -->
-    <section id="process" class="p-[10px] scroll-mt-20">
+    <section id="process" class="scroll-mt-[90px] pb-[120px]">
         <h2 class="text-h2 text-primary text-center">
             Une méthode claire et structurée
         </h2>
@@ -266,7 +266,8 @@
                     Mise en ligne du site et vérifications finales pour garantir un fonctionnement optimal.
                 </p>
                 <div class="flex-1"></div>
-                <img class="w-[24px] h-[24px] self-start" src="{{ asset('icon/circle-check.svg') }}" alt="Mise en ligne">
+                <img class="w-[24px] h-[24px] self-start" src="{{ asset('icon/circle-check.svg') }}"
+                    alt="Mise en ligne">
             </div>
 
         </div>
@@ -282,13 +283,13 @@
         </h3>
         <div class="flex gap-[10px] px-[10px] py-[10px] justify-center">
 
-                        <a href="#"
-                            class="bg-brand hover:bg-hover text-primary text-button rounded-[10px] flex items-center justify-center px-[12px] h-[48px] transition-all duration-200 whitespace-nowrap">
-                            Démarrer un projet
-                        </a>
+            <a href="#"
+                class="bg-brand hover:bg-hover text-primary text-button rounded-[10px] flex items-center justify-center px-[12px] h-[48px] transition-all duration-200 whitespace-nowrap">
+                Démarrer un projet
+            </a>
 
-                        
 
-                    </div>
+
+        </div>
     </section>
 @endsection
