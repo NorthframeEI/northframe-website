@@ -47,7 +47,7 @@
                         <div class="absolute -top-10 left-[70%] h-40 w-px bg-brand/8"></div>
                         <div class="absolute -top-32 left-[91%] h-40 w-px bg-brand/8"></div>
 
-                        <img src="{{ asset('logos/logo_hero_blue.svg') }}" alt="" aria-hidden="true"
+                        <img src="{{ asset('logos/logo_hero.svg') }}" alt="" aria-hidden="true"
                             class="absolute inset-0 w-full  opacity-30  -translate-x-[4px] -translate-y-[3.5px] drop-shadow-[0_0_8px_rgba(59,130,246,0.4)]">
 
                         <!-- Logo -->
@@ -55,7 +55,7 @@
 
                         <!-- Reflet -->
                         <img src="{{ asset('logos/logo_hero.svg') }}" alt="" aria-hidden="true"
-                            class="absolute left-0 top-[101%] rotate-[-2deg] w-full scale-y-[-1] opacity-10 blur-[1px]
+                            class="absolute left-0 top-[101%] rotate-[-2deg] w-full scale-y-[-1] opacity-50 blur-[1px]
             [mask-image:linear-gradient(to_top,rgba(0,0,0,0.5),transparent_70%)]">
 
                     </div>
