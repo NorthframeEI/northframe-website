@@ -2,7 +2,7 @@
 
 @section('content')
     <!--Hero Section -->
-    <section id="hero">
+    <section id="hero" class="relative overflow-hidden pt-10 lg:pt-16">
         <div class="max-w-[1242px] mx-auto px-6">
 
             <div class="grid grid-cols-1 lg:grid-cols-[1fr_500px] gap-10 lg:gap-[60px] items-center">
@@ -34,10 +34,31 @@
                     </div>
                 </div>
 
-                <!-- RIGHT (desktop only) -->
 
-                <div class="hidden md:block relative w-[500px] flex justify-center">
-                    <img src="{{ asset('logos/logo_hero.svg') }}" class="block z-10">
+                <!-- RIGHT (desktop only) -->
+                <div class="hidden md:flex relative justify-center items-center overflow-visible">
+                    <div class="relative w-[200px]">
+
+                        <!-- Glow derrière -->
+                        <div class="absolute inset-[-40px] -z-10 rounded-full bg-blue-600/20 blur-[60px]"></div>
+
+                        <!-- Traits verticaux -->
+                        <div class="absolute -top-32 left-[68%] h-40 w-px bg-brand/8"></div>
+                        <div class="absolute -top-10 left-[70%] h-40 w-px bg-brand/8"></div>
+                        <div class="absolute -top-32 left-[91%] h-40 w-px bg-brand/8"></div>
+
+                        <img src="{{ asset('logos/logo_hero_blue.svg') }}" alt="" aria-hidden="true"
+                            class="absolute inset-0 w-full  opacity-30  -translate-x-[4px] -translate-y-[3.5px] drop-shadow-[0_0_8px_rgba(59,130,246,0.4)]">
+
+                        <!-- Logo -->
+                        <img src="{{ asset('logos/logo_hero.svg') }}" alt="Northframe Brand" class="relative z-10 w-full">
+
+                        <!-- Reflet -->
+                        <img src="{{ asset('logos/logo_hero.svg') }}" alt="" aria-hidden="true"
+                            class="absolute left-0 top-[101%] rotate-[-2deg] w-full scale-y-[-1] opacity-10 blur-[1px]
+            [mask-image:linear-gradient(to_top,rgba(0,0,0,0.5),transparent_70%)]">
+
+                    </div>
                 </div>
 
             </div>
@@ -240,7 +261,8 @@
                     clarté.
                 </p>
                 <div class="flex-1"></div>
-                <img class="w-[24px] h-[24px] self-start" src="{{ asset('icon/panels-top-left.svg') }}" alt="Conception">
+                <img class="w-[24px] h-[24px] self-start" src="{{ asset('icon/panels-top-left.svg') }}"
+                    alt="Conception">
             </div>
             <div
                 class="w-[240px] h-[240px] rounded-[12px] bg-surface shadow-lg p-[12px] border border-primary/5 flex flex-col justify-between">
