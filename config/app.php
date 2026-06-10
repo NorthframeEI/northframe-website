@@ -123,4 +123,9 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    //Admin Domain
+
+    //Admin Domain
+    'admin_domain' => env('ADMIN_DOMAIN'),
+
 ];
