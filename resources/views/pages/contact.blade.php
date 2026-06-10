@@ -18,11 +18,34 @@
         </div>
     </section>
     <section id="formulaireContact" class="overflow-visible">
-        <div class="flex justify-center px-3 py-3 overflow-visible">
 
-            <form
+        <div class="flex flex-col items-center px-3 py-3 gap-4">
+
+            <!-- MESSAGES (alignés avec la card) -->
+            <div class="w-full max-w-[700px]">
+
+                @if (session('success'))
+                    <div class="p-4 bg-success/30 border border-success text-success rounded-lg">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="p-4 bg-error/30 border border-error text-error rounded-lg">
+                        <ul class="space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>• {{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+            </div>
+
+
+            <form action="{{ route('contact.post') }}" method="POST" autocomplete="on" novalidate
                 class="overflow-visible w-full max-w-[700px] rounded-[12px] bg-surface shadow-lg px-[20px] md:px-[34px] py-[24px] border border-primary/5">
-
+                @csrf
                 <div class="flex flex-col gap-[24px] overflow-visible">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-[16px] overflow-visible">
@@ -31,18 +54,26 @@
                             <label class="text-label text-secondary">
                                 Votre nom <span class="text-red-500">*</span>
                             </label>
-                            <input name="nom" type="text"
+                            <input name="nom" autocomplete="name" type="text" value="{{ old('nom') }}"
                                 class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition"
                                 placeholder="Entrez votre nom complet" required>
+
+                            @error('nom')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="flex flex-col gap-[6px]">
                             <label class="text-label text-secondary">
                                 Votre email <span class="text-red-500">*</span>
                             </label>
-                            <input name="email" type="email"
+                            <input name="email" type="email" value="{{ old('email') }}"
                                 class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition"
-                                placeholder="Entrez votre email" required>
+                                placeholder="Entrez votre email" autocomplete="email" required>
+
+                            @error('email')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                     </div>
@@ -53,9 +84,13 @@
                             <label class="text-label text-secondary">
                                 Votre entreprise <span class="text-red-500">*</span>
                             </label>
-                            <input name="entreprise" type="text"
+                            <input name="entreprise" type="text" value="{{ old('entreprise') }}"
                                 class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition"
-                                placeholder="Entrez le nom de votre entreprise" required>
+                                placeholder="Entrez le nom de votre entreprise" autocomplete="organization" required>
+
+                            @error('entreprise')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="flex flex-col gap-[6px]">
@@ -64,18 +99,22 @@
                             </label>
 
                             <select id="typeProjet" name="type_projet"
-                                class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition"
-                                required>
+                                class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+
                                 <option value="">Sélectionnez le type de projet ...</option>
 
-                                <option value="vitrine" {{ ($projet ?? '') === 'vitrine' ? 'selected' : '' }}>
+                                <option value="vitrine" {{ old('type_projet') === 'vitrine' ? 'selected' : '' }}>
                                     Site vitrine
                                 </option>
 
-                                <option value="landing" {{ ($projet ?? '') === 'landing' ? 'selected' : '' }}>
+                                <option value="landing" {{ old('type_projet') === 'landing' ? 'selected' : '' }}>
                                     Landing page
                                 </option>
                             </select>
+
+                            @error('type_projet')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                     </div>
@@ -88,9 +127,16 @@
 
                         <select name="template"
                             class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+
                             <option value="">Choisir un template (optionnel)</option>
-                            <option value="template1" {{ ($template ?? '') === 'template1' ? 'selected' : '' }}>Template 1</option>
-                            <option value="template2" {{ ($template ?? '') === 'template2' ? 'selected' : '' }}>Template 2</option>
+
+                            <option value="template1" {{ old('template') === 'template1' ? 'selected' : '' }}>
+                                Template 1
+                            </option>
+
+                            <option value="template2" {{ old('template') === 'template2' ? 'selected' : '' }}>
+                                Template 2
+                            </option>
                         </select>
                     </div>
                     <!-- Message -->
@@ -99,15 +145,19 @@
                             Votre message <span class="text-red-500">*</span>
                         </label>
 
-                        <textarea name="description_projet" rows="10" placeholder="Décrivez votre projet ..."
+                        <textarea name="contenuMessage" rows="10" placeholder="Décrivez votre projet ..."
                             class="w-full p-3 text-label text-secondary bg-dark rounded-[10px] focus:border-brand focus:border outline-none transition resize-none"
-                            required></textarea>
+                            required>{{ old('contenuMessage') }}</textarea>
+
+                        @error('contenuMessage')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="flex flex-col gap-[10px] items-center">
 
                         <button type="submit"
-                            class="text-primary text-button-inter bg-brand px-[12px] py-[20px] rounded-[12px] w-fit">
+                            class="text-primary text-button-inter bg-brand hover:bg-hover px-[12px] py-[20px] rounded-[12px] w-fit cursor-pointer">
                             Envoyer ma demande
                         </button>
 

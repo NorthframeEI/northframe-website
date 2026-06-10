@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,9 @@ Route::get('/mentions-legales', [PagesController::class, 'mentionsLegales'])->na
 Route::get('/politique-confidentialite', [PagesController::class, 'politiqueConfidentialite'])->name('politique-confidentialite');
 Route::get('/cgv', [PagesController::class, 'cgv'])->name('cgv');
 
+//Contact
+Route::post('/contact', [ContactController::class, 'postForm'])
+    ->name('contact.post');
 
 //Admin
 Route::domain(config('app.admin_domain'))
