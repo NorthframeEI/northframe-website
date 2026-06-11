@@ -94,10 +94,10 @@
     </section>
     <section id="pourquoi" class="p-[10px] scroll-mt-20">
         <h2 class="text-h2 text-primary text-center">
-            Aperçu complet du design
+            Pourquoi ce template ?
         </h2>
         <h3 class="text-h3 text-secondary text-center">
-            Découvrez les différentes sections du template
+            Un template pensé pour aller vite et générer des résultats.
         </h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-[24px] px-[10px] py-[10px]">
 
