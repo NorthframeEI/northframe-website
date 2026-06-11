@@ -110,6 +110,9 @@
                                 <option value="landing" {{ old('type_projet', request('projet')) === 'landing' ? 'selected' : '' }}>
                                     Landing page
                                 </option>
+                                <option value="freelance" {{ old('type_projet', request('projet')) === 'freelance' ? 'selected' : '' }}>
+                                    Renfort technique / Freelance
+                                </option>
                             </select>
 
                             @error('type_projet')

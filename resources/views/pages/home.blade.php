@@ -75,42 +75,6 @@
         <div class="flex flex-wrap justify-center gap-[10px]  pt-3">
             <div
                 class="w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5">
-                <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/globe.svg') }}" alt="Site vitrine">
-                <div class="px-6 py-4 flex flex-col gap-[10px]">
-                    <div class="text-card-title text-primary text-center ">Site vitrine professionnel</div>
-                    <p class="text-label text-secondary text-center">
-                        Donnez une image crédible et moderne de votre activité avec un site rapide, clair et pensé pour
-                        convertir vos visiteurs en clients.
-                    </p>
-                    <ul class="list-disc pl-5 text-h3-footer text-secondary whitespace-nowrap">
-                        <li>
-                            Design sur mesure
-                        </li>
-                        <li>
-                            Site responsive (mobile, tablette, desktop)
-                        </li>
-                        <li>
-                            Développement rapide et performant
-                        </li>
-                        <li>
-                            SEO de base optimisé
-                        </li>
-                        <li>
-                            Mise en ligne incluse
-                        </li>
-                    </ul>
-                    <p class="text-card-price text-primary text-center">
-                        À partir de 1100€
-                    </p>
-                    <div class="flex gap-[10px] px-[10px] py-[10px]">
-                        <a href="{{ route('contact', ['projet' => 'vitrine']) }}"
-                            class="flex items-center justify-center w-fit mx-auto bg-brand hover:bg-hover text-primary text-button  cursor-pointer rounded-[10px] gap-[10px]  px-[12px] h-[48px] transition-all duration-200">Choisir
-                            cette offre</a>
-                    </div>
-                </div>
-            </div>
-            <div
-                class="w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5">
                 <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/rocket.svg') }}" alt="Landing page">
                 <div class="px-6 py-4 flex flex-col gap-[10px]">
                     <div class="text-card-title text-primary text-center ">Landing page</div>
@@ -153,6 +117,43 @@
             </div>
             <div
                 class="w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5">
+                <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/globe.svg') }}" alt="Site vitrine">
+                <div class="px-6 py-4 flex flex-col gap-[10px]">
+                    <div class="text-card-title text-primary text-center ">Site vitrine professionnel</div>
+                    <p class="text-label text-secondary text-center">
+                        Donnez une image crédible et moderne de votre activité avec un site rapide, clair et pensé pour
+                        convertir vos visiteurs en clients.
+                    </p>
+                    <ul class="list-disc pl-5 text-h3-footer text-secondary whitespace-nowrap">
+                        <li>
+                            Design sur mesure
+                        </li>
+                        <li>
+                            Site responsive (mobile, tablette, desktop)
+                        </li>
+                        <li>
+                            Développement optimisé pour les performances
+                        </li>
+                        <li>
+                            SEO de base optimisé
+                        </li>
+                        <li>
+                            Mise en ligne incluse
+                        </li>
+                    </ul>
+                    <p class="text-card-price text-primary text-center">
+                        À partir de 1100€
+                    </p>
+                    <div class="flex gap-[10px] px-[10px] py-[10px]">
+                        <a href="{{ route('contact', ['projet' => 'vitrine']) }}"
+                            class="flex items-center justify-center w-fit mx-auto bg-brand hover:bg-hover text-primary text-button  cursor-pointer rounded-[10px] gap-[10px]  px-[12px] h-[48px] transition-all duration-200">Choisir
+                            cette offre</a>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5">
                 <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/cog.svg') }}" alt="Site vitrine">
                 <div class="px-6 py-4 flex flex-col gap-[10px]">
                     <div class="text-card-title text-primary text-center ">Maintenance</div>
@@ -183,6 +184,36 @@
                     </p>
                 </div>
             </div>
+            <div
+                class="w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5">
+                <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/users-round.svg') }}" alt="Site vitrine">
+                <div class="px-6 py-4 flex flex-col gap-[10px]">
+                    <div class="text-card-title text-primary text-center ">Renfort technique / Freelance</div>
+                    <p class="text-label text-secondary text-center">
+                        Besoin d’un développeur pour renforcer votre équipe sur une mission ponctuelle ou sur plusieurs
+                        semaines ?
+                        J’interviens directement sur vos projets pour accélérer vos développements et fiabiliser vos
+                        livraisons.
+                    </p>
+
+                    <ul class="list-disc pl-5 text-h3-footer text-secondary">
+                        <li>Développement Laravel & PHP</li>
+                        <li>JavaScript & interfaces modernes</li>
+                        <li>Intégration responsive Tailwind CSS</li>
+                        <li>Développement de fonctionnalités</li>
+                        <li>Maintenance et corrections techniques</li>
+                        <li>Collaboration avec vos équipes existantes</li>
+                    </ul>
+                    <p class="text-card-price text-primary text-center">
+                        À partir de 300€/jour
+                    </p>
+                    <div class="flex gap-[10px] px-[10px] py-[10px]">
+                        <a href="{{ route('contact', ['projet' => 'freelance']) }}"
+                            class="flex items-center justify-center w-fit mx-auto bg-brand hover:bg-hover text-primary text-button  cursor-pointer rounded-[10px] gap-[10px]  px-[12px] h-[48px] transition-all duration-200">Choisir
+                            cette offre</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </section>
@@ -196,14 +227,69 @@
             Des sites web conçus pour allier performance, clarté et expérience utilisateur.
         </h3>
         <div class="flex flex-wrap justify-center gap-[10px]  pt-3">
+            <a href="#"
+                class="relative w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px]
+          hover:shadow-hover hover:-translate-y-2 transition-all duration-300 ease-out hover:scale-[1.02]
+          border border-primary/5 hover:border-hover pointer-events-none">
 
+                <!-- Badge overlay -->
+                <div class="absolute top-4 left-4 z-10 bg-black/80 text-primary text-small px-3 py-2 rounded-full">
+                    🔒 En attente d'autorisation
+                </div>
+
+                <img class="w-full aspect-video bg-white opacity-90"
+                    src="{{ asset('screen_portfolio/ufr_artois_logo.png') }}" alt="Site vitrine">
+
+                <div class="px-6 py-4 flex flex-col gap-[10px]">
+
+                    <div class="text-card-title text-primary text-center">
+                        UFR Artois — Outil de demande de télétravail
+                    </div>
+
+                    <div class="flex flex-wrap justify-center gap-[8px]">
+
+                        <p class="text-label text-secondary text-center">
+                            Conception et développement d’un outil de gestion interne pour dématérialiser le processus de
+                            demande de télétravail et fluidifier les validations RH.
+                        </p>
+
+                        <span
+                            class="inline-block outline-solid outline-brand rounded-full px-3 py-1 text-sm font-semibold text-secondary">
+                            #Laravel
+                        </span>
+
+                        <span
+                            class="inline-block outline-solid outline-brand rounded-full px-3 py-1 text-sm font-semibold text-secondary">
+                            #Tailwind CSS
+                        </span>
+
+                        <span
+                            class="inline-block outline-solid outline-brand rounded-full px-3 py-1 text-sm font-semibold text-secondary">
+                            #Javascript
+                        </span>
+
+                        <span
+                            class="inline-block outline-solid outline-brand rounded-full px-3 py-1 text-sm font-semibold text-secondary">
+                            #MySQL
+                        </span>
+
+                    </div>
+                </div>
+
+            </a>
             <a href="https://www.heliopales.com" target="_blank"
                 class="w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] hover:shadow-hover hover:-translate-y-2 transition-all duration-300 ease-out hover:scale-[1.02] border border-primary/5 hover:border-hover">
-                <img class="w-full aspect-video object-cover" src="{{ asset('screen_portfolio/heliopales.png') }}"
+                <img class="w-full aspect-video" src="{{ asset('screen_portfolio/heliopales.png') }}"
                     alt="Site vitrine">
                 <div class="px-6 py-4 flex flex-col gap-[10px]">
                     <div class="text-card-title text-primary text-center ">Héliopales - Site vitrine</div>
                     <div class="flex flex-wrap justify-center gap-[8px]">
+                        <p class="text-label text-secondary text-center">
+                            Site vitrine conçu au cours de mon alternance pour présenter l’activité de l’entreprise
+                            Héliopales
+                            avec une interface claire,
+                            responsive et optimisée pour la navigation.
+                        </p>
                         <span
                             class="inline-block outline-solid outline-brand rounded-full px-3 py-1 text-sm font-semibold text-secondary mr-2 mb-2">#PHP</span>
                         <span
@@ -214,11 +300,7 @@
                         <span
                             class="inline-block outline-solid outline-brand rounded-full px-3 py-1 text-sm font-semibold text-secondary mr-2 mb-2">#MySql</span>
                     </div>
-                    <p class="text-label text-secondary text-center">
-                        Site vitrine conçu au cours de mon alternance pour présenter l’activité de l’entreprise Héliopales
-                        avec une interface claire,
-                        responsive et optimisée pour la navigation.
-                    </p>
+
 
                 </div>
             </a>
