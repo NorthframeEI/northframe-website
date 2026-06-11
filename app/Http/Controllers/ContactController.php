@@ -29,6 +29,9 @@ class ContactController extends Controller
             ]
         );
 
+        if ($data['type_projet'] !== 'landing') {
+            $data['template'] = null;
+        }
         Mail::to('contact@northframe.test')
             ->send(new ContactMail(
                 $data['nom'],
@@ -39,6 +42,8 @@ class ContactController extends Controller
                 $data['contenuMessage'],
             ));
 
-        return back()->with('success', 'Message envoyé avec succès.');
+        return redirect()
+            ->route('contact')
+            ->with('success', 'Message envoyé avec succès.');
     }
 }

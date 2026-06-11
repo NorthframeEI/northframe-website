@@ -25,14 +25,14 @@
                         Landing page
                     </h3>
                     <h1 class="text-primary text-h1-hero">
-                        Saas Landing Pro
+                        {{ $template->title }}
                     </h1>
                     <h2 class="text-primary md:text-h2-hero">
-                        Template moderne optimisé pour convertir vos visiteurs en clients.
+                        {{ $template->long_description }}
                     </h2>
                     <div class="flex gap-[10px] px-[10px] py-[10px]">
 
-                        <a href="{{ route('contact', ['projet' => 'landing', 'template' => 'template1']) }}"
+                        <a href="{{ route('contact', ['projet' => 'landing', 'template' => $template->slug]) }}"
                             class="bg-brand hover:bg-hover text-primary text-button rounded-[10px] flex items-center justify-center px-[12px] h-[48px] transition-all duration-200 whitespace-nowrap">
                             Choisir ce template
                         </a>
@@ -49,7 +49,7 @@
 
                 <div class="w-full md:w-[500px]">
                     <img class="w-full h-auto aspect-video object-cover rounded-[12px]"
-                        src="{{ asset('screen_portfolio/heliopales.png') }}">
+                        src="{{ asset('storage/' . $template->thumbnail_url) }}" alt="{{ $template->title }}">
                 </div>
 
             </div>
@@ -65,31 +65,22 @@
             Découvrez les différentes sections du template
         </h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-[24px] px-[10px] py-[10px]">
+            @foreach ($template->sections as $section)
+                <div
+                    class="w-full  rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px]  border border-primary/5">
+                    @if ($section->image_url && file_exists(public_path('storage/' . $section->image_url)))
+                        <img class="w-full h-[220px] object-cover rounded-[12px]"
+                            src="{{ asset('storage/' . $section->image_url) }}" alt="{{ $section->title }}">
+                    @endif
+                    <div class="px-6 py-4 flex flex-col gap-[10px]">
+                        <div class="text-card-title text-primary text-center ">{{ $section->title }}</div>
+                        <p class="text-caption text-secondary text-center">
+                            {{ $section->description }}
+                        </p>
 
-            <div
-                class="w-full  rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px]  border border-primary/5">
-                <img class="w-full aspect-video object-cover" src="{{ asset('screen_portfolio/heliopales.png') }}"
-                    alt="Site vitrine">
-                <div class="px-6 py-4 flex flex-col gap-[10px]">
-                    <div class="text-card-title text-primary text-center ">Hero Section</div>
-                    <p class="text-caption text-secondary text-center">
-                        Première impression du site, pensée pour capter l’attention et convertir rapidement.
-                    </p>
-
+                    </div>
                 </div>
-            </div>
-            <div
-                class="w-full  rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px]  border border-primary/5">
-                <img class="w-full aspect-video object-cover" src="{{ asset('screen_portfolio/heliopales.png') }}"
-                    alt="Site vitrine">
-                <div class="px-6 py-4 flex flex-col gap-[10px]">
-                    <div class="text-card-title text-primary text-center ">Features Section</div>
-                    <p class="text-caption text-secondary text-center">
-                        Mise en avant des avantages clés avec un design clair et structuré pour convaincre rapidement.
-                    </p>
-
-                </div>
-            </div>
+            @endforeach
 
         </div>
     </section>
@@ -101,41 +92,19 @@
             Un template pensé pour aller vite et générer des résultats.
         </h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-[24px] px-[10px] py-[10px]">
+            @foreach ($template->benefits as $benefit)
+                <div
+                    class="w-full  rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px]  border border-primary/5">
+                    <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/' . $benefit->icon . '.svg') }}" alt="Site vitrine">
+                    <div class="px-6 py-4 flex flex-col gap-[10px]">
+                        <div class="text-card-title text-primary text-center ">{{ $benefit->title }}</div>
+                        <p class="text-caption text-secondary text-center">
+                            {{ $benefit->description }}
+                        </p>
 
-            <div
-                class="w-full  rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px]  border border-primary/5">
-                <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/rocket.svg') }}" alt="Site vitrine">
-                <div class="px-6 py-4 flex flex-col gap-[10px]">
-                    <div class="text-card-title text-primary text-center ">Optimisé conversion</div>
-                    <p class="text-caption text-secondary text-center">
-                        Structure pensée pour transformer tes visiteurs en clients grâce à une hiérarchie claire et
-                        efficace.
-                    </p>
-
+                    </div>
                 </div>
-            </div>
-            <div
-                class="w-full  rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px]  border border-primary/5">
-                <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/rocket.svg') }}" alt="Site vitrine">
-                <div class="px-6 py-4 flex flex-col gap-[10px]">
-                    <div class="text-card-title text-primary text-center ">Design responsive</div>
-                    <p class="text-caption text-secondary text-center">
-                        Le template s’adapte parfaitement à tous les écrans sans effort de configuration.
-                    </p>
-
-                </div>
-            </div>
-            <div
-                class="w-full  rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px]  border border-primary/5">
-                <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/rocket.svg') }}" alt="Site vitrine">
-                <div class="px-6 py-4 flex flex-col gap-[10px]">
-                    <div class="text-card-title text-primary text-center ">Prêt à utiliser</div>
-                    <p class="text-caption text-secondary text-center">
-                        Aucun setup compliqué, tu peux lancer ton site rapidement avec une base déjà optimisée.
-                    </p>
-
-                </div>
-            </div>
+            @endforeach
 
         </div>
     </section>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Template;
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
@@ -15,28 +16,44 @@ class PagesController extends Controller
     {
         $projet = request()->query('projet');
         $template = request()->query('template');
-        return view('pages.contact', compact('projet','template'));
+        $templates = Template::where('is_active', true)
+            ->orderBy('title')
+            ->get(['id', 'title', 'slug']);
+        return view('pages.contact', compact('projet', 'template', 'templates'));
     }
 
-     public function template()
+    public function template()
     {
-        return view('pages.template');
+
+        $templates = Template::where('is_active', true)->get();
+        return view('pages.template', compact('templates'));
     }
 
     public function detailTemplate()
     {
-        return view('pages.detail-template');
+        $slug = request()->query('slug');
+        $template = Template::with([
+            'benefits',
+            'sections',
+            'gallery'
+        ])
+            ->where('slug', $slug)
+            ->firstOrFail();
+        return view('pages.detail-template', compact('template'));
     }
 
-    public function mentionsLegales(){
+    public function mentionsLegales()
+    {
         return view('legal.mentions-legales');
     }
 
-    public function politiqueConfidentialite(){
+    public function politiqueConfidentialite()
+    {
         return view('legal.politique-confidentialite');
     }
 
-    public function cgv(){
+    public function cgv()
+    {
         return view('legal.cgv');
     }
 }

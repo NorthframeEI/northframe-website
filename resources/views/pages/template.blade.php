@@ -33,39 +33,19 @@
     </section>
     <section id="templates">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-[24px] px-[10px] py-[10px]">
-             <a href="{{route('detail-template')}}"
-                class="w-full rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] hover:shadow-hover hover:-translate-y-2 transition-all duration-300 ease-out hover:scale-[1.02] border border-primary/5 hover:border-hover">
-               <img class="w-full aspect-video object-cover" src="{{ asset('screen_portfolio/heliopales.png') }}"
-                    alt="Site vitrine">
-                <div class="px-6 py-4 flex flex-col gap-[10px]">
-                    <div class="text-card-title text-primary text-center ">SaaS Landing Pro</div>
-                    <p class="text-caption text-secondary text-center">
-                        Landing page moderne optimisée pour convertir tes visiteurs en clients.
-                    </p>
-                </div>
-            </a>
-            <a href="{{route('detail-template')}}" 
-                class="w-full rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] hover:shadow-hover hover:-translate-y-2 transition-all duration-300 ease-out hover:scale-[1.02] border border-primary/5 hover:border-hover">
-                <img class="w-full aspect-video object-cover" src="{{ asset('screen_portfolio/heliopales.png') }}"
-                    alt="Site vitrine">
-                <div class="px-6 py-4 flex flex-col gap-[10px]">
-                    <div class="text-card-title text-primary text-center ">Agency Landing Clean</div>
-                    <p class="text-caption text-secondary text-center">
-                        Template épuré pour agences modernes, pensé pour la crédibilité et la conversion.
-                    </p>
-                </div>
-            </a>
-            <a href="{{route('detail-template')}}" 
-                class="w-full rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] hover:shadow-hover hover:-translate-y-2 transition-all duration-300 ease-out hover:scale-[1.02] border border-primary/5 hover:border-hover">
-                <img class="w-full aspect-video object-cover" src="{{ asset('screen_portfolio/heliopales.png') }}"
-                    alt="Site vitrine">
-                <div class="px-6 py-4 flex flex-col gap-[10px]">
-                    <div class="text-card-title text-primary text-center ">Startup Launch Template</div>
-                    <p class="text-caption text-secondary text-center">
-                        Landing rapide et efficace pour lancer ton produit et valider ton idée.
-                    </p>
-                </div>
-            </a>
+            @foreach ($templates as $template)
+                <a href="{{ route('detail-template', ['slug' => $template->slug]) }}"
+                    class="w-full rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] hover:shadow-hover hover:-translate-y-2 transition-all duration-300 ease-out hover:scale-[1.02] border border-primary/5 hover:border-hover">
+                    <img class="w-full aspect-video object-cover" src="{{ asset('storage/' . $template->thumbnail_url) }}"
+                        alt="{{ $template->title }}">
+                    <div class="px-6 py-4 flex flex-col gap-[10px]">
+                        <div class="text-card-title text-primary text-center ">{{ $template->title }}</div>
+                        <p class="text-caption text-secondary text-center">
+                            {{ $template->short_description }}
+                        </p>
+                    </div>
+                </a>
+            @endforeach
         </div>
     </section>
 @endsection

@@ -104,14 +104,17 @@
 
                                 <option value="">Sélectionnez le type de projet ...</option>
 
-                                <option value="vitrine" {{ old('type_projet', request('projet')) === 'vitrine' ? 'selected' : '' }}>
+                                <option value="vitrine"
+                                    {{ old('type_projet', request('projet')) === 'vitrine' ? 'selected' : '' }}>
                                     Site vitrine
                                 </option>
 
-                                <option value="landing" {{ old('type_projet', request('projet')) === 'landing' ? 'selected' : '' }}>
+                                <option value="landing"
+                                    {{ old('type_projet', request('projet')) === 'landing' ? 'selected' : '' }}>
                                     Landing page
                                 </option>
-                                <option value="freelance" {{ old('type_projet', request('projet')) === 'freelance' ? 'selected' : '' }}>
+                                <option value="freelance"
+                                    {{ old('type_projet', request('projet')) === 'freelance' ? 'selected' : '' }}>
                                     Renfort technique / Freelance
                                 </option>
                             </select>
@@ -134,13 +137,12 @@
 
                             <option value="">Choisir un template (optionnel)</option>
 
-                            <option value="template1" {{ old('template', request('template')) === 'template1' ? 'selected' : '' }}>
-                                Template 1
-                            </option>
-
-                            <option value="template2" {{ old('template', request('template')) === 'template2' ? 'selected' : '' }}>
-                                Template 2
-                            </option>
+                            @foreach ($templates as $template)
+                                <option value="{{ $template->slug }}"
+                                    {{ old('template', request('template')) == $template->slug ? 'selected' : '' }}>
+                                    {{ $template->title }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
                     <!-- Message -->
