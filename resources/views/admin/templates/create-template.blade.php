@@ -5,7 +5,6 @@
         <div class="max-w-[1242px] mx-auto px-6 py-12">
 
             <div class="grid grid-cols-1 gap-6 justify-center mb-10">
-                <p class="text-body-bold text-brand text-center">ADMIN</p>
                 <h1 class="text-h1 text-primary text-center">
                     Créer un template
                 </h1>
@@ -34,7 +33,7 @@
                     @endif
                 </div>
 
-                <form action="#" method="POST"
+                <form action="{{ route('store-template') }}" method="POST"
                     class="w-full max-w-[900px] rounded-[12px] bg-surface shadow-lg px-[20px] md:px-[34px] py-[24px] border border-primary/5">
                     @csrf
 
@@ -49,6 +48,7 @@
                                     <label class="text-label text-secondary">Titre <span
                                             class="text-red-500">*</span></label>
                                     <input name="title" value="{{ old('title') }}" required
+                                    placeholder="SaaS Landing Pro"
                                         class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
                                 </div>
 
@@ -95,12 +95,14 @@
                                 <label class="text-label text-secondary">Description courte <span
                                         class="text-red-500">*</span></label>
                                 <input name="short_description" value="{{ old('short_description') }}" required
+                                placeholder="Un template moderne pour les SaaS"
                                     class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
                             </div>
 
                             <div class="flex flex-col gap-[6px]">
                                 <label class="text-label text-secondary">Description longue</label>
                                 <textarea name="long_description" rows="5"
+                                placeholder="Ce template est conçu pour les entreprises SaaS qui souhaitent présenter leurs produits de manière élégante et professionnelle. Avec une section héros accrocheuse, des avantages clairs et une galerie d'images, c'est le choix parfait pour attirer et convertir les visiteurs."
                                     class="w-full p-3 text-label text-secondary bg-dark rounded-[10px] focus:border-brand focus:border outline-none transition resize-none">{{ old('long_description') }}</textarea>
                             </div>
                         </div>

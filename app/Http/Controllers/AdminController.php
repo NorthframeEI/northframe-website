@@ -11,8 +11,4 @@ class AdminController extends Controller
         return view('admin.page.dashboard');
     }
 
-     public function createTemplate()
-    {
-        return view('admin.page.create-template');
-    }
 }
