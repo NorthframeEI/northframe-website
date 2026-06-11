@@ -103,11 +103,11 @@
 
                                 <option value="">Sélectionnez le type de projet ...</option>
 
-                                <option value="vitrine" {{ old('type_projet') === 'vitrine' ? 'selected' : '' }}>
+                                <option value="vitrine" {{ old('type_projet', request('projet')) === 'vitrine' ? 'selected' : '' }}>
                                     Site vitrine
                                 </option>
 
-                                <option value="landing" {{ old('type_projet') === 'landing' ? 'selected' : '' }}>
+                                <option value="landing" {{ old('type_projet', request('projet')) === 'landing' ? 'selected' : '' }}>
                                     Landing page
                                 </option>
                             </select>
@@ -130,11 +130,11 @@
 
                             <option value="">Choisir un template (optionnel)</option>
 
-                            <option value="template1" {{ old('template') === 'template1' ? 'selected' : '' }}>
+                            <option value="template1" {{ old('template', request('template')) === 'template1' ? 'selected' : '' }}>
                                 Template 1
                             </option>
 
-                            <option value="template2" {{ old('template') === 'template2' ? 'selected' : '' }}>
+                            <option value="template2" {{ old('template', request('template')) === 'template2' ? 'selected' : '' }}>
                                 Template 2
                             </option>
                         </select>
