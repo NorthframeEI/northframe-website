@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', 'Northframe - Contact')
 @section('content')
     <section id="introContact">
         <div class="max-w-[1242px] mx-auto px-6">

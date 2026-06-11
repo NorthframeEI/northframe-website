@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', 'Northframe - Accueil')
 @section('content')
     <!--Hero Section -->
     <section id="hero" class="relative overflow-hidden pt-10 lg:pt-16">

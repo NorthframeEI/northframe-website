@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Politique de confidentialité | Northframe')
+
+@section('title', 'Northframe - Politique de confidentialité')
 
 @section('content')
 <section class="max-w-4xl mx-auto px-6 py-32">

@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', 'Northframe -  Templates')
 @section('content')
     <section id="hero">
         <div class="max-w-[1242px] mx-auto px-6 py-20">

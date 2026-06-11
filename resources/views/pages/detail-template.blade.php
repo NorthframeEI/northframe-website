@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', 'Northframe - Détail du template')
 @section('content')
     <div
         class="sticky top-[80px] z-10 bg-surface/80 backdrop-blur border border-primary/15 px-2 py-2 w-fit rounded-[10px] mt-6 ml-1">
