@@ -95,7 +95,7 @@
             @foreach ($template->benefits as $benefit)
                 <div
                     class="w-full  rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px]  border border-primary/5">
-                    <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/' . $benefit->icon . '.svg') }}" alt="Site vitrine">
+                    <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/badge-check.svg') }}" alt="Site vitrine">
                     <div class="px-6 py-4 flex flex-col gap-[10px]">
                         <div class="text-card-title text-primary text-center ">{{ $benefit->title }}</div>
                         <p class="text-caption text-secondary text-center">
