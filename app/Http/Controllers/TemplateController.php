@@ -47,7 +47,7 @@ class TemplateController extends Controller
             }
 
             $template->benefits()->create([
-                'icon' => $benefit['icon'] ?? null,
+                'icon' => null,
                 'title' => $benefit['title'],
                 'description' => $benefit['description'] ?? null,
                 'position' => $index,
@@ -166,7 +166,7 @@ class TemplateController extends Controller
             }
 
             $template->benefits()->create([
-                'icon' => $benefit['icon'] ?? null,
+                'icon' => null,
                 'title' => $benefit['title'],
                 'description' => $benefit['description'] ?? null,
                 'position' => $index,

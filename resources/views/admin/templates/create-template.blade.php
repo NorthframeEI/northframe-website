@@ -193,9 +193,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-[16px]">
-                    <input name="benefits[${benefitIndex}][icon]" placeholder="Icon ex: rocket"
-                        class="block w-full h-[48px] rounded-[10px] bg-surface px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
-
+                 
                     <input name="benefits[${benefitIndex}][title]" placeholder="Titre"
                         class="block w-full h-[48px] rounded-[10px] bg-surface px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
                 </div>
