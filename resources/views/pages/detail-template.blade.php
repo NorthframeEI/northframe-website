@@ -49,7 +49,7 @@
 
                 <div class="w-full md:w-[500px]">
                     <img class="w-full h-auto aspect-video object-cover rounded-[12px]"
-                        src="{{ asset('storage/' . $template->thumbnail_url) }}" alt="{{ $template->title }}">
+                        src="{{ asset('storage/' . $template->hero_image_url) }}" alt="{{ $template->title }}">
                 </div>
 
             </div>

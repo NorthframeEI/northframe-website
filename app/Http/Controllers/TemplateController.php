@@ -6,6 +6,7 @@ use App\Models\Template;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class TemplateController extends Controller
 {
@@ -22,10 +23,24 @@ class TemplateController extends Controller
             'category' => ['nullable', 'string', 'max:255'],
             'short_description' => ['required', 'string'],
             'long_description' => ['nullable', 'string'],
-            'thumbnail_url' => ['nullable', 'string'],
-            'hero_image_url' => ['nullable', 'string'],
+            'thumbnail_url' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'hero_image_url' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'demo_url' => ['nullable', 'string'],
         ]);
+
+        $slug = Str::slug($validated['slug']);
+
+        $thumbnailPath = $request->file('thumbnail_url')->storeAs(
+            "templates/{$slug}",
+            'card.' . $request->file('thumbnail_url')->extension(),
+            'public'
+        );
+
+        $heroImagePath = $request->file('hero_image_url')->storeAs(
+            "templates/{$slug}",
+            'hero.' . $request->file('hero_image_url')->extension(),
+            'public'
+        );
 
         $template = Template::create([
             'title' => $validated['title'],
@@ -33,8 +48,8 @@ class TemplateController extends Controller
             'category' => $validated['category'] ?? null,
             'short_description' => $validated['short_description'],
             'long_description' => $validated['long_description'] ?? null,
-            'thumbnail_url' => $validated['thumbnail_url'] ?? null,
-            'hero_image_url' => $validated['hero_image_url'] ?? null,
+            'thumbnail_url' => $thumbnailPath,
+            'hero_image_url' => $heroImagePath,
             'demo_url' => $validated['demo_url'] ?? null,
             'is_featured' => $request->boolean('is_featured'),
             'is_active' => $request->boolean('is_active'),
@@ -60,15 +75,28 @@ class TemplateController extends Controller
                 continue;
             }
 
+            $file = $request->file("sections.$index.image_url");
+
+            $imageUrl = null;
+
+            if ($file) {
+
+                $imageUrl = $file->storeAs(
+                    "templates/{$slug}/sections",
+                    "{$index}-" . Str::slug($section['title']) . "." . $file->extension(),
+                    'public'
+                );
+            }
+
             $template->sections()->create([
                 'title' => $section['title'],
                 'description' => $section['description'] ?? null,
-                'image_url' => $section['image_url'] ?? null,
+                'image_url' => $imageUrl,
                 'position' => $index,
             ]);
         }
 
-       
+
 
         return redirect()
             ->route('create-template')
@@ -89,6 +117,9 @@ class TemplateController extends Controller
 
     public function deleteTemplate(Template $template)
     {
+        Storage::disk('public')
+            ->deleteDirectory("templates/{$template->slug}");
+
         $template->delete();
 
         return redirect()
@@ -122,13 +153,34 @@ class TemplateController extends Controller
             'category' => ['nullable', 'string', 'max:255'],
             'short_description' => ['required', 'string'],
             'long_description' => ['nullable', 'string'],
-            'thumbnail_url' => ['nullable', 'string'],
-            'hero_image_url' => ['nullable', 'string'],
+            'thumbnail_url' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'hero_image_url' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'demo_url' => ['nullable', 'string'],
 
             'benefits' => ['nullable', 'array'],
             'sections' => ['nullable', 'array'],
         ]);
+
+        $slug = Str::slug($validated['slug']);
+
+        $thumbnailPath = $template->thumbnail_url;
+        $heroImagePath = $template->hero_image_url;
+
+        if ($request->hasFile('thumbnail_url')) {
+            $thumbnailPath = $request->file('thumbnail_url')->storeAs(
+                "templates/{$slug}",
+                'card.' . $request->file('thumbnail')->extension(),
+                'public'
+            );
+        }
+
+        if ($request->hasFile('hero_image_url')) {
+            $heroImagePath = $request->file('hero_image_url')->storeAs(
+                "templates/{$slug}",
+                'hero.' . $request->file('hero_image_url')->extension(),
+                'public'
+            );
+        }
 
         $template->update([
             'title' => $validated['title'],
@@ -136,8 +188,8 @@ class TemplateController extends Controller
             'category' => $validated['category'] ?? null,
             'short_description' => $validated['short_description'],
             'long_description' => $validated['long_description'] ?? null,
-            'thumbnail_url' => $validated['thumbnail_url'] ?? null,
-            'hero_image_url' => $validated['hero_image_url'] ?? null,
+            'thumbnail_url' => $thumbnailPath,
+            'hero_image_url' => $heroImagePath,
             'demo_url' => $validated['demo_url'] ?? null,
             'is_featured' => $request->boolean('is_featured'),
             'is_active' => $request->boolean('is_active'),
@@ -163,16 +215,28 @@ class TemplateController extends Controller
             if (empty($section['title'])) {
                 continue;
             }
+            $file = $request->file("sections.$index.image_url");
+
+            $imageUrl = $section['existing_image'] ?? null;
+
+            if ($file) {
+
+                $imageUrl = $file->storeAs(
+                    "templates/{$slug}/sections",
+                    "{$index}-" . Str::slug($section['title']) . "." . $file->extension(),
+                    'public'
+                );
+            }
 
             $template->sections()->create([
                 'title' => $section['title'],
                 'description' => $section['description'] ?? null,
-                'image_url' => $section['image_url'] ?? null,
+                'image_url' => $imageUrl,
                 'position' => $index,
             ]);
         }
 
-        
+
 
         return redirect()
             ->route('list-templates')

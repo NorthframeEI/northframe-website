@@ -33,7 +33,7 @@
                     @endif
                 </div>
 
-                <form action="{{ route('store-template') }}" method="POST"
+                <form action="{{ route('store-template') }}" method="POST" enctype="multipart/form-data"
                     class="w-full max-w-[900px] rounded-[12px] bg-surface shadow-lg px-[20px] md:px-[34px] py-[24px] border border-primary/5">
                     @csrf
 
@@ -78,16 +78,14 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-[16px]">
                                 <div class="flex flex-col gap-[6px]">
                                     <label class="text-label text-secondary">Image card</label>
-                                    <input name="thumbnail_url" value="{{ old('thumbnail_url') }}"
-                                        placeholder="/images/templates/card.jpg"
-                                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+                                    <input name="thumbnail_url" type="file" accept="image/*"
+                                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
                                 </div>
 
                                 <div class="flex flex-col gap-[6px]">
                                     <label class="text-label text-secondary">Image hero</label>
-                                    <input name="hero_image_url" value="{{ old('hero_image_url') }}"
-                                        placeholder="/images/templates/hero.jpg"
-                                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+                                    <input name="hero_image_url" type="file" accept="image/*"
+                                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
                                 </div>
                             </div>
 
@@ -205,8 +203,8 @@
                     <input name="sections[${sectionIndex}][title]" placeholder="Titre section"
                         class="block w-full h-[48px] rounded-[10px] bg-surface px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
 
-                    <input name="sections[${sectionIndex}][image_url]" placeholder="/images/templates/section.jpg"
-                        class="block w-full h-[48px] rounded-[10px] bg-surface px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+                    <input name="sections[${sectionIndex}][image_url]" type="file" accept="image/*"
+                        class="block w-full h-[48px] rounded-[10px] bg-surface px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
                 </div>
 
                 <textarea name="sections[${sectionIndex}][description]" rows="3" placeholder="Description"

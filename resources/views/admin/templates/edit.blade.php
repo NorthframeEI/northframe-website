@@ -17,7 +17,7 @@
             </div>
 
             <div class="bg-surface border border-primary/5 rounded-[12px] p-6">
-                <form action="{{ route('update-template', $template) }}" method="POST"
+                <form action="{{ route('update-template', $template) }}" method="POST" enctype="multipart/form-data"
                     class="w-full rounded-[12px] bg-surface shadow-lg px-[20px] md:px-[34px] py-[24px] border border-primary/5">
                     @csrf
                     @method('PUT')
@@ -55,14 +55,25 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-[16px]">
                             <div class="flex flex-col gap-[6px]">
                                 <label class="text-label text-secondary">Image card</label>
-                                <input name="thumbnail_url" value="{{ old('thumbnail_url', $template->thumbnail_url) }}"
-                                    class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+                                @if ($template->thumbnail_url)
+                                    <img src="{{ asset('storage/' . $template->thumbnail_url) }}"
+                                        class="w-full h-[160px] object-cover rounded-[10px] mb-3"
+                                        alt="{{ $template->title }}">
+                                @endif
+
+                                <input name="thumbnail_url" type="file" accept="image/*"
+                                    class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition curdor-pointer">
                             </div>
 
                             <div class="flex flex-col gap-[6px]">
                                 <label class="text-label text-secondary">Image hero</label>
-                                <input name="hero_image_url" value="{{ old('hero_image_url', $template->hero_image_url) }}"
-                                    class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+                                @if ($template->hero_image_url)
+                                    <img src="{{ asset('storage/' . $template->hero_image_url) }}"
+                                        class="w-full h-[160px] object-cover rounded-[10px] mb-3"
+                                        alt="{{ $template->title }}">
+                                @endif
+                                <input name="hero_image_url" type="file" accept="image/*"
+                                    class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
                             </div>
                         </div>
 
@@ -100,7 +111,7 @@
                                         </div>
 
                                         <div class="grid grid-cols-1 md:grid-cols-1 gap-[16px]">
-                                            
+
                                             <input name="benefits[{{ $index }}][title]"
                                                 value="{{ $benefit->title }}" placeholder="Titre"
                                                 class="block w-full h-[48px] rounded-[10px] bg-surface px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
@@ -127,25 +138,60 @@
                                 @foreach ($template->sections as $index => $section)
                                     <div
                                         class="dynamic-block rounded-[12px] bg-dark p-4 border border-primary/5 flex flex-col gap-[16px]">
+
+                                        <input type="hidden" name="sections[{{ $index }}][existing_image]"
+                                            value="{{ $section->image_url }}">
+
                                         <div class="flex justify-between items-center">
-                                            <p class="text-body-bold text-primary">Section</p>
+                                            <p class="text-body-bold text-primary">
+                                                Section
+                                            </p>
+
                                             <button type="button" onclick="removeBlock(this)"
-                                                class="text-error text-label">Supprimer</button>
+                                                class="text-error text-label">
+                                                Supprimer
+                                            </button>
                                         </div>
 
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-[16px]">
-                                            <input name="sections[{{ $index }}][title]"
-                                                value="{{ $section->title }}" placeholder="Titre section"
-                                                class="block w-full h-[48px] rounded-[10px] bg-surface px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
 
-                                            <input name="sections[{{ $index }}][image_url]"
-                                                value="{{ $section->image_url }}"
-                                                placeholder="/images/templates/section.jpg"
-                                                class="block w-full h-[48px] rounded-[10px] bg-surface px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+                                            <div class="flex flex-col gap-[6px]">
+                                                <label class="text-label text-secondary">
+                                                    Titre section
+                                                </label>
+
+                                                <input name="sections[{{ $index }}][title]"
+                                                    value="{{ $section->title }}" placeholder="Titre section"
+                                                    class="block w-full h-[48px] rounded-[10px] bg-surface px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+                                            </div>
+
+                                            <div class="flex flex-col gap-[6px]">
+                                                <label class="text-label text-secondary">
+                                                    Image section
+                                                </label>
+
+                                                @if ($section->image_url)
+                                                    <img src="{{ asset('storage/' . $section->image_url) }}"
+                                                        class="w-full h-[160px] object-cover rounded-[10px]"
+                                                        alt="{{ $section->title }}">
+                                                @endif
+
+                                                <input name="sections[{{ $index }}][image_url]" type="file"
+                                                    accept="image/*"
+                                                    class="block w-full h-[48px] rounded-[10px] bg-surface px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
+                                            </div>
+
                                         </div>
 
-                                        <textarea name="sections[{{ $index }}][description]" rows="3" placeholder="Description"
-                                            class="w-full p-3 text-label text-secondary bg-surface rounded-[10px] focus:border-brand focus:border outline-none transition resize-none">{{ $section->description }}</textarea>
+                                        <div class="flex flex-col gap-[6px]">
+                                            <label class="text-label text-secondary">
+                                                Description
+                                            </label>
+
+                                            <textarea name="sections[{{ $index }}][description]" rows="3" placeholder="Description"
+                                                class="w-full p-3 text-label text-secondary bg-surface rounded-[10px] focus:border-brand focus:border outline-none transition resize-none">{{ $section->description }}</textarea>
+                                        </div>
+
                                     </div>
                                 @endforeach
                             </div>
@@ -218,8 +264,8 @@
                     <input name="sections[${sectionIndex}][title]" placeholder="Titre section"
                         class="block w-full h-[48px] rounded-[10px] bg-surface px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
 
-                    <input name="sections[${sectionIndex}][image_url]" placeholder="/images/templates/section.jpg"
-                        class="block w-full h-[48px] rounded-[10px] bg-surface px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+                    <input name="sections[${sectionIndex}][image_url]" type="file" accept="image/*"
+                        class="block w-full h-[48px] rounded-[10px] bg-surface px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
                 </div>
 
                 <textarea name="sections[${sectionIndex}][description]" rows="3" placeholder="Description"
@@ -229,6 +275,5 @@
 
             sectionIndex++;
         }
-
     </script>
 @endsection

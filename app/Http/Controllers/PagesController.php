@@ -35,7 +35,6 @@ class PagesController extends Controller
         $template = Template::with([
             'benefits',
             'sections',
-            'gallery'
         ])
             ->where('slug', $slug)
             ->firstOrFail();
