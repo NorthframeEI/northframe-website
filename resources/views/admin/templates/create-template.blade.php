@@ -133,19 +133,6 @@
                             <div id="sectionsWrapper" class="flex flex-col gap-[16px]"></div>
                         </div>
 
-                        {{-- Galerie --}}
-                        <div class="flex flex-col gap-[16px]">
-                            <div class="flex items-center justify-between gap-4">
-                                <h2 class="text-h3 text-primary">Galerie</h2>
-                                <button type="button" onclick="addGallery()"
-                                    class="text-primary text-button-inter bg-brand hover:bg-hover px-4 py-3 rounded-[12px] cursor-pointer">
-                                    + Ajouter
-                                </button>
-                            </div>
-
-                            <div id="galleryWrapper" class="flex flex-col gap-[16px]"></div>
-                        </div>
-
                         {{-- Options --}}
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-[16px]">
                             <label class="flex items-center gap-3 text-label text-secondary">
@@ -176,7 +163,6 @@
     <script>
         let benefitIndex = 0;
         let sectionIndex = 0;
-        let galleryIndex = 0;
 
         function removeBlock(button) {
             button.closest('.dynamic-block').remove();
@@ -192,8 +178,7 @@
                     <button type="button" onclick="removeBlock(this)" class="text-error text-label">Supprimer</button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-[16px]">
-                 
+                <div class="grid grid-cols-1 md:grid-cols-1 gap-[16px]">
                     <input name="benefits[${benefitIndex}][title]" placeholder="Titre"
                         class="block w-full h-[48px] rounded-[10px] bg-surface px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
                 </div>
@@ -232,31 +217,9 @@
             sectionIndex++;
         }
 
-        function addGallery() {
-            const wrapper = document.getElementById('galleryWrapper');
-
-            wrapper.insertAdjacentHTML('beforeend', `
-            <div class="dynamic-block rounded-[12px] bg-dark p-4 border border-primary/5 flex flex-col gap-[16px]">
-                <div class="flex justify-between items-center">
-                    <p class="text-body-bold text-primary">Image galerie</p>
-                    <button type="button" onclick="removeBlock(this)" class="text-error text-label">Supprimer</button>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-[16px]">
-                    <input name="gallery[${galleryIndex}][image_url]" placeholder="/images/templates/gallery.jpg"
-                        class="block w-full h-[48px] rounded-[10px] bg-surface px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
-
-                    <input name="gallery[${galleryIndex}][alt_text]" placeholder="Texte alternatif"
-                        class="block w-full h-[48px] rounded-[10px] bg-surface px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
-                </div>
-            </div>
-        `);
-
-            galleryIndex++;
-        }
+        
 
         addBenefit();
         addSection();
-        addGallery();
     </script>
 @endsection

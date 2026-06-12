@@ -68,18 +68,7 @@ class TemplateController extends Controller
             ]);
         }
 
-        foreach ($request->gallery ?? [] as $index => $image) {
-
-            if (empty($image['image_url'])) {
-                continue;
-            }
-
-            $template->gallery()->create([
-                'image_url' => $image['image_url'],
-                'alt_text' => $image['alt_text'] ?? null,
-                'position' => $index,
-            ]);
-        }
+       
 
         return redirect()
             ->route('create-template')
@@ -89,8 +78,8 @@ class TemplateController extends Controller
     public function listTemplates()
     {
         $templates = Template::with([
+            'benefits',
             'sections',
-            'gallery'
         ])
             ->latest()
             ->get();
@@ -112,7 +101,6 @@ class TemplateController extends Controller
         $template->load([
             'benefits',
             'sections',
-            'gallery'
         ]);
 
         return view(
@@ -140,7 +128,6 @@ class TemplateController extends Controller
 
             'benefits' => ['nullable', 'array'],
             'sections' => ['nullable', 'array'],
-            'gallery' => ['nullable', 'array'],
         ]);
 
         $template->update([
@@ -158,7 +145,6 @@ class TemplateController extends Controller
 
         $template->benefits()->delete();
         $template->sections()->delete();
-        $template->gallery()->delete();
 
         foreach ($request->input('benefits', []) as $index => $benefit) {
             if (empty($benefit['title'])) {
@@ -186,17 +172,7 @@ class TemplateController extends Controller
             ]);
         }
 
-        foreach ($request->input('gallery', []) as $index => $image) {
-            if (empty($image['image_url'])) {
-                continue;
-            }
-
-            $template->gallery()->create([
-                'image_url' => $image['image_url'],
-                'alt_text' => $image['alt_text'] ?? null,
-                'position' => $index,
-            ]);
-        }
+        
 
         return redirect()
             ->route('list-templates')

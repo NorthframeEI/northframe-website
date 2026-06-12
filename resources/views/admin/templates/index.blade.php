@@ -45,7 +45,7 @@
                             </th>
 
                             <th class="text-center text-label text-secondary px-6 py-5">
-                                Galerie
+                                Avantages
                             </th>
 
                             <th class="text-center text-label text-secondary px-6 py-5">
@@ -90,8 +90,7 @@
                                 </td>
 
                                 <td class="px-6 py-5 text-center text-primary">
-                                    {{ $template->gallery->count() }}
-                                </td>
+                                    {{ $template->benefits->count() }}
 
                                 <td class="px-6 py-5 text-center">
 
