@@ -37,7 +37,7 @@
                             Choisir ce template
                         </a>
 
-                        <a href="{{ route('contact') }}"
+                        <a href="{{ asset('storage/' . $template->html_path) }}" target="_blank"
                             class="border-2 border-secondary hover:border-hover text-primary hover:text-hover text-button rounded-[10px] flex items-center justify-center px-[12px] h-[48px transition-all duration-200 whitespace-nowrap">
                             Voir la démo
                         </a>
@@ -67,18 +67,26 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-[24px] px-[10px] py-[10px]">
             @foreach ($template->sections as $section)
                 <div
-                    class="w-full  rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px]  border border-primary/5">
-                    @if ($section->image_url && file_exists(public_path('storage/' . $section->image_url)))
-                        <img class="w-full h-[220px] object-cover rounded-[12px]"
-                            src="{{ asset('storage/' . $section->image_url) }}" alt="{{ $section->title }}">
+                    class="w-full rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5">
+
+                    @if ($section->image_url)
+                        <div
+                            class="w-full h-[260px] bg-dark rounded-[12px] flex items-center justify-center overflow-hidden">
+                            <img class="w-full h-full object-contain" src="{{ asset('storage/' . $section->image_url) }}"
+                                alt="{{ $section->title }}">
+                        </div>
                     @endif
+
                     <div class="px-6 py-4 flex flex-col gap-[10px]">
-                        <div class="text-card-title text-primary text-center ">{{ $section->title }}</div>
+                        <div class="text-card-title text-primary text-center">
+                            {{ $section->title }}
+                        </div>
+
                         <p class="text-caption text-secondary text-center">
                             {{ $section->description }}
                         </p>
-
                     </div>
+
                 </div>
             @endforeach
 
@@ -91,10 +99,10 @@
         <h3 class="text-h3 text-secondary text-center">
             Un template pensé pour aller vite et générer des résultats.
         </h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-[24px] px-[10px] py-[10px]">
+        <div class="flex flex-wrap justify-center gap-[24px] px-[10px] py-[10px]">
             @foreach ($template->benefits as $benefit)
                 <div
-                    class="w-full  rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px]  border border-primary/5">
+                    class="w-full md:w-[calc(33.333%-16px)] rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5">
                     <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/badge-check.svg') }}" alt="Site vitrine">
                     <div class="px-6 py-4 flex flex-col gap-[10px]">
                         <div class="text-card-title text-primary text-center ">{{ $benefit->title }}</div>

@@ -38,16 +38,10 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-[16px]">
+                        <div class="grid grid-cols-1 gap-[16px]">
                             <div class="flex flex-col gap-[6px]">
                                 <label class="text-label text-secondary">Catégorie</label>
                                 <input name="category" value="{{ old('category', $template->category) }}"
-                                    class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
-                            </div>
-
-                            <div class="flex flex-col gap-[6px]">
-                                <label class="text-label text-secondary">URL démo</label>
-                                <input name="demo_url" value="{{ old('demo_url', $template->demo_url) }}"
                                     class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
                             </div>
                         </div>
@@ -196,7 +190,63 @@
                                 @endforeach
                             </div>
                         </div>
+                        {{-- Files template --}}
+                        <div class="flex flex-col gap-[16px]">
 
+                            <h2 class="text-h3 text-primary">
+                                Fichiers source du template
+                            </h2>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-[16px]">
+
+                                <div class="flex flex-col gap-[6px]">
+                                    <label class="text-label text-secondary">
+                                        Fichier HTML
+                                    </label>
+
+                                    <input type="file" name="html_file" accept=".html,text/html"
+                                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
+
+                                    @error('html_file')
+                                        <p class="text-error text-small">
+                                            {{ $message }}
+                                        </p>
+                                    @enderror
+                                </div>
+
+                                <div class="flex flex-col gap-[6px]">
+                                    <label class="text-label text-secondary">
+                                        Fichier CSS
+                                    </label>
+
+                                    <input type="file" name="css_file" accept=".css,text/css"
+                                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
+
+                                    @error('css_file')
+                                        <p class="text-error text-small">
+                                            {{ $message }}
+                                        </p>
+                                    @enderror
+                                </div>
+
+                                <div class="flex flex-col gap-[6px]">
+                                    <label class="text-label text-secondary">
+                                        Fichier JS
+                                    </label>
+
+                                    <input type="file" name="js_file" accept=".js,text/javascript"
+                                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
+
+                                    @error('js_file')
+                                        <p class="text-error text-small">
+                                            {{ $message }}
+                                        </p>
+                                    @enderror
+                                </div>
+
+                            </div>
+
+                        </div>
                         <div class="flex items-center gap-6">
                             <label class="flex items-center gap-3 text-label text-secondary">
                                 <input type="checkbox" name="is_featured" value="1"

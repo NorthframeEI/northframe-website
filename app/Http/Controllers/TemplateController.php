@@ -25,7 +25,11 @@ class TemplateController extends Controller
             'long_description' => ['nullable', 'string'],
             'thumbnail_url' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'hero_image_url' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'html_path' => ['nullable', 'string'],
+            'css_path' => ['nullable', 'string'],
+            'js_path' => ['nullable', 'string'],
             'demo_url' => ['nullable', 'string'],
+
         ]);
 
         $slug = Str::slug($validated['slug']);
@@ -42,6 +46,24 @@ class TemplateController extends Controller
             'public'
         );
 
+        $htmlPath = $request->file('html_file')->storeAs(
+            "templates/{$slug}/source",
+            'index.html',
+            'public'
+        );
+
+        $cssPath = $request->file('css_file')->storeAs(
+            "templates/{$slug}/source",
+            'style.css',
+            'public'
+        );
+
+        $jsPath = $request->file('js_file')->storeAs(
+            "templates/{$slug}/source",
+            'script.js',
+            'public'
+        );
+
         $template = Template::create([
             'title' => $validated['title'],
             'slug' => Str::slug($validated['slug']),
@@ -53,7 +75,11 @@ class TemplateController extends Controller
             'demo_url' => $validated['demo_url'] ?? null,
             'is_featured' => $request->boolean('is_featured'),
             'is_active' => $request->boolean('is_active'),
+            'html_path' => $htmlPath,
+            'css_path' => $cssPath,
+            'js_path' => $jsPath,
         ]);
+
 
         foreach ($request->benefits ?? [] as $index => $benefit) {
 
@@ -156,7 +182,9 @@ class TemplateController extends Controller
             'thumbnail_url' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'hero_image_url' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'demo_url' => ['nullable', 'string'],
-
+            'html_path' => ['nullable', 'string'],
+            'css_path' => ['nullable', 'string'],
+            'js_path' => ['nullable', 'string'],
             'benefits' => ['nullable', 'array'],
             'sections' => ['nullable', 'array'],
         ]);
@@ -182,6 +210,46 @@ class TemplateController extends Controller
             );
         }
 
+        $htmlPath = $template->html_path;
+        $cssPath = $template->css_path;
+        $jsPath = $template->js_path;
+
+        if ($request->hasFile('html_file')) {
+            if ($template->html_path) {
+                Storage::disk('public')->delete($template->html_path);
+            }
+
+            $htmlPath = $request->file('html_file')->storeAs(
+                "templates/{$slug}/source",
+                'index.html',
+                'public'
+            );
+        }
+
+        if ($request->hasFile('css_file')) {
+            if ($template->css_path) {
+                Storage::disk('public')->delete($template->css_path);
+            }
+
+            $cssPath = $request->file('css_file')->storeAs(
+                "templates/{$slug}/source",
+                'style.css',
+                'public'
+            );
+        }
+
+        if ($request->hasFile('js_file')) {
+            if ($template->js_path) {
+                Storage::disk('public')->delete($template->js_path);
+            }
+
+            $jsPath = $request->file('js_file')->storeAs(
+                "templates/{$slug}/source",
+                'script.js',
+                'public'
+            );
+        }
+
         $template->update([
             'title' => $validated['title'],
             'slug' => Str::slug($validated['slug']),
@@ -191,6 +259,9 @@ class TemplateController extends Controller
             'thumbnail_url' => $thumbnailPath,
             'hero_image_url' => $heroImagePath,
             'demo_url' => $validated['demo_url'] ?? null,
+            'html_path' => $htmlPath,
+            'css_path' => $cssPath,
+            'js_path' => $jsPath,
             'is_featured' => $request->boolean('is_featured'),
             'is_active' => $request->boolean('is_active'),
         ]);

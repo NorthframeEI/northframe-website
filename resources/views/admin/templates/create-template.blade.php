@@ -48,7 +48,7 @@
                                     <label class="text-label text-secondary">Titre <span
                                             class="text-red-500">*</span></label>
                                     <input name="title" value="{{ old('title') }}" required
-                                    placeholder="SaaS Landing Pro"
+                                        placeholder="SaaS Landing Pro"
                                         class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
                                 </div>
 
@@ -61,16 +61,10 @@
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-[16px]">
+                            <div class="grid grid-cols-1 gap-[16px]">
                                 <div class="flex flex-col gap-[6px]">
                                     <label class="text-label text-secondary">Catégorie</label>
                                     <input name="category" value="{{ old('category') }}" placeholder="Landing page"
-                                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
-                                </div>
-
-                                <div class="flex flex-col gap-[6px]">
-                                    <label class="text-label text-secondary">URL démo</label>
-                                    <input name="demo_url" value="{{ old('demo_url') }}" placeholder="https://..."
                                         class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
                                 </div>
                             </div>
@@ -93,14 +87,14 @@
                                 <label class="text-label text-secondary">Description courte <span
                                         class="text-red-500">*</span></label>
                                 <input name="short_description" value="{{ old('short_description') }}" required
-                                placeholder="Un template moderne pour les SaaS"
+                                    placeholder="Un template moderne pour les SaaS"
                                     class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
                             </div>
 
                             <div class="flex flex-col gap-[6px]">
                                 <label class="text-label text-secondary">Description longue</label>
                                 <textarea name="long_description" rows="5"
-                                placeholder="Ce template est conçu pour les entreprises SaaS qui souhaitent présenter leurs produits de manière élégante et professionnelle. Avec une section héros accrocheuse, des avantages clairs et une galerie d'images, c'est le choix parfait pour attirer et convertir les visiteurs."
+                                    placeholder="Ce template est conçu pour les entreprises SaaS qui souhaitent présenter leurs produits de manière élégante et professionnelle. Avec une section héros accrocheuse, des avantages clairs et une galerie d'images, c'est le choix parfait pour attirer et convertir les visiteurs."
                                     class="w-full p-3 text-label text-secondary bg-dark rounded-[10px] focus:border-brand focus:border outline-none transition resize-none">{{ old('long_description') }}</textarea>
                             </div>
                         </div>
@@ -131,10 +125,68 @@
                             <div id="sectionsWrapper" class="flex flex-col gap-[16px]"></div>
                         </div>
 
+                        {{-- Files template --}}
+                        <div class="flex flex-col gap-[16px]">
+
+                            <h2 class="text-h3 text-primary">
+                                Fichiers source du template
+                            </h2>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-[16px]">
+
+                                <div class="flex flex-col gap-[6px]">
+                                    <label class="text-label text-secondary">
+                                        Fichier HTML
+                                    </label>
+
+                                    <input type="file" name="html_file" accept=".html,text/html"
+                                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
+
+                                    @error('html_file')
+                                        <p class="text-error text-small">
+                                            {{ $message }}
+                                        </p>
+                                    @enderror
+                                </div>
+
+                                <div class="flex flex-col gap-[6px]">
+                                    <label class="text-label text-secondary">
+                                        Fichier CSS
+                                    </label>
+
+                                    <input type="file" name="css_file" accept=".css,text/css"
+                                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
+
+                                    @error('css_file')
+                                        <p class="text-error text-small">
+                                            {{ $message }}
+                                        </p>
+                                    @enderror
+                                </div>
+
+                                <div class="flex flex-col gap-[6px]">
+                                    <label class="text-label text-secondary">
+                                        Fichier JS
+                                    </label>
+
+                                    <input type="file" name="js_file" accept=".js,text/javascript"
+                                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
+
+                                    @error('js_file')
+                                        <p class="text-error text-small">
+                                            {{ $message }}
+                                        </p>
+                                    @enderror
+                                </div>
+
+                            </div>
+
+                        </div>
                         {{-- Options --}}
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-[16px]">
                             <label class="flex items-center gap-3 text-label text-secondary">
-                                <input type="checkbox" name="is_featured" value="1" class="rounded border-transparent">
+                                <input type="checkbox" name="is_featured" value="1"
+                                    class="rounded border-transparent">
                                 Mettre en avant
                             </label>
 
@@ -215,7 +267,7 @@
             sectionIndex++;
         }
 
-        
+
 
         addBenefit();
         addSection();

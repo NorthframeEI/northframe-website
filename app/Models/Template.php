@@ -18,6 +18,9 @@ class Template extends Model
         'is_featured',
         'is_active',
         'position',
+        'html_path',
+        'css_path',
+        'js_path',
     ];
 
     public function benefits()
