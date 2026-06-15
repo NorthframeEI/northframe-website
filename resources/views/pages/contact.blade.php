@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Northframe - Contact')
+@section('title', 'Contact - Création de site web et landing page - Northframe')
+@section('meta_description',
+    'Contactez Northframe pour créer un site vitrine, une landing page ou renforcer votre
+    équipe avec un développeur web freelance.')
+@section('canonical', route('contact'))
 @section('content')
     <section id="introContact">
         <div class="max-w-[1242px] mx-auto px-6">
@@ -12,7 +16,8 @@
                     Parlons de votre projet
                 </h1>
                 <p class="text-navbar text-primary text-center">
-                    Répondez à quelques questions et je reviendrai vers vous rapidement pour discuter de votre besoin.
+                    Décrivez votre besoin pour un site vitrine, une landing page ou une mission freelance, et je reviendrai
+                    vers vous rapidement.
                 </p>
             </div>
 

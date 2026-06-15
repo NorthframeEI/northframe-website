@@ -3,13 +3,14 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TemplateController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [PagesController::class, 'home'])->name('home');
-Route::get('/template', [PagesController::class, 'template'])->name('template');
-Route::get('/detail-template', [PagesController::class, 'detailTemplate'])->name('detail-template');
+Route::get('/templates', [PagesController::class, 'template'])->name('template');
+Route::get('/templates/{slug}', [PagesController::class, 'detailTemplate'])->name('detail-template');
 
 
 //Legal Pages
@@ -22,6 +23,8 @@ Route::get('/cgv', [PagesController::class, 'cgv'])->name('cgv');
 Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::post('/contact', [ContactController::class, 'postForm'])
     ->name('contact.post');
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 //Admin
 Route::domain(config('app.admin_domain'))

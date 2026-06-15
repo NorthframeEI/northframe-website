@@ -24,20 +24,24 @@ class PagesController extends Controller
 
     public function template()
     {
+        $templates = Template::where('is_active', true)
+            ->orderBy('position')
+            ->orderBy('title')
+            ->get();
 
-        $templates = Template::where('is_active', true)->get();
         return view('pages.template', compact('templates'));
     }
 
-    public function detailTemplate()
+    public function detailTemplate(string $slug)
     {
-        $slug = request()->query('slug');
         $template = Template::with([
             'benefits',
             'sections',
         ])
+            ->where('is_active', true)
             ->where('slug', $slug)
             ->firstOrFail();
+
         return view('pages.detail-template', compact('template'));
     }
 

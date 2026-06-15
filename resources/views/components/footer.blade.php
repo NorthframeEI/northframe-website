@@ -46,6 +46,9 @@
                         <li><a href="{{ route('home') }}#portfolio" class="hover:opacity-70 transition">
                                 Portfolio
                             </a></li>
+                            <li><a href="{{ route('template') }}" class="hover:opacity-70 transition">
+                                Templates
+                            </a></li>
                         <li><a href="{{ route('home') }}#process" class="hover:opacity-70 transition">
                                 Process
                             </a></li>

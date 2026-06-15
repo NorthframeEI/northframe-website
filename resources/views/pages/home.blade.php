@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Northframe - Accueil')
+@section('title', 'Northframe - Création de sites web et landing pages')
+@section('meta_description', 'Développeur web freelance spécialisé dans la création de sites vitrines, landing pages et interfaces web modernes, rapides et pensées pour convertir.')
+
 @section('content')
     <!--Hero Section -->
     <section id="hero" class="relative overflow-hidden pt-10 lg:pt-16">
@@ -28,7 +30,7 @@
                         </a>
 
                         <a href="{{ route('contact') }}"
-                            class="border-2 border-secondary hover:border-hover text-primary hover:text-hover text-button rounded-[10px] flex items-center justify-center px-[12px] h-[48px transition-all duration-200 whitespace-nowrap">
+                            class="border-2 border-secondary hover:border-hover text-primary hover:text-hover text-button rounded-[10px] flex items-center justify-center px-[12px] h-[48px] transition-all duration-200 whitespace-nowrap">
                             Démarrer un projet
                         </a>
 
@@ -388,7 +390,7 @@
         </h3>
         <div class="flex gap-[10px] px-[10px] py-[10px] justify-center">
 
-            <a href="#"
+            <a href="{{ route('contact') }}"
                 class="bg-brand hover:bg-hover text-primary text-button rounded-[10px] flex items-center justify-center px-[12px] h-[48px] transition-all duration-200 whitespace-nowrap">
                 Démarrer un projet
             </a>

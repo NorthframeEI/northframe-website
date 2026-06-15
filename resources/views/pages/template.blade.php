@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Northframe -  Templates')
+@section('title', 'Templates de sites web et landing pages - Northframe')
+
+@section('meta_description',
+    'Découvrez des templates de sites web modernes, landing pages et pages événementielles
+    conçus pour convertir et être personnalisés rapidement.')
 @section('content')
     <section id="hero">
         <div class="max-w-[1242px] mx-auto px-6 py-20">
@@ -12,8 +16,8 @@
                 </h1>
 
                 <p class="text-regular text-secondary">
-                    Gagnez du temps avec des designs professionnels conçus pour convertir,
-                    entièrement personnalisables et adaptés à votre activité.
+                    Découvrez une sélection de templates de sites web, landing pages et pages événementielles conçus pour
+                    convertir, entièrement personnalisables et prêts à être déployés.
                 </p>
 
                 <ul class="flex flex-wrap gap-4 text-navbar text-muted">
@@ -37,7 +41,7 @@
                 <a href="{{ route('detail-template', ['slug' => $template->slug]) }}"
                     class="w-full rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] hover:shadow-hover hover:-translate-y-2 transition-all duration-300 ease-out hover:scale-[1.02] border border-primary/5 hover:border-hover">
                     <img class="w-full aspect-video object-cover" src="{{ asset('storage/' . $template->thumbnail_url) }}"
-                        alt="{{ $template->title }}">
+                        alt="Template {{ $template->title }} - Aperçu du template">
                     <div class="px-6 py-4 flex flex-col gap-[10px]">
                         <div class="text-card-title text-primary text-center ">{{ $template->title }}</div>
                         <p class="text-caption text-secondary text-center">
@@ -47,5 +51,11 @@
                 </a>
             @endforeach
         </div>
+    </section>
+
+    <section class="hidden">
+        <h2 class="text-h2 text-primary">Section à venir</h2>
+        <h2>Pourquoi utiliser un template ?</h2>
+        <p class="text-regular text-secondary">Contenu en cours de création, restez à l’écoute pour plus d’informations !</p>
     </section>
 @endsection
