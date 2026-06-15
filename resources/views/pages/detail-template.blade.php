@@ -64,10 +64,10 @@
         <h3 class="text-h3 text-secondary text-center">
             Découvrez les différentes sections du template
         </h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-[24px] px-[10px] py-[10px]">
+        <div class="flex flex-wrap justify-center gap-[24px] px-[10px] py-[10px]">
             @foreach ($template->sections as $section)
                 <div
-                    class="w-full rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5">
+                    class="w-full md:w-[calc(33.333%-16px)] rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5">
 
                     @if ($section->image_url)
                         <div
