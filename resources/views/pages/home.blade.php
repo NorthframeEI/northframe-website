@@ -103,7 +103,7 @@
                         </li>
                     </ul>
                     <p class="text-card-price text-primary text-center">
-                        À partir de 700€
+                        À partir de 400€
                     </p>
                     <div class="flex gap-[10px] px-[10px] py-[10px] justify-center">
                         <a href="{{ route('contact', ['projet' => 'landing']) }}"
