@@ -19,7 +19,7 @@
 
         $ogDescription = View::yieldContent('og_description', $metaDescription);
 
-        $ogImage = View::yieldContent('og_image', asset('images/og-default.jpg'));
+        $ogImage = View::yieldContent('og_image', asset('images/og-default.png'));
 
         $robots = View::yieldContent('robots', 'index, follow');
         $siteUrl = config('app.url');
