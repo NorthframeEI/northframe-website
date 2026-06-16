@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('title', 'Northframe - Création de sites web et landing pages')
-@section('meta_description', 'Développeur web freelance spécialisé dans la création de sites vitrines, landing pages et interfaces web modernes, rapides et pensées pour convertir.')
+@section('meta_description',
+    'Développeur web freelance spécialisé dans la création de sites vitrines, landing pages et
+    interfaces web modernes, rapides et pensées pour convertir.')
 
 @section('content')
     <!--Hero Section -->
@@ -77,7 +79,13 @@
         </h2>
         <div class="flex flex-wrap justify-center gap-[10px]  pt-3">
             <div
-                class="w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5">
+                class="relative w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5">
+                
+
+                <div
+                    class="absolute top-4 -right-4 z-20 bg-brand/70 backdrop-blur-sm text-primary text-small px-5 py-2 rounded-full shadow-lg whitespace-nowrap">
+                    5 à 7 jours
+                </div>
                 <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/rocket.svg') }}" alt="Landing page">
                 <div class="px-6 py-4 flex flex-col gap-[10px]">
                     <div class="text-card-title text-primary text-center ">Landing page</div>
@@ -119,7 +127,12 @@
                 </div>
             </div>
             <div
-                class="w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5">
+                class="relative w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5">
+                
+
+                <div class="absolute top-4 -right-4 z-20 bg-brand/70 backdrop-blur-sm text-primary text-small px-5 py-2 rounded-full shadow-lg whitespace-nowrap">
+                    10 à 15 jours
+                </div>
                 <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/globe.svg') }}" alt="Site vitrine">
                 <div class="px-6 py-4 flex flex-col gap-[10px]">
                     <div class="text-card-title text-primary text-center ">Site vitrine professionnel</div>
@@ -156,7 +169,12 @@
             </div>
 
             <div
-                class="w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5">
+                class="relative w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5">
+                
+
+                <div class="absolute top-4 -right-4 z-20 bg-brand/70 backdrop-blur-sm text-primary text-small px-5 py-2 rounded-full shadow-lg whitespace-nowrap">
+                    Support 24h
+                </div>
                 <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/cog.svg') }}" alt="Site vitrine">
                 <div class="px-6 py-4 flex flex-col gap-[10px]">
                     <div class="text-card-title text-primary text-center ">Maintenance</div>
@@ -188,7 +206,12 @@
                 </div>
             </div>
             <div
-                class="w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5">
+                class="relative w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5">
+                
+
+                <div class="absolute top-4 -right-4 z-20 bg-brand/70 backdrop-blur-sm text-primary text-small px-5 py-2 rounded-full shadow-lg whitespace-nowrap">
+                    Selon planning
+                </div>
                 <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/users-round.svg') }}" alt="Site vitrine">
                 <div class="px-6 py-4 flex flex-col gap-[10px]">
                     <div class="text-card-title text-primary text-center ">Renfort technique / Freelance</div>

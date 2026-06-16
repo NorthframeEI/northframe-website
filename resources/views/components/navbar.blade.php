@@ -18,9 +18,9 @@
             <span id="nav-pill"></span>
             <a href="{{ route('home') }}#services" class="nav-item">Services</a>
             <a href="{{ route('home') }}#portfolio" class="nav-item">Portfolio</a>
-            <a href="{{ route('template') }}" class="nav-item">Templates</a>
             <a href="{{ route('home') }}#process" class="nav-item">Process</a>
             <a href="{{ route('home') }}#ctaFinal" class="nav-item">Contact</a>
+            <a href="{{ route('template') }}" class="nav-item">Templates</a>
         </div>
 
         <!-- CTA + BURGER -->
@@ -51,9 +51,9 @@
 
             <a href="{{ route('home') }}#services" class="text-primary">Services</a>
             <a href="{{ route('home') }}#portfolio" class="text-primary">Portfolio</a>
-            <a href="{{ route('template') }}" class="nav-item">Templates</a>
             <a href="{{ route('home') }}#process" class="text-primary">Process</a>
             <a href="{{ route('home') }}#ctaFinal" class="text-primary">Contact</a>
+            <a href="{{ route('template') }}" class="nav-item">Templates</a>
 
             <a href="{{ route('contact') }}"
                 class="self-center text-brand outline-solid rounded-[10px] outline-brand text-sm px-3 py-2 h-[38px] mt-4">

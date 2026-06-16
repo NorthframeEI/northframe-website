@@ -36,10 +36,13 @@
         </div>
     </section>
     <section id="templates">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-[24px] px-[10px] py-[10px]">
+        <div class="flex flex-wrap justify-center gap-[24px] px-[10px] py-[10px]">
+            @if(isset($templates) && count($templates) === 0)
+                <p class="text-regular text-secondary">Aucun template disponible pour le moment. Revenez plus tard !</p>
+            @endif
             @foreach ($templates as $template)
                 <a href="{{ route('detail-template', ['slug' => $template->slug]) }}"
-                    class="w-full rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] hover:shadow-hover hover:-translate-y-2 transition-all duration-300 ease-out hover:scale-[1.02] border border-primary/5 hover:border-hover">
+                    class="w-full max-w-md rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] hover:shadow-hover hover:-translate-y-2 transition-all duration-300 ease-out hover:scale-[1.02] border border-primary/5 hover:border-hover">
                     <img class="w-full aspect-video object-cover" src="{{ asset('storage/' . $template->thumbnail_url) }}"
                         alt="Template {{ $template->title }} - Aperçu du template">
                     <div class="px-6 py-4 flex flex-col gap-[10px]">

@@ -80,6 +80,9 @@ export default function initNavPill() {
     function onScroll() {
         if (isClickNavigation) return;
 
+        // Empêche le clearNav sur /templates
+        if (window.location.pathname !== "/") return;
+
         const activeSection = getActiveSection();
         if (!activeSection) return;
 
@@ -136,9 +139,36 @@ export default function initNavPill() {
     // =========================
     // 🚀 INIT
     // =========================
-    const initial = document.querySelector(".nav-active");
+    const currentPath = window.location.pathname;
 
-    if (initial) {
-        movePill(initial);
+    const pageLink = Array.from(links).find((link) => {
+        const href = link.getAttribute("href");
+
+        if (!href) return false;
+
+        try {
+            const url = new URL(href, window.location.origin);
+
+            // Page réelle : /templates, /contact, etc.
+            if (!url.hash && url.pathname === currentPath) {
+                return true;
+            }
+
+            return false;
+        } catch {
+            return false;
+        }
+    });
+
+    if (pageLink) {
+        setActive(pageLink);
+    } else {
+        const initial = document.querySelector(".nav-active");
+
+        if (initial) {
+            movePill(initial);
+        } else {
+            onScroll();
+        }
     }
 }

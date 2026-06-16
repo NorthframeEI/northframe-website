@@ -33,6 +33,7 @@
                         <li>Site Vitrine</li>
                         <li>Landing Page</li>
                         <li>Maintenance</li>
+                        <li>Renfort technique / Freelance</li>
                     </ul>
                 </div>
                 <div class="flex flex-col gap-2">
@@ -46,14 +47,14 @@
                         <li><a href="{{ route('home') }}#portfolio" class="hover:opacity-70 transition">
                                 Portfolio
                             </a></li>
-                            <li><a href="{{ route('template') }}" class="hover:opacity-70 transition">
-                                Templates
-                            </a></li>
                         <li><a href="{{ route('home') }}#process" class="hover:opacity-70 transition">
                                 Process
                             </a></li>
                         <li><a href="{{ route('home') }}#ctaFinal" class="hover:opacity-70 transition">
                                 Contact
+                            </a></li>
+                            <li><a href="{{ route('template') }}" class="hover:opacity-70 transition">
+                                Templates
                             </a></li>
                     </ul>
                 </div>

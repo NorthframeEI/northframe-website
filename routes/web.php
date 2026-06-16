@@ -50,3 +50,8 @@ Route::domain(config('app.admin_domain'))
         Route::put('/templates/{template}', [TemplateController::class, 'updateTemplate'])
             ->name('update-template');
     });
+
+    //maintenance preview route for local environment
+if (app()->environment('local')) {
+    Route::view('/maintenance-preview', 'errors.503');
+}
