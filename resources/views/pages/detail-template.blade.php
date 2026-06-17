@@ -29,7 +29,7 @@
                 <!-- LEFT -->
                 <div>
                     <h3 class="text-primary text-h3-hero">
-                        {{ $template->category }}
+                        Landing page - {{ $template->category->name }}
                     </h3>
                     <h1 class="text-primary text-h1-hero">
                         {{ $template->title }}

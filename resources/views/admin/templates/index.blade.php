@@ -82,7 +82,7 @@
                                 </td>
 
                                 <td class="px-6 py-5 text-secondary text-body">
-                                    {{ $template->category ?? '-' }}
+                                    {{ $template->category->name ?? '-' }}
                                 </td>
 
                                 <td class="px-6 py-5 text-center text-primary">

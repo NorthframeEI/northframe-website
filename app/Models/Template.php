@@ -9,12 +9,11 @@ class Template extends Model
     protected $fillable = [
         'slug',
         'title',
-        'category',
+        'template_category_id',
         'short_description',
         'long_description',
         'thumbnail_url',
         'hero_image_url',
-        'demo_url',
         'is_featured',
         'is_active',
         'position',
@@ -35,9 +34,9 @@ class Template extends Model
             ->orderBy('position');
     }
 
-    public function gallery()
-    {
-        return $this->hasMany(TemplateGallery::class)
-            ->orderBy('position');
-    }
+    public function category()
+{
+    return $this->belongsTo(TemplatesCategories::class, 'template_category_id');
+}
+
 }

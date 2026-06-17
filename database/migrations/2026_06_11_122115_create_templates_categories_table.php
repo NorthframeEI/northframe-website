@@ -11,18 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('template_galleries', function (Blueprint $table) {
+        Schema::create('templates_categories', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('template_id')
-                ->constrained()
-                ->cascadeOnDelete();
-
-            $table->string('image_url');
-            $table->string('alt_text')->nullable();
-
-            $table->unsignedInteger('position')->default(0);
-
+            $table->string('name');
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }
@@ -32,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('template_galleries');
+        Schema::dropIfExists('templates_categories');
     }
 };

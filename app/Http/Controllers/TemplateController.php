@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Template;
+use App\Models\TemplatesCategories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -12,7 +13,9 @@ class TemplateController extends Controller
 {
     public function createTemplate()
     {
-        return view('admin.templates.create-template');
+                $categories = TemplatesCategories::all();
+
+        return view('admin.templates.create-template', compact('categories'));
     }
 
     public function storeTemplate(Request $request)
@@ -20,7 +23,7 @@ class TemplateController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'unique:templates,slug'],
-            'category' => ['nullable', 'string', 'max:255'],
+            'template_category_id' => ['nullable', 'exists:templates_categories,id'],
             'short_description' => ['required', 'string'],
             'long_description' => ['nullable', 'string'],
             'thumbnail_url' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
@@ -28,7 +31,6 @@ class TemplateController extends Controller
             'html_path' => ['nullable', 'string'],
             'css_path' => ['nullable', 'string'],
             'js_path' => ['nullable', 'string'],
-            'demo_url' => ['nullable', 'string'],
 
         ]);
 
@@ -46,6 +48,7 @@ class TemplateController extends Controller
             'public'
         );
 
+        
         $htmlPath = $request->file('html_file')->storeAs(
             "templates/{$slug}/source",
             'index.html',
@@ -67,12 +70,11 @@ class TemplateController extends Controller
         $template = Template::create([
             'title' => $validated['title'],
             'slug' => Str::slug($validated['slug']),
-            'category' => $validated['category'] ?? null,
+            'template_category_id' => $validated['template_category_id'] ?? null,
             'short_description' => $validated['short_description'],
             'long_description' => $validated['long_description'] ?? null,
             'thumbnail_url' => $thumbnailPath,
             'hero_image_url' => $heroImagePath,
-            'demo_url' => $validated['demo_url'] ?? null,
             'is_featured' => $request->boolean('is_featured'),
             'is_active' => $request->boolean('is_active'),
             'html_path' => $htmlPath,
@@ -134,6 +136,7 @@ class TemplateController extends Controller
         $templates = Template::with([
             'benefits',
             'sections',
+            'category'
         ])
             ->latest()
             ->get();
@@ -160,9 +163,11 @@ class TemplateController extends Controller
             'sections',
         ]);
 
+        $categories = TemplatesCategories::all();
+
         return view(
             'admin.templates.edit',
-            compact('template')
+            compact('template', 'categories')
         );
     }
 
@@ -176,12 +181,11 @@ class TemplateController extends Controller
                 'max:255',
                 Rule::unique('templates', 'slug')->ignore($template->id),
             ],
-            'category' => ['nullable', 'string', 'max:255'],
+            'template_category_id' => ['nullable', 'exists:templates_categories,id'],
             'short_description' => ['required', 'string'],
             'long_description' => ['nullable', 'string'],
             'thumbnail_url' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'hero_image_url' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-            'demo_url' => ['nullable', 'string'],
             'html_path' => ['nullable', 'string'],
             'css_path' => ['nullable', 'string'],
             'js_path' => ['nullable', 'string'],
@@ -253,12 +257,11 @@ class TemplateController extends Controller
         $template->update([
             'title' => $validated['title'],
             'slug' => Str::slug($validated['slug']),
-            'category' => $validated['category'] ?? null,
+            'template_category_id' => $validated['template_category_id'] ?? null,
             'short_description' => $validated['short_description'],
             'long_description' => $validated['long_description'] ?? null,
             'thumbnail_url' => $thumbnailPath,
             'hero_image_url' => $heroImagePath,
-            'demo_url' => $validated['demo_url'] ?? null,
             'html_path' => $htmlPath,
             'css_path' => $cssPath,
             'js_path' => $jsPath,

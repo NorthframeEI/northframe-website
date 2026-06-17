@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-      Schema::create('templates', function (Blueprint $table) {
+        Schema::create('templates', function (Blueprint $table) {
             $table->id();
 
             $table->string('slug')->unique();
             $table->string('title');
-            $table->string('category')->nullable();
+            $table->foreignId('template_category_id')
+                ->constrained('templates_categories')
+                ->cascadeOnDelete();
 
             $table->string('short_description');
             $table->text('long_description')->nullable();
@@ -24,7 +26,6 @@ return new class extends Migration
             $table->string('thumbnail_url')->nullable();
             $table->string('hero_image_url')->nullable();
 
-            $table->string('demo_url')->nullable();
 
             $table->boolean('is_featured')->default(false);
             $table->boolean('is_active')->default(true);

@@ -64,8 +64,17 @@
                             <div class="grid grid-cols-1 gap-[16px]">
                                 <div class="flex flex-col gap-[6px]">
                                     <label class="text-label text-secondary">Catégorie</label>
-                                    <input name="category" value="{{ old('category') }}" placeholder="Landing page"
+
+                                    <select name="template_category_id"
                                         class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+                                        <option value="">Sélectionner une catégorie</option>
+
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}" @selected(old('template_category_id') == $category->id)>
+                                                {{ $category->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
