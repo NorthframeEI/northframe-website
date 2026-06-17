@@ -7,7 +7,7 @@
             <!--Column logo-->
             <div class="flex flex-col gap-4 items-center">
                 <div class="flex items-center gap-3">
-                    <img src="{{ asset('logos/logo_footer.svg') }}" alt="Northframe logo" class="h-[100px] w-[100px]">
+                    <img src="{{ asset('logos/logo_cadre.svg') }}" alt="Northframe logo" class="h-[200px]">
                 </div>
                 <h3 class="text-h3-footer text-primary max-w-md text-center">Développeur web freelance spécialisé en
                     sites modernes et

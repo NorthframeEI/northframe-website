@@ -1,6 +1,6 @@
 <aside
     class="bg-surface text-primary fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0">
-    <div class="h-full px-3 py-4 overflow-y-auto bg-neutral-primary-soft border-e border-default">
+    <div class="h-full px-3 py-4 bg-neutral-primary-soft border-e border-default flex flex-col">
         <ul class="space-y-2 font-medium">
             <li>
                 <a href="{{ route('dashboard') }}"
@@ -58,7 +58,18 @@
                     Services
                 </span>
             </li>
-            
+
         </ul>
+        <form method="POST" action="{{ route('logout') }}" class="mt-auto">
+            @csrf
+
+            <button type="submit"
+                class="w-full flex items-center px-2 py-1.5 text-body rounded-base hover:bg-secondary hover:text-fg-brand group cursor-pointer">
+                <img class="shrink-0 w-5 h-5 transition duration-75" src="{{ asset('icon/log-out.svg') }}"
+                    alt="Logout Icon">
+
+                <span class="ms-3">Déconnexion</span>
+            </button>
+        </form>
     </div>
 </aside>

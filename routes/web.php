@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\SitemapController;
@@ -29,29 +30,26 @@ Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap')
 //Admin
 Route::domain(config('app.admin_domain'))
     ->group(function () {
-        Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+        Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-        //Templates
+        Route::middleware('auth')->group(function () {
+            Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
 
-        //create template
-        Route::get('/create-template', [TemplateController::class, 'createTemplate'])->name('create-template');
-        Route::post('/create-template', [TemplateController::class, 'storeTemplate'])
-            ->name('store-template');
+            Route::get('/create-template', [TemplateController::class, 'createTemplate'])->name('create-template');
+            Route::post('/create-template', [TemplateController::class, 'storeTemplate'])->name('store-template');
 
-        //list templates
-        Route::get('/templates', [TemplateController::class, 'listTemplates'])->name('list-templates');
+            Route::get('/templates', [TemplateController::class, 'listTemplates'])->name('list-templates');
 
-        //delete route
-        Route::delete('/templates/{template}', [TemplateController::class, 'deleteTemplate'])
-            ->name('delete-template');
-        //update route
-        Route::get('/templates/{template}/edit', [TemplateController::class, 'editTemplate'])
-            ->name('edit-template');
-        Route::put('/templates/{template}', [TemplateController::class, 'updateTemplate'])
-            ->name('update-template');
+            Route::delete('/templates/{template}', [TemplateController::class, 'deleteTemplate'])->name('delete-template');
+
+            Route::get('/templates/{template}/edit', [TemplateController::class, 'editTemplate'])->name('edit-template');
+            Route::put('/templates/{template}', [TemplateController::class, 'updateTemplate'])->name('update-template');
+        });
     });
 
-    //maintenance preview route for local environment
+//maintenance preview route for local environment
 if (app()->environment('local')) {
     Route::view('/maintenance-preview', 'errors.503');
 }
