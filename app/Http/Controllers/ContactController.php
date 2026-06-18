@@ -32,7 +32,7 @@ class ContactController extends Controller
         if ($data['type_projet'] !== 'landing') {
             $data['template'] = null;
         }
-        Mail::to('contact@northframe.test')
+        Mail::to(config('mail.contact_address'))
             ->send(new ContactMail(
                 $data['nom'],
                 $data['email'],
