@@ -231,7 +231,7 @@
                         <li>Collaboration avec vos équipes existantes</li>
                     </ul>
                     <p class="text-card-price text-primary text-center">
-                        À partir de 300€/jour
+                        À partir de 200€/jour
                     </p>
                     <div class="flex gap-[10px] px-[10px] py-[10px]">
                         <a href="{{ route('contact', ['projet' => 'freelance']) }}"
