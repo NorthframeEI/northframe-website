@@ -201,7 +201,7 @@ class TemplateController extends Controller
         if ($request->hasFile('thumbnail_url')) {
             $thumbnailPath = $request->file('thumbnail_url')->storeAs(
                 "templates/{$slug}",
-                'card.' . $request->file('thumbnail')->extension(),
+                'card.' . $request->file('thumbnail_url')->extension(),
                 'public'
             );
         }
