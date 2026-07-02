@@ -1,6 +1,8 @@
 <div align="center">
-
-# NorthFrame
+<p align="center">
+  <img src="preview.png" alt="NorthFrame Preview" width="100%">
+</p>
+# Northframe
 
 Modern websites built for businesses, freelancers and entrepreneurs.
 
@@ -12,7 +14,7 @@ Modern websites built for businesses, freelancers and entrepreneurs.
 
 ## About
 
-NorthFrame is my freelance web development portfolio and business website.
+Northframe is my freelance web development portfolio and business website.
 
 It showcases my services, projects and approach to building modern, responsive and SEO-friendly websites.
 
@@ -39,7 +41,7 @@ The goal is simple: create fast, elegant and conversion-focused websites that he
 ## Installation
 
 ```bash
-git clone https://github.com/a-pade/northframe.git
+git clone https://github.com/NorthframeEI/northframe-website .
 
 cd northframe
 
