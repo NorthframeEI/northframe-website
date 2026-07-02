@@ -18,7 +18,7 @@
                         class="hover:opacity-70 transition" target="_blank">
                         <img src="{{ asset('icon/linkedin.svg') }}" alt="">
                     </a>
-                    <a href="https://www.github.com/apade17" class="hover:opacity-70 transition" target="_blank">
+                    <a href="https://www.github.com/a-pade" class="hover:opacity-70 transition" target="_blank">
                         <img src="{{ asset('icon/github.svg') }}" alt="">
                     </a>
                 </div>
