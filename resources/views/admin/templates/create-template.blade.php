@@ -80,13 +80,15 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-[16px]">
                                 <div class="flex flex-col gap-[6px]">
-                                    <label class="text-label text-secondary">Image card</label>
+                                    <label class="text-label text-secondary">Image card <span
+                                            class="text-red-500">*</span></label>
                                     <input name="thumbnail_url" type="file" accept="image/*"
                                         class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
                                 </div>
 
                                 <div class="flex flex-col gap-[6px]">
-                                    <label class="text-label text-secondary">Image hero</label>
+                                    <label class="text-label text-secondary">Image hero <span
+                                            class="text-red-500">*</span></label>
                                     <input name="hero_image_url" type="file" accept="image/*"
                                         class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
                                 </div>
@@ -145,7 +147,8 @@
 
                                 <div class="flex flex-col gap-[6px]">
                                     <label class="text-label text-secondary">
-                                        Fichier HTML
+                                        Fichier HTML <span
+                                            class="text-red-500">*</span>
                                     </label>
 
                                     <input type="file" name="html_file" accept=".html,text/html"
@@ -160,7 +163,8 @@
 
                                 <div class="flex flex-col gap-[6px]">
                                     <label class="text-label text-secondary">
-                                        Fichier CSS
+                                        Fichier CSS <span
+                                            class="text-red-500">*</span>
                                     </label>
 
                                     <input type="file" name="css_file" accept=".css,text/css"
@@ -175,7 +179,8 @@
 
                                 <div class="flex flex-col gap-[6px]">
                                     <label class="text-label text-secondary">
-                                        Fichier JS
+                                        Fichier JS <span
+                                            class="text-red-500">*</span>
                                     </label>
 
                                     <input type="file" name="js_file" accept=".js,text/javascript"

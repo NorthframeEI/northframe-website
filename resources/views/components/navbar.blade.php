@@ -19,6 +19,7 @@
             <a href="{{ route('home') }}#services" class="nav-item">Services</a>
             <a href="{{ route('home') }}#portfolio" class="nav-item">Portfolio</a>
             <a href="{{ route('home') }}#process" class="nav-item">Process</a>
+            <a href="{{ route('home') }}#questions-frequentes" class="nav-item">Questions fréquentes</a>
             <a href="{{ route('home') }}#ctaFinal" class="nav-item">Contact</a>
             <a href="{{ route('template') }}" class="nav-item">Templates</a>
         </div>
@@ -52,6 +53,7 @@
             <a href="{{ route('home') }}#services" class="text-primary">Services</a>
             <a href="{{ route('home') }}#portfolio" class="text-primary">Portfolio</a>
             <a href="{{ route('home') }}#process" class="text-primary">Process</a>
+            <a href="{{ route('home') }}#questions-frequentes" class="text-primary">Questions fréquentes</a>
             <a href="{{ route('home') }}#ctaFinal" class="text-primary">Contact</a>
             <a href="{{ route('template') }}" class="nav-item">Templates</a>
 

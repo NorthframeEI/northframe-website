@@ -50,6 +50,10 @@
                         <li><a href="{{ route('home') }}#process" class="hover:opacity-70 transition">
                                 Process
                             </a></li>
+
+                        <li><a href="{{ route('home') }}#questions-frequentes" class="hover:opacity-70 transition">
+                                Questions fréquentes
+                            </a></li>
                         <li><a href="{{ route('home') }}#ctaFinal" class="hover:opacity-70 transition">
                                 Contact
                             </a></li>

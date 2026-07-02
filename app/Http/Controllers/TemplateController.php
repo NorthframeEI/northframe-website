@@ -28,9 +28,9 @@ class TemplateController extends Controller
             'long_description' => ['nullable', 'string'],
             'thumbnail_url' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'hero_image_url' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-            'html_path' => ['nullable', 'string'],
-            'css_path' => ['nullable', 'string'],
-            'js_path' => ['nullable', 'string'],
+            'html_path' => ['required', 'string'],
+            'css_path' => ['required', 'string'],
+            'js_path' => ['required', 'string'],
 
         ]);
 
@@ -186,9 +186,9 @@ class TemplateController extends Controller
             'long_description' => ['nullable', 'string'],
             'thumbnail_url' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'hero_image_url' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-            'html_path' => ['nullable', 'string'],
-            'css_path' => ['nullable', 'string'],
-            'js_path' => ['nullable', 'string'],
+            'html_path' => ['required', 'string'],
+            'css_path' => ['required', 'string'],
+            'js_path' => ['required', 'string'],
             'benefits' => ['nullable', 'array'],
             'sections' => ['nullable', 'array'],
         ]);
