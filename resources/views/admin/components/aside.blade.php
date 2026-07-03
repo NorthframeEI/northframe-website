@@ -1,75 +1,86 @@
-<aside
-    class="bg-surface text-primary fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0">
-    <div class="h-full px-3 py-4 bg-neutral-primary-soft border-e border-default flex flex-col">
-        <ul class="space-y-2 font-medium">
-            <li>
-                <a href="{{ route('dashboard') }}"
-                    class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
-                    <svg class="w-5 h-5 transition duration-75 group-hover:text-fg-brand" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                        viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M10 6.025A7.5 7.5 0 1 0 17.975 14H10V6.025Z" />
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13.5 3c-.169 0-.334.014-.5.025V11h7.975c.011-.166.025-.331.025-.5A7.5 7.5 0 0 0 13.5 3Z" />
-                    </svg>
-                    <span class="ms-3">Dashboard</span>
-                </a>
-            </li>
-            <li class="mt-6 mb-2">
-                <span class="px-2 text-xs font-semibold uppercase tracking-wider text-fg-muted">
-                    Templates
-                </span>
-            </li>
-
-            <li>
-                <a href="{{ route('list-templates') }}"
-                    class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
-
-                    <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 5h16v14H4V5Z" />
-                    </svg>
-
-                    <span class="ms-3">
-                        Liste
-                    </span>
-                </a>
-            </li>
-
-            <li>
-                <a href="{{ route('create-template') }}"
-                    class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-fg-brand group">
-
-                    <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-fg-brand"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 5v14m-7-7h14" />
-                    </svg>
-
-                    <span class="ms-3">
-                        Ajouter
-                    </span>
-                </a>
-            </li>
-            <li class="mt-6 mb-2">
-                <span class="px-2 text-xs font-semibold uppercase tracking-wider text-fg-muted">
-                    Services
-                </span>
-            </li>
-
-        </ul>
-        <form method="POST" action="{{ route('logout') }}" class="mt-auto">
-            @csrf
-
-            <button type="submit"
-                class="w-full flex items-center px-2 py-1.5 text-body rounded-base hover:bg-secondary hover:text-fg-brand group cursor-pointer">
-                <img class="shrink-0 w-5 h-5 transition duration-75" src="{{ asset('icon/log-out.svg') }}"
-                    alt="Logout Icon">
-
-                <span class="ms-3">Déconnexion</span>
+<div class="fixed top-0 left-0 z-40 flex h-screen">
+    {{-- Sidebar icônes --}}
+    <aside class="w-16 bg-surface border-e border-default z-20">
+        <div class="flex h-full flex-col items-center py-4 gap-2">
+            <a href="{{ route('dashboard') }}" data-menu="dashboard"
+                class="menu-btn flex h-10 w-10 items-center justify-center rounded-base hover:bg-brand/40 cursor-pointer">
+                <img src="{{ asset('icon/admin/dashboard.svg') }}" class="w-5 h-5" alt="">
+            </a>
+            <hr class="my-4 w-10 border-default border-secondary opacity-80">
+            <button data-menu="templates"
+                class="menu-btn h-10 w-10 flex items-center justify-center rounded-base hover:bg-brand/40 cursor-pointer">
+                <img src="{{ asset('icon/admin/templates.svg') }}" class="w-5 h-5" alt="">
             </button>
-        </form>
-    </div>
-</aside>
+
+            <button data-menu="services"
+                class="menu-btn h-10 w-10 flex items-center justify-center rounded-base hover:bg-brand/40 cursor-pointer">
+                <img src="{{ asset('icon/admin/contenu.svg') }}" class="w-5 h-5" alt="">
+            </button>
+
+            <form method="POST" action="{{ route('logout') }}" class="mt-auto">
+                @csrf
+                <button
+                    class="flex h-10 w-10 items-center justify-center rounded-base hover:bg-brand/40 cursor-pointer">
+                    <img src="{{ asset('icon/admin/log-out.svg') }}" class="w-5 h-5" alt="">
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    {{-- Sidebar libellés --}}
+    <aside id="second-sidebar" class="w-64 bg-surface border-e border-default hidden z-10">
+        <div class="h-full px-3 py-4 text-primary">
+
+            <div data-panel="templates" class="menu-panel hidden">
+                <h2 class="mb-6 px-2 text-lg font-semibold">Templates</h2>
+
+                <nav class="space-y-6">
+                    <div>
+                        <p class="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-fg-muted">
+                            Templates
+                        </p>
+
+                        <a href="{{ route('list-templates') }}"
+                            class="block rounded-base px-3 py-2 text-body hover:bg-neutral-tertiary hover:text-fg-brand">
+                            Liste des templates
+                        </a>
+
+                        <a href="{{ route('create-template') }}"
+                            class="block rounded-base px-3 py-2 text-body hover:bg-neutral-tertiary hover:text-fg-brand">
+                            Ajouter un template
+                        </a>
+                    </div>
+
+                    <div>
+                        <p class="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-fg-muted">
+                            Catégories
+                        </p>
+
+                        <a href="#"
+                            class="block rounded-base px-3 py-2 text-body hover:bg-neutral-tertiary hover:text-fg-brand">
+                            Liste des catégories
+                        </a>
+
+                        <a href="#"
+                            class="block rounded-base px-3 py-2 text-body hover:bg-neutral-tertiary hover:text-fg-brand">
+                            Ajouter une catégorie
+                        </a>
+                    </div>
+                </nav>
+            </div>
+
+            <div data-panel="services" class="menu-panel hidden">
+                <h2 class="mb-6 px-2 text-lg font-semibold">Services</h2>
+
+                <a href="#" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
+                    Liste services
+                </a>
+
+                <a href="#" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
+                    Ajouter service
+                </a>
+            </div>
+
+        </div>
+    </aside>
+</div>
