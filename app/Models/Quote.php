@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Customer;
 
 class Quote extends Model
 {
     protected $fillable = [
         'customer_id',
         'number',
+        'issued_at',
         'status',
         'subtotal',
         'discount',
@@ -22,6 +24,7 @@ class Quote extends Model
 
     protected $casts = [
         'valid_until' => 'date',
+        'issued_at' => 'date',
     ];
 
     public function customer(): BelongsTo

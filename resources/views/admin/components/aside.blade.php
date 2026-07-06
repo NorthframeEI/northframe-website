@@ -87,14 +87,14 @@
             </div>
 
             <div data-panel="factures" class="menu-panel hidden">
-                <h2 class="mb-6 px-2 text-lg font-semibold">Factures</h2>
+                <h2 class="mb-6 px-2 text-lg font-semibold">Devis</h2>
 
-                <a href="#" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
-                    Liste factures
+                <a href="{{ route('list-quotes') }}" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
+                    Liste de devis
                 </a>
 
-                <a href="#" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
-                    Créer une facture
+                <a href="{{ route('create-quote') }}" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
+                    Créer un devis
                 </a>
             </div>
         </div>
