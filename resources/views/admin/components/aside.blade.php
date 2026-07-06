@@ -17,6 +17,11 @@
                 <img src="{{ asset('icon/admin/contenu.svg') }}" class="w-5 h-5" alt="">
             </button>
 
+            <button data-menu="factures"
+                class="menu-btn h-10 w-10 flex items-center justify-center rounded-base hover:bg-brand/40 cursor-pointer">
+                <img src="{{ asset('icon/admin/facture.svg') }}" class="w-5 h-5" alt="">
+            </button>
+
             <form method="POST" action="{{ route('logout') }}" class="mt-auto">
                 @csrf
                 <button
@@ -56,12 +61,12 @@
                             Catégories
                         </p>
 
-                        <a href="#"
+                        <a href="{{ route('list-categories') }}"
                             class="block rounded-base px-3 py-2 text-body hover:bg-neutral-tertiary hover:text-fg-brand">
                             Liste des catégories
                         </a>
 
-                        <a href="#"
+                        <a href="{{route('create-category')}}"
                             class="block rounded-base px-3 py-2 text-body hover:bg-neutral-tertiary hover:text-fg-brand">
                             Ajouter une catégorie
                         </a>
@@ -81,6 +86,17 @@
                 </a>
             </div>
 
+            <div data-panel="factures" class="menu-panel hidden">
+                <h2 class="mb-6 px-2 text-lg font-semibold">Factures</h2>
+
+                <a href="#" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
+                    Liste factures
+                </a>
+
+                <a href="#" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
+                    Créer une facture
+                </a>
+            </div>
         </div>
     </aside>
 </div>
