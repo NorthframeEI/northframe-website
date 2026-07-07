@@ -17,13 +17,29 @@
                     </h1>
                 </div>
 
-                <a href="{{route('create-category')}}"
+                <a href="{{ route('create-quote') }}"
                     class="text-primary text-button-inter bg-brand hover:bg-hover px-[12px] py-[16px] rounded-[12px]">
                     Créer un devis
                 </a>
 
             </div>
+            <div class="w-full mb-6">
+                @if (session('success'))
+                    <div class="p-4 bg-success/30 border border-success text-success rounded-lg">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
+                @if ($errors->any())
+                    <div class="p-4 bg-error/30 border border-error text-error rounded-lg">
+                        <ul class="space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>• {{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
             <div class="bg-surface border border-primary/5 rounded-[12px] overflow-hidden">
 
                 <table class="w-full">
@@ -94,7 +110,7 @@
                                     <div class="flex flex-col">
 
                                         <span class="text-primary text-body-bold">
-                                            {{ $quote->issued_at }}
+                                            {{ $quote->issued_at->format('d/m/Y') }}
                                         </span>
 
                                     </div>
@@ -113,11 +129,12 @@
 
                                 </td>
 
-                                 <td class="px-6 py-5">
+                                <td class="px-6 py-5">
 
                                     <div class="flex flex-col">
 
-                                         <a href="{{route('show-quote', $quote->id)}}" class="text-brand text-small hover:underline" target="_blank">
+                                        <a href="{{ route('show-quote', $quote->id) }}"
+                                            class="text-brand text-small hover:underline">
                                             Voir le devis
                                         </a>
 
@@ -130,11 +147,12 @@
 
                                     <div class="flex justify-end gap-3">
 
-                                        <a href="{{route('edit-quote', $quote->id)}}" class="text-brand text-small hover:underline">
+                                        <a href="{{ route('edit-quote', $quote->id) }}"
+                                            class="text-brand text-small hover:underline">
                                             Modifier
                                         </a>
 
-                                        <form action="{{route('delete-quote', $quote->id)}}" method="POST"
+                                        <form action="{{ route('delete-quote', $quote->id) }}" method="POST"
                                             onclick="return confirm('Supprimer ce devis ?')">
 
                                             @csrf

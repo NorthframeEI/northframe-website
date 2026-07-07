@@ -4,12 +4,26 @@ namespace App\Services;
 
 class CalculationService
 {
-    public static function calculateItemsTotal($items): float
+    public static function calculateOneTimeTotal($items): float
     {
-        return $items->sum(function ($item) {
-            return $item->quantity * $item->unit_price;
-        });
+        return $items
+            ->where('type', 'one_time')
+            ->sum(function ($item) {
+                return $item->quantity * $item->unit_price;
+            });
     }
+
+
+    public static function calculateRecurringTotal($items): float
+    {
+        return $items
+            ->where('type', 'recurring')
+            ->sum(function ($item) {
+
+                return $item->quantity * $item->unit_price;
+            });
+    }
+
 
     public static function applyDiscount(float $subtotal, float $discount = 0): float
     {

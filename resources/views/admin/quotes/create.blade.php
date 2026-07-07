@@ -93,9 +93,7 @@
                             <input type="date" name="issued_at" value="{{ now()->toDateString() }}"
                                 class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
 
-                            <input type="date" name="valid_until"
-                                class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
-
+                            
                         </div>
                     </div>
 

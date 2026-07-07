@@ -13,7 +13,9 @@ class QuoteItem extends Model
         'description',
         'quantity',
         'unit_price',
-        'total',
+        'total', 
+        'type',
+        'billing_period',
     ];
 
     public function quote(): BelongsTo

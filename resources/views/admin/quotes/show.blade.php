@@ -2,6 +2,18 @@
 @section('title', 'NF Admin - devis ' . $quote->number)
 
 @section('admin.content')
+    <div
+        class="sticky top-[80px] z-10 bg-surface/80 backdrop-blur border border-primary/15 px-2 py-2 w-fit rounded-[10px] mt-6 ml-1">
+        <a href="{{ route('list-quotes') }}"
+            class="inline-flex items-center gap-2 text-secondary hover:text-primary transition">
+
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-width="2" d="M15 18l-6-6 6-6" />
+            </svg>
+
+            Retour
+        </a>
+    </div>
     <section id="showQuote">
 
         <div class="max-w-[1242px] mx-auto px-6 py-12">
@@ -20,13 +32,13 @@
 
                 {{-- PREVIEW --}}
                 <a href="{{ route('quotes-preview', $quote) }}"
-                    class="text-primary bg-surface border border-primary/10 hover:bg-hover px-[20px] py-[10px] rounded-[12px]" target="_blank">
+                    class="text-primary bg-surface border border-primary/10 hover:bg-hover px-[20px] py-[10px] rounded-[12px]"
+                    target="_blank">
                     Prévisualiser
                 </a>
 
                 {{-- GENERATE PDF --}}
-                <a href="#"
-                    class="text-primary bg-brand hover:bg-hover px-[20px] py-[10px] rounded-[12px]">
+                <a href="#" class="text-primary bg-brand hover:bg-hover px-[20px] py-[10px] rounded-[12px]">
                     Télécharger PDF
                 </a>
 
@@ -103,15 +115,104 @@
 
                     @csrf
 
-                    <input type="text" name="designation" placeholder="Description"
-                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+                    {{-- Désignation --}}
+                    <div class="flex flex-col gap-2">
 
-                    <input type="number" name="quantity" value="1" min="1"
-                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+                        <label class="text-secondary">
+                            Désignation
+                        </label>
 
-                    <input type="number" name="unit_price" step="0.01" placeholder="Prix unitaire"
-                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+                        <input type="text" name="designation" value="{{ old('designation') }}"
+                            placeholder="Ex : Création site vitrine"
+                            class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
 
+                    </div>
+
+
+                    {{-- Description --}}
+                    <div class="flex flex-col gap-2">
+
+                        <label class="text-secondary">
+                            Description (optionnel)
+                        </label>
+
+                        <textarea name="description" rows="3" placeholder="Détails de la prestation..."
+                            class="block w-full rounded-[10px] bg-dark px-3 py-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">{{ old('description') }}</textarea>
+
+                    </div>
+
+
+                    {{-- Quantité --}}
+                    <div class="flex flex-col gap-2">
+
+                        <label class="text-secondary">
+                            Quantité
+                        </label>
+
+                        <input type="number" name="quantity" value="{{ old('quantity', 1) }}" min="1"
+                            class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+
+                    </div>
+
+
+                    {{-- Prix --}}
+                    <div class="flex flex-col gap-2">
+
+                        <label class="text-secondary">
+                            Prix unitaire (€)
+                        </label>
+
+                        <input type="number" name="unit_price" value="{{ old('unit_price') }}" step="0.01"
+                            placeholder="Ex : 1200"
+                            class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+
+                    </div>
+
+
+                    {{-- Type --}}
+                    <div class="flex flex-col gap-2">
+
+                        <label class="text-secondary">
+                            Type de prestation
+                        </label>
+
+                        <select name="type" id="type"
+                            class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+
+                            <option value="one_time">
+                                Prestation ponctuelle
+                            </option>
+
+                            <option value="recurring">
+                                Abonnement
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    {{-- Période abonnement --}}
+                    <div id="billing_period_container" class="hidden flex-col gap-2">
+
+                        <label class="text-secondary">
+                            Période de facturation
+                        </label>
+
+                        <select name="billing_period"
+                            class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+
+                            <option value="monthly">
+                                Mensuel
+                            </option>
+
+                            <option value="yearly">
+                                Annuel
+                            </option>
+
+                        </select>
+
+                    </div>
                     <button type="submit"
                         class="text-primary text-button-inter bg-brand hover:bg-hover px-[20px] py-[20px] rounded-[12px] w-fit cursor-pointer">
                         Ajouter ligne

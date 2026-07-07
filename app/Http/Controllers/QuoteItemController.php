@@ -15,6 +15,16 @@ class QuoteItemController extends Controller
             'designation' => 'required',
             'quantity' => 'required|numeric|min:1',
             'unit_price' => 'required|numeric|min:0',
+            'type' => [
+                'required',
+                'in:one_time,recurring'
+            ],
+
+            'billing_period' => [
+                'nullable',
+                'required_if:type,recurring',
+                'in:monthly,yearly'
+            ],
         ]);
 
         $item = $quote->items()->create([
@@ -22,6 +32,8 @@ class QuoteItemController extends Controller
             'quantity' => $request->quantity,
             'unit_price' => $request->unit_price,
             'total' => $request->quantity * $request->unit_price,
+            'type' => $request->type,
+            'billing_period' => $request->type === 'recurring' ? $request->billing_period : null,
         ]);
 
         $this->recalculateQuote($quote);
@@ -29,20 +41,22 @@ class QuoteItemController extends Controller
         return back();
     }
 
-    private function recalculateQuote(Quote $quote)
-    {
-        $subtotal = $quote->items()->sum('total');
+  private function recalculateQuote(Quote $quote)
+{
+    $items = $quote->items;
 
-        $total = CalculationService::applyDiscount(
-            $subtotal,
-            $quote->discount
-        );
+    $subtotal = CalculationService::calculateOneTimeTotal($items);
 
-        $quote->update([
-            'subtotal' => $subtotal,
-            'total' => $total,
-        ]);
-    }
+    $total = CalculationService::applyDiscount(
+        $subtotal,
+        $quote->discount
+    );
+
+    $quote->update([
+        'subtotal' => $subtotal,
+        'total' => $total,
+    ]);
+}
 
     public function destroy(QuoteItem $item)
     {

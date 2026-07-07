@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Quote;
 use App\Models\Customer;
 use App\Services\DocumentNumberService;
+use Carbon\Carbon;
 
 class QuoteController extends Controller
 {
@@ -32,18 +33,22 @@ class QuoteController extends Controller
             'country' => $request->country,
         ]);
 
+        $issuedAt = Carbon::parse($request->issued_at);
+
         $quote = Quote::create([
             'customer_id' => $customer->id,
             'number' => DocumentNumberService::nextQuoteNumber(),
-            'issued_at' => $request->issued_at,
-            'valid_until' => $request->valid_until,
+            'issued_at' => $issuedAt,
+            'valid_until' => $issuedAt->copy()->addDays(30),
             'status' => 'draft',
             'subtotal' => 0,
             'discount' => 0,
             'total' => 0,
         ]);
 
-        return redirect()->route('create-quote', $quote);
+        return redirect()
+            ->route('show-quote', $quote)
+            ->with('success', 'Le devis a été créé avec succès. Vous pouvez maintenant ajouter les prestations.');
     }
 
     public function show(Quote $quote)
