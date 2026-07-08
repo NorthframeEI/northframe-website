@@ -56,23 +56,27 @@ Route::domain(config('app.admin_domain'))
             Route::put('/category/{category}', [TemplateCategoryController::class, 'updateCategory'])->name('update-category'); // Handle the form submission to update a specific category
             Route::delete('/category/{category}', [TemplateCategoryController::class, 'deleteCategory'])->name('delete-category'); // Delete a specific category    
 
-            //Devis
+            //Quote Management
             Route::resource('quotes', QuoteController::class);
-            Route::get('/quotes/create', [QuoteController::class, 'create'])->name('create-quote');
-            Route::post('/quotes', [QuoteController::class, 'store'])->name('store-quote');
-            Route::get('/quotes', [QuoteController::class, 'index'])->name('list-quotes');
-            Route::get('/quotes/{quote}', [QuoteController::class, 'show'])->name('show-quote');
-            Route::get('/quotes/{quote}/edit', [QuoteController::class, 'edit'])->name('edit-quote');
-            Route::put('/quotes/{quote}', [QuoteController::class, 'update'])->name('update-quote');
-            Route::delete('/quotes/{quote}', [QuoteController::class, 'destroy'])->name('delete-quote');
+            Route::get('/quotes/create', [QuoteController::class, 'create'])->name('create-quote'); // Show the form to create a new quote
+            Route::post('/quotes', [QuoteController::class, 'store'])->name('store-quote'); // Handle the form submission to store the new quote
+            Route::get('/quotes', [QuoteController::class, 'index'])->name('list-quotes'); // List all quotes
+            Route::get('/quotes/{quote}', [QuoteController::class, 'show'])->name('show-quote'); // Show a specific quote
+            Route::get('/quotes/{quote}/edit', [QuoteController::class, 'edit'])->name('edit-quote'); // Show the form to edit a specific quote
+            Route::put('/quotes/{quote}', [QuoteController::class, 'update'])->name('update-quote'); // Handle the form submission to update a specific quote
+            Route::delete('/quotes/{quote}', [QuoteController::class, 'destroy'])->name('delete-quote'); // Delete a specific quote
+            Route::get('/quotes/{quote}/preview', [QuoteController::class, 'preview'])
+                ->name('quotes-preview'); // Preview a specific quote
+            Route::post('/quotes/{quote}/generate-pdf', [QuoteController::class, 'generatePdf'])->name('quotes-generate-pdf'); // Generate PDF for a specific quote
+
+            //Quote Items
             Route::post('/quotes/{quote}/items', [QuoteItemController::class, 'store'])
                 ->name('quotes-items-store');
-
             Route::delete('/quote-items/{item}', [QuoteItemController::class, 'destroy'])
                 ->name('quote-items-delete');
 
-            Route::get('/quotes/{quote}/preview', [QuoteController::class, 'preview'])
-                ->name('quotes-preview');
+
+
         });
     });
 

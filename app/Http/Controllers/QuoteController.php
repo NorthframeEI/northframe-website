@@ -7,7 +7,8 @@ use App\Models\Quote;
 use App\Models\Customer;
 use App\Services\DocumentNumberService;
 use Carbon\Carbon;
-
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 class QuoteController extends Controller
 {
     public function index()
@@ -69,5 +70,27 @@ class QuoteController extends Controller
         $quote->load('items', 'customer');
 
         return view('admin.quotes.pdf', compact('quote'));
+    }
+
+    public function generatePdf(Quote $quote)
+    {
+        $pdf = Pdf::loadView('admin.quotes.pdf', [
+            'quote' => $quote->load(['customer', 'items'])
+        ]);
+
+        $filename = $quote->number . '.pdf';
+
+        $path = 'quotes/' . $filename;
+
+        Storage::disk('private')->put(
+            $path,
+            $pdf->output()
+        );
+
+        $quote->update([
+            'pdf_path' => $path,
+        ]);
+
+        return back()->with('success', 'Le PDF a été généré.');
     }
 }

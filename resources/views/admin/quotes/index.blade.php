@@ -67,6 +67,9 @@
                                 Voir le devis
                             </th>
 
+                            <th class="text-left text-label text-secondary px-6 py-5">
+                                Etat
+                            </th>
 
                             <th class="text-right text-label text-secondary px-6 py-5">
                                 Actions
@@ -141,7 +144,24 @@
                                     </div>
 
                                 </td>
+                                <td class="px-6 py-5">
 
+                                    @php
+                                        $statusStyles = [
+                                            'draft' => 'bg-secondary/20 text-secondary',
+                                            'sent' => 'bg-brand/20 text-brand',
+                                            'accepted' => 'bg-success/20 text-success',
+                                            'rejected' => 'bg-error/20 text-error',
+                                            'expired' => 'bg-warning/20 text-warning',
+                                        ];
+                                    @endphp
+
+                                    <span
+                                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $statusStyles[$quote->status] ?? 'bg-secondary/20 text-secondary' }}">
+                                        {{ ucfirst($quote->status) }}
+                                    </span>
+
+                                </td>
 
                                 <td class="px-6 py-5">
 

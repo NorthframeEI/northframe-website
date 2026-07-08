@@ -15,16 +15,6 @@
             <td style="width:50%;vertical-align:top;">
                 <img src="{{ $base64 }}" style="width:120px;margin-bottom:15px;">
 
-                <div style="line-height:1.7;">
-                    <strong style="font-size:20px;color:#0B1220;">NorthFrame</strong><br>
-
-                    112 Rue de Cambrai<br>
-                    62000 Arras<br>
-
-                    contact@northframe.fr<br>
-
-                    SIRET : 104 701 727 00018
-                </div>
 
             </td>
 
@@ -55,7 +45,18 @@
 
         <tr>
 
-            <td></td>
+            <td>
+                <div style="line-height:1.7;">
+                    <strong style="font-size:20px;color:#0B1220;">NorthFrame</strong><br>
+
+                    112 Rue de Cambrai<br>
+                    62000 Arras<br>
+
+                    contact@northframe.fr<br>
+
+                    SIRET : 104 701 727 00018
+                </div>
+            </td>
 
             <td style="padding-top:40px;text-align:right;">
 
@@ -97,7 +98,7 @@
         Création d'un site internet pour
         <strong>{{ $quote->customer->company_name }}</strong>.
 
-        <br><br>
+        <br>
 
         Suite à votre demande, veuillez trouver ci-dessous notre proposition commerciale.
 
@@ -147,7 +148,7 @@
                 @foreach ($oneTimeItems as $item)
                     <tr>
 
-                        <td style="border:1px solid #DDD;">
+                        <td style="border:1px solid #DDD;font-size:13px;">
 
                             {{ $item->designation }}
 
@@ -185,7 +186,7 @@
     @endif
 
     @if ($recurringItems->count())
-
+        <div style="page-break-before:always;"></div>
         <h3 style="color:#0B1220;margin-top:30px;margin-bottom:10px;">
             Abonnements
         </h3>
@@ -220,7 +221,7 @@
                 @foreach ($recurringItems as $item)
                     <tr>
 
-                        <td style="border:1px solid #DDD;">
+                        <td style="border:1px solid #DDD;font-size:13px;">
 
                             {{ $item->designation }}
 
@@ -260,21 +261,110 @@
 
     @endif
 
-    {{-- TOTAUX --}}
-    {{-- TOTALS --}}
-    <table align="right" style="margin-top:25px;border-collapse:collapse;min-width:280px;">
+    {{-- RESUME BAS DE PAGE --}}
+
+    <table width="100%" style="border-collapse:collapse;margin-top:25px;">
 
         <tr>
 
-            <td style="padding:12px;background:#0B1220;color:white;border:1px solid #0B1220;">
-                <strong>Total projet</strong>
+            {{-- CONDITIONS A GAUCHE --}}
+            <td width="55%" valign="top" style="font-size:11px;line-height:1.6;">
+
+                <strong style="color:#0B1220;">
+                    Conditions
+                </strong>
+
+                <br>
+
+                • Ce devis est valable jusqu'au {{ $quote->valid_until->format('d/m/Y') }}.
+
+                <br>
+
+                • Le démarrage du projet intervient après acceptation du devis.
+
+                <br>
+
+                • Les délais de réalisation sont donnés à titre indicatif.
+
+                <br>
+
+                • Les abonnements récurrents seront facturés selon la période indiquée.
+
             </td>
 
-            <td align="right" style="padding:12px;border:1px solid #0B1220;font-size:18px;">
 
-                <strong>
-                    {{ number_format($quote->total, 2, ',', ' ') }} €
-                </strong>
+            {{-- TOTAL + ABONNEMENTS A DROITE --}}
+            <td width="45%" valign="top" align="right">
+
+
+                <table style="border-collapse:collapse;min-width:280px;">
+
+                    <tr>
+
+                        <td style="padding:12px;background:#0B1220;color:white;border:1px solid #0B1220;">
+                            <strong>Total projet</strong>
+                        </td>
+
+                        <td align="right" style="padding:12px;border:1px solid #0B1220;font-size:18px;">
+
+                            <strong>
+                                {{ number_format($quote->total, 2, ',', ' ') }} €
+                            </strong>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+
+                @if ($recurringItems->count())
+
+                    <table style="border-collapse:collapse;min-width:280px;margin-top:15px;">
+
+                        <tr>
+
+                            <td colspan="2" style="padding:10px;background:#F5F5F5;border:1px solid #DDD;">
+
+                                <strong>
+                                    Abonnements récurrents
+                                </strong>
+
+                            </td>
+
+                        </tr>
+
+
+                        @foreach ($recurringItems as $item)
+                            <tr>
+
+                                <td style="padding:8px;border:1px solid #DDD;font-size:12px;">
+
+                                    {{ $item->designation }}
+
+                                </td>
+
+
+                                <td align="right"
+                                    style="padding:8px;border:1px solid #DDD;font-size:12px;white-space:nowrap;">
+
+                                    {{ number_format($item->unit_price, 2, ',', ' ') }} €
+
+                                    @if ($item->billing_period === 'monthly')
+                                        /mois
+                                    @elseif($item->billing_period === 'yearly')
+                                        /an
+                                    @endif
+
+                                </td>
+
+                            </tr>
+                        @endforeach
+
+                    </table>
+
+                @endif
+
 
             </td>
 
@@ -282,102 +372,41 @@
 
     </table>
 
-
-    @if ($recurringItems->count())
-
-        <div style="clear:both;"></div>
-
-        <table align="right" style="margin-top:15px;border-collapse:collapse;min-width:280px;font-size:13px;">
-
-            <tr>
-
-                <td colspan="2" style="padding:10px;background:#F5F5F5;border:1px solid #DDD;">
-
-                    <strong>
-                        Abonnements récurrents
-                    </strong>
-
-                </td>
-
-            </tr>
-
-
-            @foreach ($recurringItems as $item)
-                <tr>
-
-                    <td style="padding:8px;border:1px solid #DDD;">
-
-                        {{ $item->designation }}
-
-                    </td>
-
-
-                    <td align="right" style="padding:8px;border:1px solid #DDD;">
-
-                        {{ number_format($item->unit_price, 2, ',', ' ') }} €
-
-                        @if ($item->billing_period === 'monthly')
-                            /mois
-                        @elseif($item->billing_period === 'yearly')
-                            /an
-                        @endif
-
-                    </td>
-
-                </tr>
-            @endforeach
-
-        </table>
-
-    @endif
-
     <div style="clear:both;"></div>
+    <div style="height:130px;"></div>
+    <div
+        style="
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:120px;
+    font-size:10px;
+    color:#666;
+    line-height:1.5;
+">
 
-    {{-- CONDITIONS --}}
-    <div style="margin-top:60px;">
+        <div style="border-top:1px solid #DDD;margin-bottom:10px;"></div>
 
-        <h3 style="color:#0B1220;margin-bottom:10px;">
-            Conditions
-        </h3>
 
-        <p style="font-size:12px;line-height:1.8;">
+        <br><br>
 
-            • Ce devis est valable jusqu'au
-            {{ $quote->valid_until->format('d/m/Y') }}.
+        <strong style="color:#0B1220;">
+            Mentions légales
+        </strong>
 
-            <br>
+        <br>
 
-            • Le démarrage du projet intervient après acceptation du devis.
+        TVA non applicable, article 293 B du Code général des impôts.
 
-            <br>
+        <br>
 
-            • Les délais de réalisation sont donnés à titre indicatif.
+        En cas de retard de paiement, des pénalités pourront être appliquées conformément aux dispositions légales en
+        vigueur.
 
-        </p>
+        <br>
 
-    </div>
-
-    <hr style="margin:35px 0;border:none;border-top:1px solid #DDD;">
-
-    {{-- MENTIONS --}}
-    <div style="font-size:11px;color:#666;line-height:1.8;">
-
-        <strong>Mentions légales</strong>
-
-        <p>
-            TVA non applicable, article 293 B du Code général des impôts.
-        </p>
-
-        <p>
-            En cas de retard de paiement, des pénalités pourront être appliquées conformément aux dispositions légales
-            en vigueur.
-        </p>
-
-        <p>
-            Une indemnité forfaitaire de 40 € pour frais de recouvrement sera exigible conformément aux articles L441-10
-            et D441-5 du Code de commerce.
-        </p>
+        Une indemnité forfaitaire de 40 € pour frais de recouvrement sera exigible conformément aux articles L441-10 et
+        D441-5 du Code de commerce.
 
     </div>
-
-</div>

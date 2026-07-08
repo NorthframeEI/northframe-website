@@ -38,9 +38,13 @@
                 </a>
 
                 {{-- GENERATE PDF --}}
-                <a href="#" class="text-primary bg-brand hover:bg-hover px-[20px] py-[10px] rounded-[12px]">
-                    Télécharger PDF
-                </a>
+                <form method="POST" action="{{ route('quotes-generate-pdf', $quote) }}">
+                    @csrf
+
+                    <button type="submit" class="text-primary bg-brand hover:bg-hover px-[20px] py-[10px] rounded-[12px] cursor-pointer">
+                        Générer le PDF
+                    </button>
+                </form>
 
                 {{-- CONVERT TO INVOICE --}}
                 <form method="POST" action="#">
