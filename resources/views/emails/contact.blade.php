@@ -15,7 +15,6 @@
     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
 ">
 
-    ```
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
         <tr>
             <td align="center" style="padding:40px 20px;">
@@ -33,8 +32,9 @@
                     <!-- Header -->
                     <tr>
                         <td style=" padding:40px 32px; background:#111827; text-align:center; ">
-                            <!-- Logo --> <img src="{{ asset('logos/logo_email_header.svg') }}" alt="Northframe"
-                                style=" display:block; margin:0 auto; max-width:220px; height:auto; ">
+                            <!-- Logo -->
+                            <img src="{{ $message->embed(public_path('logos/logo_email_header.svg')) }}"
+                                alt="NorthFrame" style="display:block;margin:0 auto;max-width:220px;height:auto;">
                             <!-- Séparateur -->
                             <div style=" width:60px; height:2px; background:#3b82f6; margin:24px auto; "></div>
                             <p
@@ -166,8 +166,6 @@
             </td>
         </tr>
     </table>
-    ```
-
 </body>
 
 </html>

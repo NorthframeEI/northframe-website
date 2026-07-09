@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\QuoteMail;
 use Illuminate\Http\Request;
 use App\Models\Quote;
 use App\Models\Customer;
+use App\Models\Invoice;
 use App\Services\DocumentNumberService;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+
+
 class QuoteController extends Controller
 {
     public function index()
@@ -67,9 +73,23 @@ class QuoteController extends Controller
 
     public function preview(Quote $quote)
     {
-        $quote->load('items', 'customer');
+        $pdf = Pdf::loadView('admin.quotes.pdf', [
+            'quote' => $quote->load(['customer', 'items']),
+        ]);
 
-        return view('admin.quotes.pdf', compact('quote'));
+        return $pdf->stream($quote->number . '.pdf');
+    }
+
+    public function previewPdf(Quote $quote)
+    {
+
+        $path = 'quotes/' . $quote->number . '.pdf';
+
+        abort_unless(Storage::disk('private')->exists($path), 404);
+
+        return response()->file(
+            Storage::disk('private')->path($path)
+        );
     }
 
     public function generatePdf(Quote $quote)
@@ -92,5 +112,96 @@ class QuoteController extends Controller
         ]);
 
         return back()->with('success', 'Le PDF a été généré.');
+    }
+
+    public function sentQuote(Quote $quote)
+    {
+        $path = 'quotes/' . $quote->number . '.pdf';
+
+        abort_unless(
+            Storage::disk('private')->exists($path),
+            404,
+            'Le PDF doit être généré avant l\'envoi.'
+        );
+
+        Mail::to($quote->customer->email)
+            ->send(new QuoteMail($quote, $path));
+
+        $quote->update([
+            'status' => 'sent',
+        ]);
+
+        return back()->with('success', 'Le devis a été envoyé au client.');
+    }
+
+    public function acceptQuote(Quote $quote)
+    {
+        $quote->update([
+            'status' => 'accepted',
+        ]);
+
+        return back()->with('success', 'Le devis a été accepté.');
+    }
+
+    public function rejectQuote(Quote $quote)
+    {
+        $quote->update([
+            'status' => 'rejected',
+        ]);
+
+        return back()->with('success', 'Le devis a été refusé.');
+    }
+
+    public function convertToInvoice(Quote $quote)
+    {
+        abort_unless(
+            $quote->status === 'accepted',
+            403,
+            'Ce devis ne peut pas être transformé en facture.'
+        );
+
+
+        $invoice = DB::transaction(function () use ($quote) {
+
+            $invoice = Invoice::create([
+                'customer_id' => $quote->customer_id,
+                'quote_id' => $quote->id,
+                'number' => DocumentNumberService::nextInvoiceNumber(),
+                'status' => 'draft',
+                'subtotal' => $quote->subtotal,
+                'discount' => $quote->discount ?? 0,
+                'total' => $quote->total,
+                'paid_amount' => 0,
+                'issued_at' => now(),
+                'due_date' => now()->addDays(30),
+                'notes' => $quote->notes,
+                'vat_notice' => 'TVA non applicable, art. 293 B du CGI',
+            ]);
+
+
+            foreach ($quote->items->where('type', 'one_time') as $item) {
+
+                $invoice->items()->create([
+                    'designation' => $item->designation,
+                    'description' => $item->description,
+                    'quantity' => $item->quantity,
+                    'unit_price' => $item->unit_price,
+                    'total' => $item->total,
+                ]);
+            }
+
+
+            $quote->update([
+                'status' => 'converted',
+            ]);
+
+
+            return $invoice;
+        });
+
+
+        return redirect()
+            ->route('invoices-show', $invoice)
+            ->with('success', 'Le devis a été transformé en facture.');
     }
 }

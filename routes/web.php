@@ -10,6 +10,7 @@ use App\Http\Controllers\TemplateCategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\QuoteItemController;
+use App\Http\Controllers\InvoiceController;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 
@@ -68,6 +69,11 @@ Route::domain(config('app.admin_domain'))
             Route::get('/quotes/{quote}/preview', [QuoteController::class, 'preview'])
                 ->name('quotes-preview'); // Preview a specific quote
             Route::post('/quotes/{quote}/generate-pdf', [QuoteController::class, 'generatePdf'])->name('quotes-generate-pdf'); // Generate PDF for a specific quote
+            Route::get('/quotes/{quote}/pdf', [QuoteController::class, 'previewPdf'])
+                ->name('quotes-preview-pdf'); // Preview PDF for a specific quote
+            Route::post('/quotes/{quote}/sent', [QuoteController::class, 'sentQuote'])->name('quotes-sent'); // Mark a specific quote as sent
+            Route::post('/quotes/{quote}/accept', [QuoteController::class, 'acceptQuote'])->name('quotes-accept'); // Mark a specific quote as accepted
+            Route::post('/quotes/{quote}/reject', [QuoteController::class, 'rejectQuote'])->name('quotes-reject'); // Mark a specific quote as rejected
 
             //Quote Items
             Route::post('/quotes/{quote}/items', [QuoteItemController::class, 'store'])
@@ -75,8 +81,15 @@ Route::domain(config('app.admin_domain'))
             Route::delete('/quote-items/{item}', [QuoteItemController::class, 'destroy'])
                 ->name('quote-items-delete');
 
+            //Convert Quote to Invoice
+            Route::post('/quotes/{quote}/convert', [QuoteController::class, 'convertToInvoice'])
+                ->name('quotes-convert');// Convert a specific quote to an invoice
 
 
+            //Invoice Management
+            Route::get('/invoices', [InvoiceController::class, 'listInvoices'])->name('list-invoices'); // List all invoices
+            Route::get('/invoices/{invoice}', [InvoiceController::class, 'showInvoice'])->name('invoices-show'); // Show a specific invoice
+            Route::get('/invoices/{invoice}/pdf', [InvoiceController::class, 'previewInvoicePdf'])->name('invoices-preview-pdf'); // Preview PDF for a specific invoice
         });
     });
 

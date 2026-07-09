@@ -66,7 +66,7 @@
                             Liste des catégories
                         </a>
 
-                        <a href="{{route('create-category')}}"
+                        <a href="{{ route('create-category') }}"
                             class="block rounded-base px-3 py-2 text-body hover:bg-neutral-tertiary hover:text-fg-brand">
                             Ajouter une catégorie
                         </a>
@@ -87,15 +87,45 @@
             </div>
 
             <div data-panel="factures" class="menu-panel hidden">
-                <h2 class="mb-6 px-2 text-lg font-semibold">Devis</h2>
 
-                <a href="{{ route('list-quotes') }}" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
-                    Liste de devis
-                </a>
+                {{-- DEVIS --}}
+                <div class="mb-6">
 
-                <a href="{{ route('create-quote') }}" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
-                    Créer un devis
-                </a>
+                    <h2 class="mb-3 px-2 text-lg font-semibold text-primary">
+                        Devis
+                    </h2>
+
+                    <a href="{{ route('list-quotes') }}"
+                        class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
+                        Liste de devis
+                    </a>
+
+                    <a href="{{ route('create-quote') }}"
+                        class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
+                        Créer un devis
+                    </a>
+
+                </div>
+
+
+                {{-- SEPARATION --}}
+                <div class="mx-2 my-5 border-t border-primary/10"></div>
+
+
+                {{-- FACTURES --}}
+                <div>
+
+                    <h2 class="mb-3 px-2 text-lg font-semibold text-primary">
+                        Factures
+                    </h2>
+
+                    <a href="{{ route('list-invoices') }}"
+                        class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
+                        Liste des factures
+                    </a>
+
+                </div>
+
             </div>
         </div>
     </aside>

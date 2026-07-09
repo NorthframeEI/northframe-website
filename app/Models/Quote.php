@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Customer;
+use Carbon\Carbon;
 
 class Quote extends Model
 {
@@ -35,5 +36,10 @@ class Quote extends Model
     public function items(): HasMany
     {
         return $this->hasMany(QuoteItem::class);
+    }
+
+    public function isExpired(): bool
+    {
+        return $this->valid_until->isPast() && $this->status === 'sent';
     }
 }
