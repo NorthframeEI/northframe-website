@@ -90,7 +90,11 @@ Route::domain(config('app.admin_domain'))
             Route::get('/invoices', [InvoiceController::class, 'listInvoices'])->name('list-invoices'); // List all invoices
             Route::get('/invoices/{invoice}', [InvoiceController::class, 'showInvoice'])->name('invoices-show'); // Show a specific invoice
             Route::get('/invoices/{invoice}/pdf', [InvoiceController::class, 'previewInvoicePdf'])->name('invoices-preview-pdf'); // Preview PDF for a specific invoice
-        });
+            Route::get('/invoices/{invoice}/preview', [InvoiceController::class, 'preview'])->name('invoices-preview'); // Preview a specific invoice
+            Route::post('/invoices/{invoice}/generate-pdf', [InvoiceController::class, 'generatePdf'])->name('invoices-generate-pdf'); // Generate PDF for a specific invoice
+            Route::get('/invoices/{invoice}/pdf', [InvoiceController::class, 'previewPdf'])->name('invoices-preview-pdf'); // Preview PDF for a specific invoice
+
+            });
     });
 
 //maintenance preview route for local environment

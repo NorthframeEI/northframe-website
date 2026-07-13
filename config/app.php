@@ -123,9 +123,16 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    //Admin Domain
 
     //Admin Domain
     'admin_domain' => env('ADMIN_DOMAIN'),
+
+    //Bank Details
+    'bank_owner' => env('BANK_OWNER'),
+    'bank_name' => env('BANK_NAME'),
+    'bank_iban' => env('BANK_IBAN'),
+    'bank_bic' => env('BANK_BIC'),
+
+
 
 ];

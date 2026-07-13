@@ -41,7 +41,7 @@
             <div class="w-full flex flex-wrap gap-3 justify-center mb-8">
 
 
-                <a href="#"
+                <a href="{{ route('invoices-preview', $invoice) }}" target="_blank"
                     class="text-primary bg-surface border border-primary/10 hover:bg-hover px-[20px] py-[10px] rounded-[12px]">
 
                     Prévisualiser
@@ -49,7 +49,7 @@
                 </a>
 
 
-                <form method="POST" action="#">
+                <form method="POST" action="{{ route('invoices-generate-pdf', $invoice) }}">
 
                     @csrf
 
@@ -79,26 +79,30 @@
                 @endif
 
 
-                @if ($invoice->status !== 'paid')
-                    <form method="POST" action="#">
-
-                        @csrf
-
-                        <button type="submit"
-                            class="text-primary bg-success hover:bg-hover px-[20px] py-[10px] rounded-[12px] cursor-pointer">
-
-                            Ajouter un paiement
-
-                        </button>
-
-                    </form>
-                @endif
-
 
             </div>
 
 
+            {{-- ALERTS --}}
+            <div class="w-full max-w-[900px] mx-auto mb-6">
 
+                @if (session('success'))
+                    <div class="p-4 bg-success/30 border border-success text-success rounded-lg">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="p-4 bg-error/30 border border-error text-error rounded-lg">
+                        <ul class="space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>• {{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+            </div>
 
             {{-- INFORMATIONS FACTURE --}}
 
@@ -242,101 +246,50 @@
             {{-- LIGNES FACTURE --}}
 
             <div class="bg-surface border border-primary/5 rounded-[12px] overflow-hidden mb-8">
-
-
                 <table class="w-full">
-
-
                     <thead>
-
                         <tr class="border-b border-primary/5">
-
                             <th class="text-left text-label text-secondary px-6 py-5">
                                 Description
                             </th>
-
-
                             <th class="text-left text-label text-secondary px-6 py-5">
                                 Quantité
                             </th>
-
-
                             <th class="text-left text-label text-secondary px-6 py-5">
                                 Prix unitaire
                             </th>
-
-
                             <th class="text-right text-label text-secondary px-6 py-5">
                                 Total
                             </th>
-
-
                         </tr>
-
                     </thead>
-
-
                     <tbody>
-
-
                         @foreach ($invoice->items as $item)
                             <tr class="border-b border-primary/5">
-
-
                                 <td class="px-6 py-5">
-
                                     <p class="text-primary text-body-bold">
-
                                         {{ $item->designation }}
-
                                     </p>
-
-
                                     @if ($item->description)
                                         <p class="text-secondary text-small">
 
                                             {{ $item->description }}
-
                                         </p>
                                     @endif
-
                                 </td>
-
-
-
                                 <td class="px-6 py-5 text-primary">
-
                                     {{ $item->quantity }}
-
                                 </td>
-
-
-
                                 <td class="px-6 py-5 text-primary">
-
                                     {{ number_format($item->unit_price, 2, ',', ' ') }} €
-
                                 </td>
-
-
-
                                 <td class="px-6 py-5 text-right text-primary text-body-bold">
-
                                     {{ number_format($item->total, 2, ',', ' ') }} €
-
                                 </td>
-
-
                             </tr>
                         @endforeach
-
-
                     </tbody>
-
-
                 </table>
-
-
             </div>
 
 
@@ -381,9 +334,147 @@
 
             </div>
 
+            @if ($invoice->status === 'draft')
+                {{-- FORM AJOUT PAIEMENT --}}
+                <div
+                    class="w-full mx-auto mb-6 rounded-[12px] bg-surface shadow-lg px-[20px] md:px-[34px] py-[24px] border border-primary/5">
+
+                    <h3 class="text-h3 text-primary mb-4">
+                        Ajouter un paiement
+                    </h3>
+
+                    <form method="POST" action="#" class="flex flex-col gap-4">
+
+                        @csrf
+
+                        {{-- Montant --}}
+                        <div class="flex flex-col gap-2">
+
+                            <label class="text-secondary">
+                                Montant
+                            </label>
+
+                            <input type="number" name="amount" value="{{ old('amount') }}" placeholder="Ex : 1200"
+                                class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+
+                        </div>
 
 
+                        {{-- Date --}}
+                        <div class="flex flex-col gap-2">
 
+                            <label class="text-secondary">
+                                Date de paiement
+                            </label>
+
+                            <input type="date" name="paid_at" value="{{ old('paid_at') }}"
+                                class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+                        </div>
+
+
+                        {{-- Méthode --}}
+                        <div class="flex flex-col gap-2">
+
+                            <label class="text-secondary">
+                                Méthode de paiement
+                            </label>
+                            @php
+                                $paymentMethods = [
+                                    'bank_transfer' => 'Virement bancaire',
+                                    'card' => 'Carte bancaire',
+                                    'cash' => 'Espèces',
+                                    'check' => 'Chèque',
+                                    'other' => 'Autre',
+                                ];
+                            @endphp
+                            <select name="method" id="method"
+                                class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+
+                                @foreach ($paymentMethods as $value => $label)
+                                    <option value="{{ $value }}">{{ $label }}</option>
+                                @endforeach
+
+                            </select>
+                        </div>
+
+
+                        {{-- Réference --}}
+                        <div class="flex flex-col gap-2">
+
+                            <label class="text-secondary">
+                                Référence du paiement
+                            </label>
+
+                            <input type="text" name="reference" value="{{ old('reference') }}"
+                                placeholder="Ex : P-2023-001"
+                                class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+
+                        </div>
+
+                        <button type="submit"
+                            class="text-primary text-button-inter bg-brand hover:bg-hover px-[20px] py-[20px] rounded-[12px] w-fit cursor-pointer">
+                            Ajouter ligne
+                        </button>
+
+                    </form>
+                </div>
+            @endif
+
+            {{-- LIGNES PAIEMENTs --}}
+            @if ($invoice->payments->count() > 0)
+                <div class="bg-surface border border-primary/5 rounded-[12px] overflow-hidden mb-8">
+                    <h3 class="text-h3 text-primary mb-4">
+                        Historique des paiements
+                    </h3>
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-primary/5">
+                                <th class="text-left text-label text-secondary px-6 py-5">
+                                    Montant payé
+                                </th>
+                                <th class="text-left text-label text-secondary px-6 py-5">
+                                    Payé le
+                                </th>
+                                <th class="text-left text-label text-secondary px-6 py-5">
+                                    Méthode de paiement
+                                </th>
+                                <th class="text-right text-label text-secondary px-6 py-5">
+                                    Référence
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($invoice->payments as $payment)
+                                <tr class="border-b border-primary/5">
+                                    <td class="px-6 py-5">
+                                        <p class="text-primary text-body-bold">
+                                            {{ $payment->amount }}
+                                        </p>
+                                    </td>
+                                    <td class="px-6 py-5 text-primary">
+                                        {{ $payment->paid_at }}
+                                    </td>
+                                    <td class="px-6 py-5 text-primary">
+                                        {{ $payment->method }}
+                                    </td>
+                                    <td class="px-6 py-5 text-right text-primary text-body-bold">
+                                        {{ $payment->reference }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <div class="bg-surface border border-primary/5 rounded-[12px] p-6 mb-8">
+                    <h3 class="text-h3 text-primary mb-4">
+                        Historique des paiements
+                    </h3>
+                    <p class="text-secondary">
+                        Aucun paiement enregistré pour cette facture.
+                    </p>
+                </div>
+            @endif
             {{-- NOTES --}}
 
             @if ($invoice->notes)

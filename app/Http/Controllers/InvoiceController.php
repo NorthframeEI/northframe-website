@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
@@ -16,5 +18,48 @@ class InvoiceController extends Controller
     public function showInvoice(Invoice $invoice)
     {
         return view('admin.invoice.show', compact('invoice'));
+    }
+
+     public function preview(Invoice $invoice)
+    {
+        $pdf = Pdf::loadView('admin.invoice.pdf', [
+            'invoice' => $invoice->load(['customer', 'items']),
+        ]);
+
+        return $pdf->stream($invoice->number . '.pdf');
+    }
+
+    public function previewPdf(Invoice $invoice)
+    {
+
+        $path = 'invoices/' . $invoice->number . '.pdf';
+
+        abort_unless(Storage::disk('private')->exists($path), 404);
+
+        return response()->file(
+            Storage::disk('private')->path($path)
+        );
+    }
+
+    public function generatePdf(Invoice $invoice)
+    {
+        $pdf = Pdf::loadView('admin.invoice.pdf', [
+            'invoice' => $invoice->load(['customer', 'items'])
+        ]);
+
+        $filename = $invoice->number . '.pdf';
+
+        $path = 'invoices/' . $filename;
+
+        Storage::disk('private')->put(
+            $path,
+            $pdf->output()
+        );
+
+        $invoice->update([
+            'pdf_path' => $path,
+        ]);
+
+        return back()->with('success', 'Le PDF a été généré.');
     }
 }

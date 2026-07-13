@@ -90,9 +90,6 @@
                                 PDF
                             </th>
 
-                            <th class="text-right text-label text-secondary px-6 py-5">
-                                Actions
-                            </th>
 
                         </tr>
 
@@ -220,31 +217,6 @@
                                             alt="PDF absent">
                                     @endif
 
-
-                                </td>
-
-
-                                <td class="px-6 py-5">
-
-                                    <div class="flex justify-end gap-3">
-
-
-                                        <a href="{{ route('invoices-show', $invoice) }}"
-                                            class="text-brand text-small hover:underline">
-
-                                            Voir
-
-                                        </a>
-
-
-                                        @if ($invoice->status === 'draft')
-                                            <span class="text-secondary text-small">
-                                                Brouillon
-                                            </span>
-                                        @endif
-
-
-                                    </div>
 
                                 </td>
 
