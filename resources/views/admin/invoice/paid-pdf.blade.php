@@ -9,7 +9,21 @@
 
     {{-- HEADER --}}
     <table width="100%" style="border-collapse:collapse;">
-
+        <div
+            style="
+    position:absolute;
+    top:80px;
+    left:320px;
+    border:3px solid #16a34a;
+    color:#16a34a;
+    padding:10px 25px;
+    font-size:26px;
+    font-weight:bold;
+    transform:rotate(-12deg);
+    letter-spacing:3px;
+">
+            ACQUITTÉE
+        </div>
         <tr>
 
             <td style="width:50%;vertical-align:top;">
@@ -21,7 +35,7 @@
             <td style="width:50%;text-align:right;vertical-align:top;">
 
                 <h1 style="margin:0;font-size:38px;color:#0B1220;">
-                    Facture
+                    Facture acquittée
                 </h1>
 
                 <div style="font-size:18px;font-weight:bold;margin-top:8px;">
@@ -34,8 +48,10 @@
                     {{ $invoice->issued_at->format('d/m/Y') }}
                     <br>
 
-                    <strong>Date d'échéance :</strong>
-                    {{ $invoice->due_date->format('d/m/Y') }}
+                    <strong>Date de règlement :</strong>
+                    @if ($invoice->payments->isNotEmpty())
+                        {{ $invoice->payments->last()->paid_at->format('d/m/Y') }}
+                    @endif
 
                 </div>
 
@@ -94,10 +110,37 @@
     @endphp
 
     {{-- PRESTATIONS --}}
+    <div
+        style="
+    margin-top:20px;
+    padding:10px;
+    border:1px solid #16a34a;
+    background:#f0fdf4;
+    color:#166534;
+">
 
+        <strong>
+            Facture acquittée
+        </strong>
+
+        <br>
+
+        Cette facture a été réglée intégralement.
+
+        <br>
+        Montant réglé :
+        {{ number_format($invoice->paid_amount, 2, ',', ' ') }} €
+        <br>
+        Date du dernier règlement :
+        @if ($invoice->payments->isNotEmpty())
+            {{ $invoice->payments->last()->paid_at->format('d/m/Y') }}
+        @endif
+
+    </div>
     <h3 style="color:#0B1220;margin-bottom:10px;">
         Prestations
     </h3>
+
 
     <table width="100%" cellpadding="10" cellspacing="0" style="border-collapse:collapse;border:1px solid #DDD;">
 
@@ -168,7 +211,7 @@
 
     {{-- RESUME BAS DE PAGE --}}
 
-    <table width="100%" style="border-collapse:collapse;margin-top:25px;">
+    <table width="100%" style="border-collapse:collapse;margin-top:25px;page-break-inside:avoid;">
 
         <tr>
 
@@ -176,20 +219,16 @@
             <td width="55%" valign="top" style="font-size:11px;line-height:1.6;">
 
                 <strong style="color:#0B1220;">
-                    Conditions
+                    Informations
                 </strong>
 
                 <br>
 
-                • Paiement à effectuer avant le {{ $invoice->due_date->format('d/m/Y') }}.
+                • Document établi après règlement complet de la facture.
 
                 <br>
 
-                • Merci de rappeler le numéro de facture lors de votre règlement.
-
-                <br>
-
-                • En cas de virement bancaire, utiliser la référence de la facture.
+                • Merci pour votre confiance.
 
             </td>
 
@@ -198,52 +237,31 @@
             <td width="45%" valign="top" align="right">
 
 
-                <table style="border-collapse:collapse;min-width:280px;">
+                <table style="border-collapse:collapse;min-width:280px;page-break-inside:avoid;">
 
                     <tr>
-
                         <td style="padding:12px;background:#0B1220;color:white;border:1px solid #0B1220;">
-                            <strong>Total projet</strong>
+                            <strong>Total facture</strong>
                         </td>
 
                         <td align="right" style="padding:12px;border:1px solid #0B1220;font-size:18px;">
-
                             <strong>
                                 {{ number_format($invoice->total, 2, ',', ' ') }} €
                             </strong>
-
                         </td>
-
                     </tr>
-                    <tr>
 
+
+                    <tr>
                         <td style="padding:12px;background:#0B1220;color:white;border:1px solid #0B1220;">
-                            <strong>Déjà payé</strong>
+                            <strong>Montant réglé</strong>
                         </td>
 
                         <td align="right" style="padding:12px;border:1px solid #0B1220;font-size:18px;">
-
                             <strong>
                                 {{ number_format($invoice->paid_amount, 2, ',', ' ') }} €
                             </strong>
-
                         </td>
-
-                    </tr>
-                    <tr>
-
-                        <td style="padding:12px;background:#0B1220;color:white;border:1px solid #0B1220;">
-                            <strong>Reste à payer</strong>
-                        </td>
-
-                        <td align="right" style="padding:12px;border:1px solid #0B1220;font-size:18px;">
-
-                            <strong>
-                                {{ number_format($invoice->total - $invoice->paid_amount, 2, ',', ' ') }} €
-                            </strong>
-
-                        </td>
-
                     </tr>
 
                 </table>
@@ -261,9 +279,9 @@
     bottom:0;
     left:0;
     right:0;
-    height:120px;
-    border-top:1px solid #DDD;
+    height:100px;
     padding-top:10px;
+    border-top:1px solid #DDD;
     font-size:10px;
     color:#666;
 ">
@@ -301,7 +319,7 @@
 
                     <br>
 
-                    Référence de paiement :
+                    Référence de facture :
                     {{ $invoice->number }}
 
                 </td>
@@ -318,17 +336,18 @@
 
                     {{ $invoice->vat_notice }}
 
-                    <br>
-                    Paiement exigible avant le {{ $invoice->due_date->format('d/m/Y') }}.
-                    <br>
+                    <br><br>
 
-                    En cas de retard de paiement, des pénalités pourront être appliquées conformément aux dispositions
-                    légales en vigueur.
+                    Cette facture a été réglée intégralement par le client.
 
                     <br>
 
-                    Une indemnité forfaitaire de 40 € pour frais de recouvrement sera exigible conformément aux articles
-                    L441-10 et D441-5 du Code de commerce.
+                    Le présent document constitue une facture acquittée attestant du règlement complet
+                    des sommes dues.
+
+                    <br>
+
+                    Aucun montant ne reste exigible au titre de cette facture.
 
                 </td>
 

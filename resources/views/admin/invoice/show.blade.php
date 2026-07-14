@@ -3,7 +3,18 @@
 @section('title', 'NF Admin - Facture ' . $invoice->number)
 
 @section('admin.content')
+    <div
+        class="sticky top-[80px] z-10 bg-surface/80 backdrop-blur border border-primary/15 px-2 py-2 w-fit rounded-[10px] mt-6 ml-1">
+        <a href="{{ route('list-invoices') }}"
+            class="inline-flex items-center gap-2 text-secondary hover:text-primary transition">
 
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-width="2" d="M15 18l-6-6 6-6" />
+            </svg>
+
+            Retour
+        </a>
+    </div>
     <section>
 
         <div class="max-w-[1100px] mx-auto px-6">
@@ -23,15 +34,6 @@
 
                 </div>
 
-
-                <a href="{{ route('list-invoices') }}"
-                    class="text-primary bg-surface border border-primary/10 hover:bg-hover px-[20px] py-[10px] rounded-[12px]">
-
-                    Retour
-
-                </a>
-
-
             </div>
 
 
@@ -40,42 +42,86 @@
 
             <div class="w-full flex flex-wrap gap-3 justify-center mb-8">
 
+                @if ($invoice->status !== 'paid')
+                    <a href="{{ route('invoices-preview', $invoice) }}" target="_blank"
+                        class="text-primary bg-surface border border-primary/10 hover:bg-hover px-[20px] py-[10px] rounded-[12px]">
 
-                <a href="{{ route('invoices-preview', $invoice) }}" target="_blank"
-                    class="text-primary bg-surface border border-primary/10 hover:bg-hover px-[20px] py-[10px] rounded-[12px]">
+                        Prévisualiser
 
-                    Prévisualiser
+                    </a>
+                @else
+                    <a href="{{ route('invoices-paid-preview', $invoice) }}" target="_blank"
+                        class="text-primary bg-surface border border-primary/10 hover:bg-hover px-[20px] py-[10px] rounded-[12px]">
 
-                </a>
+                        Prévisualiser
 
-
-                <form method="POST" action="{{ route('invoices-generate-pdf', $invoice) }}">
-
-                    @csrf
-
-                    <button type="submit"
-                        class="text-primary bg-surface border border-primary/10 hover:bg-hover px-[20px] py-[10px] rounded-[12px] cursor-pointer">
-
-                        Générer le PDF
-
-                    </button>
-
-                </form>
-
-
+                    </a>
+                @endif
+                @php
+                    $pdfExists = Storage::disk('private')->exists('invoices/' . $invoice->number . '.pdf');
+                @endphp
                 @if ($invoice->status === 'draft')
-                    <form method="POST" action="#">
+                    <form method="POST" action="{{ route('invoices-generate-pdf', $invoice) }}">
 
                         @csrf
 
                         <button type="submit"
-                            class="text-primary bg-brand hover:bg-hover px-[20px] py-[10px] rounded-[12px] cursor-pointer">
+                            class="text-primary bg-surface border border-primary/10 hover:bg-hover px-[20px] py-[10px] rounded-[12px] cursor-pointer">
 
-                            Envoyer la facture
+                            Générer PDF facture
 
                         </button>
 
                     </form>
+
+                    @if ($pdfExists)
+                        <form method="POST" action="{{ route('invoices-sent', $invoice) }}">
+
+                            @csrf
+
+                            <button type="submit"
+                                class="text-primary bg-brand hover:bg-hover px-[20px] py-[10px] rounded-[12px] cursor-pointer">
+
+                                Envoyer la facture
+
+                            </button>
+
+                        </form>
+                    @endif
+                @endif
+                @php
+                    $pdfPaidExists = Storage::disk('private')->exists(
+                        'invoices/' . $invoice->number . '-acquittee.pdf',
+                    );
+                @endphp
+                @if ($invoice->status === 'paid')
+                    <form method="POST" action="{{ route('invoices-generate-paid-pdf', $invoice) }}">
+
+                        @csrf
+
+                        <button type="submit"
+                            class="text-primary bg-surface border border-primary/10 hover:bg-hover px-[20px] py-[10px] rounded-[12px] cursor-pointer">
+
+                            Générer PDF facture acquittée
+
+                        </button>
+
+                    </form>
+
+                    @if ($pdfPaidExists)
+                        <form method="POST" action="{{ route('invoices-paid-sent', $invoice) }}">
+
+                            @csrf
+
+                            <button type="submit"
+                                class="text-primary bg-brand hover:bg-hover px-[20px] py-[10px] rounded-[12px] cursor-pointer">
+
+                                Envoyer la facture acquittée
+
+                            </button>
+
+                        </form>
+                    @endif
                 @endif
 
 
@@ -201,7 +247,7 @@
 
 
                         @php
-
+                           
                             $statusStyles = [
                                 'draft' => 'bg-secondary/20 text-secondary',
                                 'sent' => 'bg-brand/20 text-brand',
@@ -297,44 +343,67 @@
 
 
             {{-- TOTAL --}}
-
             <div class="flex justify-end mb-8">
 
-
-                <table class="border-collapse min-w-[300px]">
-
+                <table class="border-collapse min-w-[350px]">
 
                     <tr>
-
                         <td class="px-5 py-4 bg-brand text-primary border border-brand">
-
                             <strong>
                                 Total
                             </strong>
-
                         </td>
-
 
                         <td class="px-5 py-4 text-right text-primary border border-primary/10 text-lg">
-
                             <strong>
-
                                 {{ number_format($invoice->total, 2, ',', ' ') }} €
-
                             </strong>
-
                         </td>
-
-
                     </tr>
 
 
+                    <tr>
+                        <td class="px-5 py-4 bg-dark text-secondary border border-primary/10">
+                            <strong>
+                                Déjà payé
+                            </strong>
+                        </td>
+
+                        <td class="px-5 py-4 text-right text-secondary border border-primary/10 text-lg">
+                            <strong>
+                                {{ number_format($invoice->paid_amount, 2, ',', ' ') }} €
+                            </strong>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td class="px-5 py-4 bg-dark text-secondary border border-primary/10">
+                            <strong>
+                                Reste à payer
+                            </strong>
+                        </td>
+
+                        <td class="px-5 py-4 text-right text-secondary border border-primary/10 text-lg">
+                            <strong>
+                                {{ number_format($invoice->total - $invoice->paid_amount, 2, ',', ' ') }} €
+                            </strong>
+                        </td>
+                    </tr>
+
                 </table>
 
-
             </div>
-
-            @if ($invoice->status === 'draft')
+            @php
+                $paymentMethods = [
+                    'bank_transfer' => 'Virement bancaire',
+                    'card' => 'Carte bancaire',
+                    'cash' => 'Espèces',
+                    'check' => 'Chèque',
+                    'other' => 'Autre',
+                ];
+            @endphp
+            @if ($invoice->status === 'sent' || $invoice->status === 'partially_paid')
                 {{-- FORM AJOUT PAIEMENT --}}
                 <div
                     class="w-full mx-auto mb-6 rounded-[12px] bg-surface shadow-lg px-[20px] md:px-[34px] py-[24px] border border-primary/5">
@@ -343,7 +412,8 @@
                         Ajouter un paiement
                     </h3>
 
-                    <form method="POST" action="#" class="flex flex-col gap-4">
+                    <form method="POST" action="{{ route('invoice-payments-store', $invoice) }}"
+                        class="flex flex-col gap-4">
 
                         @csrf
 
@@ -351,7 +421,7 @@
                         <div class="flex flex-col gap-2">
 
                             <label class="text-secondary">
-                                Montant
+                                Montant <span style="text-color:red">*</span>
                             </label>
 
                             <input type="number" name="amount" value="{{ old('amount') }}" placeholder="Ex : 1200"
@@ -364,7 +434,7 @@
                         <div class="flex flex-col gap-2">
 
                             <label class="text-secondary">
-                                Date de paiement
+                                Date de paiement <span style="text-color:red">*</span>
                             </label>
 
                             <input type="date" name="paid_at" value="{{ old('paid_at') }}"
@@ -376,17 +446,9 @@
                         <div class="flex flex-col gap-2">
 
                             <label class="text-secondary">
-                                Méthode de paiement
+                                Méthode de paiement <span style="text-color:red">*</span>
                             </label>
-                            @php
-                                $paymentMethods = [
-                                    'bank_transfer' => 'Virement bancaire',
-                                    'card' => 'Carte bancaire',
-                                    'cash' => 'Espèces',
-                                    'check' => 'Chèque',
-                                    'other' => 'Autre',
-                                ];
-                            @endphp
+
                             <select name="method" id="method"
                                 class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
 
@@ -422,7 +484,8 @@
 
             {{-- LIGNES PAIEMENTs --}}
             @if ($invoice->payments->count() > 0)
-                <div class="bg-surface border border-primary/5 rounded-[12px] overflow-hidden mb-8">
+                <div
+                    class="w-full mx-auto mb-6 rounded-[12px] bg-surface shadow-lg px-[20px] md:px-[34px] py-[24px] border border-primary/5">
                     <h3 class="text-h3 text-primary mb-4">
                         Historique des paiements
                     </h3>
@@ -448,14 +511,14 @@
                                 <tr class="border-b border-primary/5">
                                     <td class="px-6 py-5">
                                         <p class="text-primary text-body-bold">
-                                            {{ $payment->amount }}
+                                            {{ number_format($payment->amount, 2, ',', ' ') }} €
                                         </p>
                                     </td>
                                     <td class="px-6 py-5 text-primary">
-                                        {{ $payment->paid_at }}
+                                        {{ $payment->paid_at->format('d/m/Y') }}
                                     </td>
                                     <td class="px-6 py-5 text-primary">
-                                        {{ $payment->method }}
+                                        {{ $paymentMethods[$payment->method] ?? $payment->method }}
                                     </td>
                                     <td class="px-6 py-5 text-right text-primary text-body-bold">
                                         {{ $payment->reference }}

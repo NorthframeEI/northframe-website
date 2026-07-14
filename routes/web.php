@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\QuoteItemController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\PaymentsController;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 
@@ -93,7 +94,16 @@ Route::domain(config('app.admin_domain'))
             Route::get('/invoices/{invoice}/preview', [InvoiceController::class, 'preview'])->name('invoices-preview'); // Preview a specific invoice
             Route::post('/invoices/{invoice}/generate-pdf', [InvoiceController::class, 'generatePdf'])->name('invoices-generate-pdf'); // Generate PDF for a specific invoice
             Route::get('/invoices/{invoice}/pdf', [InvoiceController::class, 'previewPdf'])->name('invoices-preview-pdf'); // Preview PDF for a specific invoice
+            Route::post('/invoices/{invoice}/sent', [InvoiceController::class, 'sentInvoice'])->name('invoices-sent'); //Mark a specific invoice as sent
 
+            //Payement Management
+            Route::post('/invoices/{invoice}/payment', [PaymentsController::class,'store'])->name('invoice-payments-store');
+
+            //Invoice paid
+            Route::get('/invoices/{invoice}/paid-preview', [PaymentsController::class, 'paidPreview'])->name('invoices-paid-preview'); // Preview a specific invoice paid
+            Route::post('/invoices/{invoice}/generate-paid-pdf', [PaymentsController::class, 'generatePaidInvoice'])->name('invoices-generate-paid-pdf'); // Generate PDF for a specific invoice paid
+            Route::get('/invoices/{invoice}/paid-pdf', [PaymentsController::class, 'previewPaidPdf'])->name('invoices-preview-paid-pdf'); // Preview PDF for a specific invoice paid
+            Route::post('/invoices/{invoice}/sent-paid-pdf', [PaymentsController::class, 'sentInvoicePaid'])->name('invoices-paid-sent'); //Mark a specific invoice as sent
             });
     });
 

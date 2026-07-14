@@ -68,7 +68,6 @@
                             </button>
                         </form>
                     @endif
-
                 @endif
 
 
@@ -149,11 +148,11 @@
                 </p>
 
                 <p class="text-secondary">
-                    <strong>Date émission :</strong> {{ $quote->issued_at }}
+                    <strong>Date émission :</strong> {{ $quote->issued_at->format('d/m/Y') }}
                 </p>
 
                 <p class="text-secondary">
-                    <strong>Validité :</strong> {{ $quote->valid_until }}
+                    <strong>Validité :</strong> {{ $quote->valid_until->format('d/m/Y') }}
                 </p>
 
                 <div class="mt-4">
