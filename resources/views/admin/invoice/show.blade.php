@@ -403,7 +403,7 @@
                     'other' => 'Autre',
                 ];
             @endphp
-            @if ($invoice->status === 'sent' || $invoice->status === 'partially_paid')
+            @if ($invoice->status === 'sent' || $invoice->status === 'partially_paid' || $invoice->status === 'overdue')
                 {{-- FORM AJOUT PAIEMENT --}}
                 <div
                     class="w-full mx-auto mb-6 rounded-[12px] bg-surface shadow-lg px-[20px] md:px-[34px] py-[24px] border border-primary/5">

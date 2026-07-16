@@ -248,6 +248,11 @@
 
 
                                     </td>
+                                @else
+                                    <td class="px-6 py-5">
+                                        <img src="{{ asset('icon/admin/eye-closed.svg') }}" class="w-5 h-5 opacity-40"
+                                            alt="PDF absent">
+                                    </td>
                                 @endif
                             </tr>
 

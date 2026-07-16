@@ -5,87 +5,142 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use App\Models\Quote;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
-        // Total facturé (hors annulées)
-        $totalRevenue = Invoice::where('status', '!=', 'cancelled')
+        $now = now();
+
+        /*
+    |--------------------------------------------------------------------------
+    | Année en cours
+    |--------------------------------------------------------------------------
+    */
+
+        $yearRevenue = Invoice::whereYear('issued_at', $now->year)
+            ->where('status', '!=', 'cancelled')
             ->sum('total');
 
-
-        // Total encaissé
-        $totalPaid = Invoice::where('status', '!=', 'cancelled')
+        $yearPaid = Invoice::whereYear('issued_at', $now->year)
+            ->where('status', '!=', 'cancelled')
             ->sum('paid_amount');
 
-
-        // Reste à encaisser
-        $totalRemaining = $totalRevenue - $totalPaid;
+        $yearRemaining = $yearRevenue - $yearPaid;
 
 
-        // Nombre de factures en retard
-        $overdueInvoices = Invoice::where('status', 'overdue')
-            ->count();
+        /*
+    |--------------------------------------------------------------------------
+    | Mois en cours
+    |--------------------------------------------------------------------------
+    */
+
+        $monthlyRevenue = Invoice::whereYear('issued_at', $now->year)
+            ->whereMonth('issued_at', $now->month)
+            ->where('status', '!=', 'cancelled')
+            ->sum('total');
+
+        $monthPaid = Invoice::whereYear('issued_at', $now->year)
+            ->whereMonth('issued_at', $now->month)
+            ->where('status', '!=', 'cancelled')
+            ->sum('paid_amount');
+
+        $monthRemaining = $monthlyRevenue - $monthPaid;
 
 
-        // Dernières factures
+        /*
+    |--------------------------------------------------------------------------
+    | Charges du mois
+    |--------------------------------------------------------------------------
+    */
+
+        $acreEndDate = Carbon::create(2027, 3, 31);
+
+        $acreActive = now()->lessThanOrEqualTo($acreEndDate);
+
+        // A adapter plus tard
+        if ($acreActive) {
+            $urssafRate = 12.8;
+            $taxRate = 7.2;
+        } else {
+            $urssafRate = 25.6;
+            $taxRate = 9.4;
+        }
+
+        $monthUrssaf = $monthPaid * ($urssafRate / 100);
+        $monthTaxes = $monthPaid * ($taxRate / 100);
+        $monthAvailable = $monthPaid - $monthUrssaf - $monthTaxes;
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Alertes
+    |--------------------------------------------------------------------------
+    */
+
+        $overdueInvoices = Invoice::where('status', 'overdue')->count();
+
+        $draftInvoices = Invoice::where('status', 'draft')->count();
+
+        $partiallyPaidInvoices = Invoice::where('status', 'partially_paid')->count();
+
+        $draftQuotes = Quote::where('status', 'draft')->count();
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Derniers documents
+    |--------------------------------------------------------------------------
+    */
+
         $latestInvoices = Invoice::with('customer')
             ->latest()
             ->take(5)
             ->get();
 
+        $latestInvoicesToCollect = Invoice::with('customer')
+    ->whereIn('status', [
+        'sent',
+        'partially_paid',
+        'overdue'
+    ])
+    ->latest()
+    ->take(5)
+    ->get();
 
-        // Derniers devis
         $latestQuotes = Quote::with('customer')
             ->latest()
             ->take(5)
             ->get();
 
 
-        // Devis en attente
-        $pendingQuotes = Quote::where('status', 'pending')
-            ->count();
-
-        // URSSAF
-        $activityStartDate = \Carbon\Carbon::create(2026, 5, 6);
-
-        $acreEndDate = \Carbon\Carbon::create(2027, 3, 31);
-
-        $acreActive = now()->lessThanOrEqualTo($acreEndDate);
-
-        // Exemple micro-entreprise prestation de service avec ACRE
-        $urssafRate = 5.5; // à modifier selon ton taux réel
-
-
-        $urssafAmount = $totalPaid * ($urssafRate / 100);
-
-
-        // Impôts (à adapter selon ton choix réel)
-        $taxRate = 11; // pas de versement libératoire actuellement
-
-        $taxAmount = $totalPaid * ($taxRate / 100);
-
-
-        // Ce qu'il te reste après provisions
-        $availableAmount = $totalPaid - $urssafAmount - $taxAmount;
-
-
         return view('admin.page.dashboard', compact(
-            'totalRevenue',
-            'totalPaid',
-            'totalRemaining',
+            'yearRevenue',
+            'yearPaid',
+            'yearRemaining',
+
+            'monthlyRevenue',
+            'monthPaid',
+            'monthRemaining',
+
+            'monthUrssaf',
+            'monthTaxes',
+            'monthAvailable',
+
+            'urssafRate',
+            'taxRate',
+            'acreActive',
+            'acreEndDate',
+
             'overdueInvoices',
+            'draftInvoices',
+            'partiallyPaidInvoices',
+            'draftQuotes',
+
             'latestInvoices',
             'latestQuotes',
-            'pendingQuotes',
-            'acreEndDate',
-            'urssafRate',
-            'urssafAmount',
-            'taxRate',
-            'taxAmount',
-            'availableAmount',
-            'acreActive'
+            'latestInvoicesToCollect'
         ));
     }
 }
