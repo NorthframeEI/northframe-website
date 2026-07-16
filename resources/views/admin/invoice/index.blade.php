@@ -87,11 +87,11 @@
                             </th>
 
                             <th class="text-left text-label text-secondary px-6 py-5">
-                                PDF
+                                Facture
                             </th>
 
                             <th class="text-left text-label text-secondary px-6 py-5">
-                                Facture Acquittée
+                                Document
                             </th>
                         </tr>
 
@@ -222,38 +222,38 @@
 
                                 </td>
 
+                                <td class="px-6 py-5">
 
-                                @if ($invoice->status === 'paid')
-                                    <td class="px-6 py-5">
+                                    @php
+                                        $pdfPath = null;
+                                        $pdfRoute = null;
 
-                                        @php
-                                            $pdfPaidExists = Storage::disk('private')->exists(
-                                                'invoices/' . $invoice->number . '-acquittee.pdf',
-                                            );
+                                        if ($invoice->status === 'paid') {
+                                            $pdfPath = 'invoices/' . $invoice->number . '-acquittee.pdf';
+                                            $pdfRoute = 'invoices-preview-paid-pdf';
+                                        }
 
-                                        @endphp
+                                        if ($invoice->status === 'cancelled') {
+                                            $pdfPath = 'invoices/' . $invoice->number . '-annulee.pdf';
+                                            $pdfRoute = 'invoices-preview-cancelled-pdf';
+                                        }
 
-
-                                        @if ($pdfPaidExists)
-                                            <a href="{{ route('invoices-preview-paid-pdf', $invoice) }}" target="_blank">
-
-                                                <img src="{{ asset('icon/admin/eye.svg') }}" class="w-5 h-5"
-                                                    alt="Voir le PDF">
-
-                                            </a>
-                                        @else
-                                            <img src="{{ asset('icon/admin/eye-closed.svg') }}" class="w-5 h-5 opacity-40"
-                                                alt="PDF absent">
-                                        @endif
+                                        $pdfExists = $pdfPath && Storage::disk('private')->exists($pdfPath);
+                                    @endphp
 
 
-                                    </td>
-                                @else
-                                    <td class="px-6 py-5">
+                                    @if ($pdfExists)
+                                        <a href="{{ route($pdfRoute, $invoice) }}" target="_blank">
+
+                                            <img src="{{ asset('icon/admin/eye.svg') }}" class="w-5 h-5" alt="Voir le PDF">
+
+                                        </a>
+                                    @else
                                         <img src="{{ asset('icon/admin/eye-closed.svg') }}" class="w-5 h-5 opacity-40"
                                             alt="PDF absent">
-                                    </td>
-                                @endif
+                                    @endif
+
+                                </td>
                             </tr>
 
 

@@ -95,6 +95,7 @@ Route::domain(config('app.admin_domain'))
             Route::post('/invoices/{invoice}/generate-pdf', [InvoiceController::class, 'generatePdf'])->name('invoices-generate-pdf'); // Generate PDF for a specific invoice
             Route::get('/invoices/{invoice}/pdf', [InvoiceController::class, 'previewPdf'])->name('invoices-preview-pdf'); // Preview PDF for a specific invoice
             Route::post('/invoices/{invoice}/sent', [InvoiceController::class, 'sentInvoice'])->name('invoices-sent'); //Mark a specific invoice as sent
+            Route::post('/invoices/{invoice}/cancelled', [InvoiceController::class,'cancelledInvoice'])->name('invoices-cancelled');
 
             //Payement Management
             Route::post('/invoices/{invoice}/payment', [PaymentsController::class,'store'])->name('invoice-payments-store');
@@ -104,6 +105,13 @@ Route::domain(config('app.admin_domain'))
             Route::post('/invoices/{invoice}/generate-paid-pdf', [PaymentsController::class, 'generatePaidInvoice'])->name('invoices-generate-paid-pdf'); // Generate PDF for a specific invoice paid
             Route::get('/invoices/{invoice}/paid-pdf', [PaymentsController::class, 'previewPaidPdf'])->name('invoices-preview-paid-pdf'); // Preview PDF for a specific invoice paid
             Route::post('/invoices/{invoice}/sent-paid-pdf', [PaymentsController::class, 'sentInvoicePaid'])->name('invoices-paid-sent'); //Mark a specific invoice as sent
+
+            //Invoice cancelled
+            Route::get('/invoices/{invoice}/cancelled-preview', [PaymentsController::class, 'cancelledPreview'])->name('invoices-cancelled-preview'); // Preview a specific invoice paid
+            Route::post('/invoices/{invoice}/generate-cancelled-pdf', [PaymentsController::class, 'generateCancelledInvoice'])->name('invoices-generate-cancelled-pdf'); // Generate PDF for a specific invoice paid
+            Route::get('/invoices/{invoice}/cancelled-pdf', [PaymentsController::class, 'previewCancelledPdf'])->name('invoices-preview-cancelled-pdf'); // Preview PDF for a specific invoice paid
+            Route::post('/invoices/{invoice}/sent-cancelled-pdf', [PaymentsController::class, 'sentInvoiceCancelled'])->name('invoices-cancelled-sent'); //Mark a specific invoice as sent
+
             });
     });
 

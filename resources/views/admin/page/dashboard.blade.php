@@ -286,9 +286,34 @@
                                 {{ number_format($invoice->total, 2, ',', ' ') }} €
                             </td>
 
+                            @php
 
+                                $statusStyles = [
+                                    'draft' => 'bg-secondary/20 text-secondary',
+                                    'sent' => 'bg-brand/20 text-brand',
+                                    'partially_paid' => 'bg-warning/20 text-warning',
+                                    'paid' => 'bg-success/20 text-success',
+                                    'overdue' => 'bg-error/20 text-error',
+                                    'cancelled' => 'bg-error/20 text-error',
+                                ];
+
+                                $statusLabels = [
+                                    'draft' => 'Brouillon',
+                                    'sent' => 'Envoyée',
+                                    'partially_paid' => 'Partiellement payée',
+                                    'paid' => 'Payée',
+                                    'overdue' => 'En retard',
+                                    'cancelled' => 'Annulée',
+                                ];
+
+                            @endphp
                             <td class="px-4 py-4 text-primary">
-                                {{ $invoice->status }}
+                                <span
+                                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $statusStyles[$invoice->status] }}">
+
+                                    {{ $statusLabels[$invoice->status] }}
+
+                                </span>
                             </td>
 
 

@@ -89,4 +89,27 @@ class InvoiceController extends Controller
 
         return back()->with('success', 'La facture a été envoyé au client.');
     }
+
+    public function cancelledInvoice(Invoice $invoice)
+    {
+        if ($invoice->status === 'paid') {
+            return back()->with('error', 'Impossible d’annuler une facture déjà payée.');
+        }
+
+        if ($invoice->status === 'cancelled') {
+            return back()->with('error', 'Cette facture est déjà annulée.');
+        }
+        
+        if ($invoice->paid_amount > 0) {
+            return back()->with(
+                'error',
+                'Impossible d’annuler une facture avec un paiement enregistré.'
+            );
+        }
+
+        $invoice->update([
+            'status' => 'cancelled',
+        ]);
+        return back()->with('success', 'Cette facture est annulée.');
+    }
 }

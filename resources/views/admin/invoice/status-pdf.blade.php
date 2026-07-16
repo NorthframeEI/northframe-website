@@ -5,25 +5,44 @@
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        
     @endphp
 
     {{-- HEADER --}}
     <table width="100%" style="border-collapse:collapse;">
-        <div
-            style="
-    position:absolute;
-    top:80px;
-    left:320px;
-    border:3px solid #16a34a;
-    color:#16a34a;
-    padding:10px 25px;
-    font-size:26px;
-    font-weight:bold;
-    transform:rotate(-12deg);
-    letter-spacing:3px;
-">
-            ACQUITTÉE
-        </div>
+        @if ($invoice->status === 'paid')
+            <div
+                style="
+        position:absolute;
+        top:80px;
+        left:320px;
+        border:3px solid #16a34a;
+        color:#16a34a;
+        padding:10px 25px;
+        font-size:26px;
+        font-weight:bold;
+        transform:rotate(-12deg);
+        letter-spacing:3px;
+    ">
+                ACQUITTÉE
+            </div>
+        @elseif($invoice->status === 'cancelled')
+            <div
+                style="
+        position:absolute;
+        top:80px;
+        left:320px;
+        border:3px solid #dc2626;
+        color:#dc2626;
+        padding:10px 25px;
+        font-size:26px;
+        font-weight:bold;
+        transform:rotate(-12deg);
+        letter-spacing:3px;
+    ">
+                ANNULÉE
+            </div>
+        @endifÒ
         <tr>
 
             <td style="width:50%;vertical-align:top;">

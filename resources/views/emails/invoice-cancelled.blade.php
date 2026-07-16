@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta charset="UTF-8">
-    <title>Votre facture acquittée {{ $invoice->number }} - NorthFrame</title>
+    <title>Votre facture annulée {{ $invoice->number }} - NorthFrame</title>
 </head>
 
 <body
@@ -41,7 +40,7 @@
                                 letter-spacing:2px;
                                 text-transform:uppercase;
                             ">
-                                Facture acquittée
+                                Facture annulée
                             </p>
 
                             <h1
@@ -52,7 +51,7 @@
                                 line-height:1.3;
                                 font-weight:700;
                             ">
-                                Votre facture acquittée est disponible
+                                Votre facture annulée est disponible
                             </h1>
 
                         </td>
@@ -69,25 +68,25 @@
                             </p>
 
                             <p style="color:#334155;line-height:1.7;">
-                                Nous vous transmettons ci-joint votre facture acquittée
-                                <strong>{{ $invoice->number }}</strong>,
-                                attestant du règlement intégral des sommes dues.
+                                Nous vous informons que la facture
+                                <strong>{{ $invoice->number }}</strong>
+                                a été annulée.
                             </p>
 
                             <p style="color:#334155;line-height:1.7;">
-                                Ce document constitue votre justificatif de paiement. Aucun règlement complémentaire
-                                n'est attendu concernant cette facture.
+                                Cette facture ne fait plus l'objet d'une demande de règlement.
+                                Aucun paiement n'est attendu concernant ce document.
                             </p>
 
 
                             {{-- RESUME --}}
                             <table width="100%" cellspacing="0" cellpadding="0"
                                 style="
-                                margin-top:30px;
-                                background:#f8fafc;
-                                border:1px solid #e2e8f0;
-                                border-radius:12px;
-                            ">
+            margin-top:30px;
+            background:#f8fafc;
+            border:1px solid #e2e8f0;
+            border-radius:12px;
+        ">
 
                                 <tr>
                                     <td style="padding:20px;">
@@ -109,21 +108,21 @@
                                         <br>
 
                                         <span style="color:#64748b;">
-                                            Montant réglé :
+                                            Montant :
                                         </span>
 
                                         <strong>
-                                            {{ number_format($invoice->paid_amount, 2, ',', ' ') }} €
+                                            {{ number_format($invoice->total, 2, ',', ' ') }} €
                                         </strong>
 
                                         <br>
 
                                         <span style="color:#64748b;">
-                                            Date de règlement :
+                                            Statut :
                                         </span>
 
                                         <strong>
-                                            {{ $invoice->payments->last()->paid_at->format('d/m/Y') }}
+                                            Annulée
                                         </strong>
 
                                     </td>
@@ -134,21 +133,20 @@
 
                             <p
                                 style="
-                                margin-top:30px;
-                                color:#334155;
-                                line-height:1.7;
-                            ">
-                                La facture acquittée est disponible en pièce jointe au format PDF.
+            margin-top:30px;
+            color:#334155;
+            line-height:1.7;
+        ">
+                                Vous trouverez en pièce jointe le document PDF confirmant l'annulation de cette facture.
                             </p>
 
 
-                            <p
-                                style="
-                                color:#334155;
-                                line-height:1.7;
-                            ">
-                                Nous vous remercions pour votre confiance et restons à votre disposition pour toute
-                                information complémentaire.
+                            <p style="
+            color:#334155;
+            line-height:1.7;
+        ">
+                                Nous restons à votre disposition pour toute information complémentaire concernant cette
+                                annulation.
                             </p>
 
 

@@ -42,15 +42,22 @@
 
             <div class="w-full flex flex-wrap gap-3 justify-center mb-8">
 
-                @if ($invoice->status !== 'paid')
-                    <a href="{{ route('invoices-preview', $invoice) }}" target="_blank"
+                @if ($invoice->status === 'cancelled')
+                    <a href="{{ route('invoices-cancelled-preview', $invoice) }}" target="_blank"
+                        class="text-primary bg-surface border border-primary/10 hover:bg-hover px-[20px] py-[10px] rounded-[12px]">
+
+                        Prévisualiser
+
+                    </a>
+                @elseif ($invoice->status === 'paid')
+                    <a href="{{ route('invoices-paid-preview', $invoice) }}" target="_blank"
                         class="text-primary bg-surface border border-primary/10 hover:bg-hover px-[20px] py-[10px] rounded-[12px]">
 
                         Prévisualiser
 
                     </a>
                 @else
-                    <a href="{{ route('invoices-paid-preview', $invoice) }}" target="_blank"
+                    <a href="{{ route('invoices-preview', $invoice) }}" target="_blank"
                         class="text-primary bg-surface border border-primary/10 hover:bg-hover px-[20px] py-[10px] rounded-[12px]">
 
                         Prévisualiser
@@ -123,7 +130,51 @@
                         </form>
                     @endif
                 @endif
+                @php
+                    $pdfCancelledExists = Storage::disk('private')->exists(
+                        'invoices/' . $invoice->number . '-annulee.pdf',
+                    );
+                @endphp
+                @if ($invoice->status === 'cancelled')
+                    <form method="POST" action="{{ route('invoices-generate-cancelled-pdf', $invoice) }}">
 
+                        @csrf
+
+                        <button type="submit"
+                            class="text-primary bg-surface border border-primary/10 hover:bg-hover px-[20px] py-[10px] rounded-[12px] cursor-pointer">
+
+                            Générer PDF facture annulée
+
+                        </button>
+
+                    </form>
+
+                    @if ($pdfCancelledExists)
+                        <form method="POST" action="{{ route('invoices-cancelled-sent', $invoice) }}">
+
+                            @csrf
+
+                            <button type="submit"
+                                class="text-primary bg-brand hover:bg-hover px-[20px] py-[10px] rounded-[12px] cursor-pointer">
+
+                                Envoyer la facture annulée
+
+                            </button>
+
+                        </form>
+                    @endif
+                @endif
+                @if (!in_array($invoice->status, ['paid', 'cancelled']))
+                    <form method="POST" action="{{ route('invoices-cancelled', $invoice) }}">
+                        @csrf
+
+                        <button type="submit"
+                            class="text-primary bg-error hover:bg-hover px-[20px] py-[10px] rounded-[12px] cursor-pointer">
+                            Annuler la facture
+                        </button>
+
+                    </form>
+                @endif
 
 
             </div>
@@ -135,6 +186,12 @@
                 @if (session('success'))
                     <div class="p-4 bg-success/30 border border-success text-success rounded-lg">
                         {{ session('success') }}
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="p-4 bg-error/30 border border-error text-error rounded-lg">
+                        {{ session('error') }}
                     </div>
                 @endif
 
@@ -247,7 +304,7 @@
 
 
                         @php
-                           
+
                             $statusStyles = [
                                 'draft' => 'bg-secondary/20 text-secondary',
                                 'sent' => 'bg-brand/20 text-brand',
