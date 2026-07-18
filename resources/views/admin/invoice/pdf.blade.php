@@ -49,7 +49,7 @@
                 <div style="line-height:1.7;">
                     <strong style="font-size:20px;color:#0B1220;">NorthFrame</strong><br>
 
-                    112 Rue de Cambrai<br>
+                    112Q Rue de Cambrai<br>
                     62000 Arras<br>
 
                     contact@northframe.fr<br>
