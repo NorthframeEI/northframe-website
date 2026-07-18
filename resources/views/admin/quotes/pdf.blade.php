@@ -47,7 +47,7 @@
 
             <td>
                 <div style="line-height:1.7;">
-                    <strong style="font-size:20px;color:#0B1220;">NorthFrame</strong><br>
+                    <strong style="font-size:20px;color:#0B1220;">Northframe</strong><br>
 
                     112Q Rue de Cambrai<br>
                     62000 Arras<br>

@@ -5,7 +5,7 @@
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-        
+
     @endphp
 
     {{-- HEADER --}}
@@ -82,7 +82,7 @@
 
             <td>
                 <div style="line-height:1.7;">
-                    <strong style="font-size:20px;color:#0B1220;">NorthFrame</strong><br>
+                    <strong style="font-size:20px;color:#0B1220;">Northframe</strong><br>
 
                     112Q Rue de Cambrai<br>
                     62000 Arras<br>
@@ -129,8 +129,25 @@
     @endphp
 
     {{-- PRESTATIONS --}}
-    <div
-        style="
+    @if ($invoice->status === 'cancelled')
+        <div
+            style="
+    margin-top:20px;
+    padding:10px;
+   border:1px solid #dc2626;
+background:#fef2f2;
+color:#991b1b;
+">
+            <strong>Facture annulée</strong>
+
+            <br>
+
+            Cette facture a été annulée.
+
+        </div>
+    @else
+        <div
+            style="
     margin-top:20px;
     padding:10px;
     border:1px solid #16a34a;
@@ -138,24 +155,23 @@
     color:#166534;
 ">
 
-        <strong>
-            Facture acquittée
-        </strong>
+            <strong>Facture acquittée</strong>
+            <br>
 
-        <br>
+            Cette facture a été réglée intégralement.
 
-        Cette facture a été réglée intégralement.
+            <br>
+            Montant réglé :
+            {{ number_format($invoice->paid_amount, 2, ',', ' ') }} €
+            <br>
+            Date du dernier règlement :
+            @if ($invoice->payments->isNotEmpty())
+                {{ $invoice->payments->last()->paid_at->format('d/m/Y') }}
+            @endif
 
-        <br>
-        Montant réglé :
-        {{ number_format($invoice->paid_amount, 2, ',', ' ') }} €
-        <br>
-        Date du dernier règlement :
-        @if ($invoice->payments->isNotEmpty())
-            {{ $invoice->payments->last()->paid_at->format('d/m/Y') }}
-        @endif
+        </div>
+    @endif
 
-    </div>
     <h3 style="color:#0B1220;margin-bottom:10px;">
         Prestations
     </h3>
