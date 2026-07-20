@@ -9,7 +9,6 @@ export default function initNavPill() {
     // =========================
     let isClickNavigation = false;
     let currentActive = null;
-    let isAnchorScroll = false;
 
     // =========================
     // 👉 MOVE PILL
@@ -38,7 +37,7 @@ export default function initNavPill() {
     // 👉 SET ACTIVE
     // =========================
     function setActive(link) {
-        if (currentActive === link) return;
+        if (!link) return;
 
         currentActive = link;
 
@@ -100,38 +99,16 @@ export default function initNavPill() {
     window.addEventListener("scroll", onScroll, { passive: true });
 
     // =========================
-    // 🖱️ HOVER
-    // =========================
-    links.forEach((link) => {
-        link.addEventListener("mouseenter", () => {
-            movePill(link);
-            pill.style.opacity = 1;
-        });
-
-        link.addEventListener("mouseleave", () => {
-            const active = document.querySelector(".nav-active");
-
-            if (active) {
-                movePill(active);
-            } else {
-                pill.style.opacity = 0;
-            }
-        });
-    });
-
-    // =========================
     // 🖱️ CLICK NAVIGATION
     // =========================
     links.forEach((link) => {
         link.addEventListener("click", () => {
             isClickNavigation = true;
-            isAnchorScroll = true;
 
             setActive(link);
 
             setTimeout(() => {
                 isClickNavigation = false;
-                isAnchorScroll = false;
             }, 900);
         });
     });
@@ -167,6 +144,14 @@ export default function initNavPill() {
 
         if (initial) {
             movePill(initial);
+            return;
+        }
+
+        const isHome = window.location.pathname === "/";
+        const hasHash = window.location.hash;
+
+        if (isHome && !hasHash) {
+            clearNav();
         } else {
             onScroll();
         }
