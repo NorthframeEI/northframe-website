@@ -29,6 +29,7 @@ Route::get('/cgv', [PagesController::class, 'cgv'])->name('cgv');
 
 Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::post('/contact', [ContactController::class, 'postForm'])
+    ->middleware('throttle:5,1')
     ->name('contact.post');
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
@@ -84,7 +85,7 @@ Route::domain(config('app.admin_domain'))
 
             //Convert Quote to Invoice
             Route::post('/quotes/{quote}/convert', [QuoteController::class, 'convertToInvoice'])
-                ->name('quotes-convert');// Convert a specific quote to an invoice
+                ->name('quotes-convert'); // Convert a specific quote to an invoice
 
 
             //Invoice Management
@@ -95,10 +96,10 @@ Route::domain(config('app.admin_domain'))
             Route::post('/invoices/{invoice}/generate-pdf', [InvoiceController::class, 'generatePdf'])->name('invoices-generate-pdf'); // Generate PDF for a specific invoice
             Route::get('/invoices/{invoice}/pdf', [InvoiceController::class, 'previewPdf'])->name('invoices-preview-pdf'); // Preview PDF for a specific invoice
             Route::post('/invoices/{invoice}/sent', [InvoiceController::class, 'sentInvoice'])->name('invoices-sent'); //Mark a specific invoice as sent
-            Route::post('/invoices/{invoice}/cancelled', [InvoiceController::class,'cancelledInvoice'])->name('invoices-cancelled');
+            Route::post('/invoices/{invoice}/cancelled', [InvoiceController::class, 'cancelledInvoice'])->name('invoices-cancelled');
 
             //Payement Management
-            Route::post('/invoices/{invoice}/payment', [PaymentsController::class,'store'])->name('invoice-payments-store');
+            Route::post('/invoices/{invoice}/payment', [PaymentsController::class, 'store'])->name('invoice-payments-store');
 
             //Invoice paid
             Route::get('/invoices/{invoice}/paid-preview', [PaymentsController::class, 'paidPreview'])->name('invoices-paid-preview'); // Preview a specific invoice paid
@@ -112,7 +113,7 @@ Route::domain(config('app.admin_domain'))
             Route::get('/invoices/{invoice}/cancelled-pdf', [PaymentsController::class, 'previewCancelledPdf'])->name('invoices-preview-cancelled-pdf'); // Preview PDF for a specific invoice paid
             Route::post('/invoices/{invoice}/sent-cancelled-pdf', [PaymentsController::class, 'sentInvoiceCancelled'])->name('invoices-cancelled-sent'); //Mark a specific invoice as sent
 
-            });
+        });
     });
 
 //maintenance preview route for local environment

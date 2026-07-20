@@ -43,7 +43,13 @@
                             <h1
                                 style=" margin:12px 0 0; color:#ffffff; font-size:28px; line-height:1.3; font-weight:700; ">
                                 Nouveau message reçu </h1>
+                            @if (env('APP_ENV') === 'local')
+                                <p>Mode développement</p>
+                            @elseif(env('APP_ENV') === 'preprod')
+                                <p>Mode Preprod</p>
+                            @endif
                         </td>
+
                     </tr>
 
                     <!-- Infos -->

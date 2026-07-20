@@ -53,7 +53,11 @@
                         ">
                                 Votre devis est disponible
                             </h1>
-
+                            @if (env('APP_ENV') === 'local')
+                                <p>Mode développement</p>
+                            @elseif(env('APP_ENV') === 'preprod')
+                                <p>Mode Preprod</p>
+                            @endif
                         </td>
                     </tr>
 

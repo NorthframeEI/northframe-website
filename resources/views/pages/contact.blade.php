@@ -85,7 +85,13 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-[16px] overflow-visible">
+                        <!--Input Hidden Honeypot against spam bot-->
+                        <div style="display:none;">
+                            <input type="text" name="website" autocomplete="off" tabindex="-1">
+                        </div>
+                        <input type="hidden" name="form_started_at" value="{{ now()->timestamp }}">
 
+                        <!-------------------------->
                         <div class="flex flex-col gap-[6px]">
                             <label class="text-label text-secondary">
                                 Votre entreprise <span class="text-red-500">*</span>
