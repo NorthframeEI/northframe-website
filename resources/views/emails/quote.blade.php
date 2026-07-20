@@ -54,9 +54,9 @@
                                 Votre devis est disponible
                             </h1>
                             @if (env('APP_ENV') === 'local')
-                                <p>Mode développement</p>
+                                <p style="color:#ffffff">Mode développement</p>
                             @elseif(env('APP_ENV') === 'preprod')
-                                <p>Mode Preprod</p>
+                                <p style="color:#ffffff">Mode Preprod</p>
                             @endif
                         </td>
                     </tr>
