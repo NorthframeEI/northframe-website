@@ -26,6 +26,18 @@ class TemplatesCategoriesSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'name' => 'Restauration',
+                'slug' => 'restauration',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Génération de prospects',
+                'slug' => 'lead-generation',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

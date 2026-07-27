@@ -8,12 +8,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+use ZipArchive;
+use Illuminate\Support\Facades\File;
 
 class TemplateController extends Controller
 {
     public function createTemplate()
     {
-                $categories = TemplatesCategories::all();
+        $categories = TemplatesCategories::all();
 
         return view('admin.templates.create-template', compact('categories'));
     }
@@ -26,109 +28,342 @@ class TemplateController extends Controller
             'template_category_id' => ['nullable', 'exists:templates_categories,id'],
             'short_description' => ['required', 'string'],
             'long_description' => ['nullable', 'string'],
-            'thumbnail_url' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-            'hero_image_url' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-            'html_path' => ['required', 'string'],
-            'css_path' => ['required', 'string'],
-            'js_path' => ['required', 'string'],
 
+            'thumbnail_url' => [
+                'required',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:5120'
+            ],
+
+            'hero_image_url' => [
+                'required',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:5120'
+            ],
+
+            'template_zip' => [
+                'required',
+                'file',
+                'mimes:zip',
+                'max:51200'
+            ],
         ]);
+
 
         $slug = Str::slug($validated['slug']);
 
+
+        /*
+    |--------------------------------------------------------------------------
+    | Images template
+    |--------------------------------------------------------------------------
+    */
+
+        $templateFolder = "templates/{$slug}";
+
+
         $thumbnailPath = $request->file('thumbnail_url')->storeAs(
-            "templates/{$slug}",
+            $templateFolder,
             'card.' . $request->file('thumbnail_url')->extension(),
             'public'
         );
 
+
         $heroImagePath = $request->file('hero_image_url')->storeAs(
-            "templates/{$slug}",
+            $templateFolder,
             'hero.' . $request->file('hero_image_url')->extension(),
             'public'
         );
 
-        
-        $htmlPath = $request->file('html_file')->storeAs(
-            "templates/{$slug}/source",
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | ZIP extraction
+    |--------------------------------------------------------------------------
+    */
+
+
+        $zip = new ZipArchive();
+
+
+        $zipTemporaryPath = $request
+            ->file('template_zip')
+            ->getRealPath();
+
+
+
+        if ($zip->open($zipTemporaryPath) !== true) {
+
+            return back()
+                ->withErrors([
+                    'template_zip' => 'Impossible d’ouvrir le ZIP.'
+                ])
+                ->withInput();
+        }
+
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Vérification contenu ZIP
+    |--------------------------------------------------------------------------
+    */
+
+
+        $requiredFiles = [
             'index.html',
-            'public'
-        );
-
-        $cssPath = $request->file('css_file')->storeAs(
-            "templates/{$slug}/source",
             'style.css',
-            'public'
+            'script.js',
+        ];
+
+
+        $missingFiles = [];
+
+
+        foreach ($requiredFiles as $file) {
+
+            if ($zip->locateName($file) === false) {
+                $missingFiles[] = $file;
+            }
+        }
+
+
+
+        $hasAssets = false;
+
+
+        for ($i = 0; $i < $zip->numFiles; $i++) {
+
+            $file = $zip->getNameIndex($i);
+
+
+            if (
+                str_starts_with($file, 'assets/')
+            ) {
+                $hasAssets = true;
+                break;
+            }
+        }
+
+
+
+        if (!empty($missingFiles)) {
+
+            $zip->close();
+
+
+            return back()
+                ->withErrors([
+                    'template_zip' =>
+                    'Fichiers manquants : '
+                        . implode(', ', $missingFiles)
+                ])
+                ->withInput();
+        }
+
+
+
+        if (!$hasAssets) {
+
+            $zip->close();
+
+
+            return back()
+                ->withErrors([
+                    'template_zip' =>
+                    'Le dossier assets est obligatoire.'
+                ])
+                ->withInput();
+        }
+
+
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Extraction dans source
+    |--------------------------------------------------------------------------
+    */
+
+
+        $sourcePath = storage_path(
+            "app/public/{$templateFolder}/source"
         );
 
-        $jsPath = $request->file('js_file')->storeAs(
-            "templates/{$slug}/source",
-            'script.js',
-            'public'
-        );
+
+        File::ensureDirectoryExists($sourcePath);
+
+
+
+        $zip->extractTo($sourcePath);
+
+
+        $zip->close();
+
+        File::deleteDirectory($sourcePath . '/__MACOSX');
+        File::delete($sourcePath . '/.DS_Store');
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Création template
+    |--------------------------------------------------------------------------
+    */
+
 
         $template = Template::create([
+
             'title' => $validated['title'],
-            'slug' => Str::slug($validated['slug']),
-            'template_category_id' => $validated['template_category_id'] ?? null,
-            'short_description' => $validated['short_description'],
-            'long_description' => $validated['long_description'] ?? null,
-            'thumbnail_url' => $thumbnailPath,
-            'hero_image_url' => $heroImagePath,
-            'is_featured' => $request->boolean('is_featured'),
-            'is_active' => $request->boolean('is_active'),
-            'html_path' => $htmlPath,
-            'css_path' => $cssPath,
-            'js_path' => $jsPath,
+
+            'slug' => $slug,
+
+            'template_category_id' =>
+            $validated['template_category_id'] ?? null,
+
+            'short_description' =>
+            $validated['short_description'],
+
+            'long_description' =>
+            $validated['long_description'] ?? null,
+
+
+            'thumbnail_url' =>
+            $thumbnailPath,
+
+            'hero_image_url' =>
+            $heroImagePath,
+
+
+            'is_featured' =>
+            $request->boolean('is_featured'),
+
+            'is_active' =>
+            $request->boolean('is_active'),
+
+
+
+            'html_path' =>
+            "{$templateFolder}/source/index.html",
+
+
+            'css_path' =>
+            "{$templateFolder}/source/style.css",
+
+
+            'js_path' =>
+            "{$templateFolder}/source/script.js",
         ]);
 
 
+
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Benefits
+    |--------------------------------------------------------------------------
+    */
+
         foreach ($request->benefits ?? [] as $index => $benefit) {
+
 
             if (empty($benefit['title'])) {
                 continue;
             }
 
+
             $template->benefits()->create([
+
                 'icon' => null,
-                'title' => $benefit['title'],
-                'description' => $benefit['description'] ?? null,
-                'position' => $index,
+
+                'title' =>
+                $benefit['title'],
+
+                'description' =>
+                $benefit['description'] ?? null,
+
+                'position' =>
+                $index,
             ]);
         }
 
+
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Sections
+    |--------------------------------------------------------------------------
+    */
+
         foreach ($request->sections ?? [] as $index => $section) {
+
 
             if (empty($section['title'])) {
                 continue;
             }
 
-            $file = $request->file("sections.$index.image_url");
+
+
+            $file =
+                $request->file(
+                    "sections.$index.image_url"
+                );
+
+
 
             $imageUrl = null;
 
+
+
             if ($file) {
+
 
                 $imageUrl = $file->storeAs(
                     "templates/{$slug}/sections",
-                    "{$index}-" . Str::slug($section['title']) . "." . $file->extension(),
+
+                    "{$index}-"
+                        . Str::slug($section['title'])
+                        . "."
+                        . $file->extension(),
+
                     'public'
                 );
             }
 
+
+
             $template->sections()->create([
-                'title' => $section['title'],
-                'description' => $section['description'] ?? null,
-                'image_url' => $imageUrl,
-                'position' => $index,
+
+                'title' =>
+                $section['title'],
+
+
+                'description' =>
+                $section['description'] ?? null,
+
+
+                'image_url' =>
+                $imageUrl,
+
+
+                'position' =>
+                $index,
             ]);
         }
 
 
 
+
         return redirect()
             ->route('create-template')
-            ->with('success', 'Template créé avec succès.');
+            ->with(
+                'success',
+                'Template créé avec succès.'
+            );
     }
 
     public function listTemplates()
@@ -186,9 +421,12 @@ class TemplateController extends Controller
             'long_description' => ['nullable', 'string'],
             'thumbnail_url' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'hero_image_url' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-            'html_path' => ['required', 'string'],
-            'css_path' => ['required', 'string'],
-            'js_path' => ['required', 'string'],
+            'template_zip' => [
+                'nullable',
+                'file',
+                'mimes:zip',
+                'max:51200'
+            ],
             'benefits' => ['nullable', 'array'],
             'sections' => ['nullable', 'array'],
         ]);
@@ -218,28 +456,128 @@ class TemplateController extends Controller
         $cssPath = $template->css_path;
         $jsPath = $template->js_path;
 
-        if ($request->hasFile('html_file')) {
-            if ($template->html_path) {
-                Storage::disk('public')->delete($template->html_path);
+
+        if ($request->hasFile('template_zip')) {
+
+
+            $sourcePath = storage_path(
+                "app/public/templates/{$slug}/source"
+            );
+
+
+            // Suppression ancienne version
+            if (File::exists($sourcePath)) {
+                File::deleteDirectory($sourcePath);
             }
 
-            $htmlPath = $request->file('html_file')->storeAs(
-                "templates/{$slug}/source",
+
+            File::ensureDirectoryExists($sourcePath);
+
+
+
+            $zip = new ZipArchive();
+
+
+            if ($zip->open(
+                $request->file('template_zip')->getRealPath()
+            ) !== true) {
+
+                return back()
+                    ->withErrors([
+                        'template_zip' => 'Impossible d’ouvrir le ZIP.'
+                    ])
+                    ->withInput();
+            }
+
+
+
+            // Vérification fichiers obligatoires
+
+            $requiredFiles = [
                 'index.html',
-                'public'
-            );
-        }
+                'style.css',
+                'script.js',
+            ];
 
-        if ($request->hasFile('css_file')) {
-            if ($template->css_path) {
-                Storage::disk('public')->delete($template->css_path);
+
+            foreach ($requiredFiles as $file) {
+
+                if ($zip->locateName($file) === false) {
+
+                    $zip->close();
+
+                    return back()
+                        ->withErrors([
+                            'template_zip' =>
+                            "Le fichier {$file} est manquant."
+                        ])
+                        ->withInput();
+                }
             }
 
-            $cssPath = $request->file('css_file')->storeAs(
-                "templates/{$slug}/source",
-                'style.css',
-                'public'
+
+
+            // Vérification assets
+
+            $hasAssets = false;
+
+
+            for ($i = 0; $i < $zip->numFiles; $i++) {
+
+                $fileName = $zip->getNameIndex($i);
+
+
+                if (str_starts_with($fileName, 'assets/')) {
+
+                    $hasAssets = true;
+                    break;
+                }
+            }
+
+
+
+            if (!$hasAssets) {
+
+                $zip->close();
+
+                return back()
+                    ->withErrors([
+                        'template_zip' =>
+                        'Le dossier assets est obligatoire.'
+                    ])
+                    ->withInput();
+            }
+
+
+
+            $zip->extractTo($sourcePath);
+
+            $zip->close();
+
+
+
+            // Nettoyage MacOS
+
+            File::deleteDirectory(
+                $sourcePath . '/__MACOSX'
             );
+
+            File::delete(
+                $sourcePath . '/.DS_Store'
+            );
+
+
+
+            $htmlPath =
+                "templates/{$slug}/source/index.html";
+
+
+            $cssPath =
+                "templates/{$slug}/source/style.css";
+
+
+            $jsPath =
+                "templates/{$slug}/source/script.js";
         }
 
         if ($request->hasFile('js_file')) {

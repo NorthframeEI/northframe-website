@@ -201,55 +201,27 @@
                         <div class="flex flex-col gap-[16px]">
 
                             <h2 class="text-h3 text-primary">
-                                Fichiers source du template
+                                Archive du template
                             </h2>
 
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-[16px]">
+                            <div class="flex flex-col gap-[6px]">
 
-                                <div class="flex flex-col gap-[6px]">
-                                    <label class="text-label text-secondary">
-                                        Fichier HTML
-                                    </label>
+                                <label class="text-label text-secondary">
+                                    Fichier ZIP <span class="text-red-500">*</span>
+                                </label>
 
-                                    <input type="file" name="html_file" accept=".html,text/html"
-                                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
+                                <input type="file" name="template_zip" accept=".zip,application/zip"
+                                    class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
 
-                                    @error('html_file')
-                                        <p class="text-error text-small">
-                                            {{ $message }}
-                                        </p>
-                                    @enderror
-                                </div>
+                                @error('template_zip')
+                                    <p class="text-error text-small">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
 
-                                <div class="flex flex-col gap-[6px]">
-                                    <label class="text-label text-secondary">
-                                        Fichier CSS
-                                    </label>
-
-                                    <input type="file" name="css_file" accept=".css,text/css"
-                                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
-
-                                    @error('css_file')
-                                        <p class="text-error text-small">
-                                            {{ $message }}
-                                        </p>
-                                    @enderror
-                                </div>
-
-                                <div class="flex flex-col gap-[6px]">
-                                    <label class="text-label text-secondary">
-                                        Fichier JS
-                                    </label>
-
-                                    <input type="file" name="js_file" accept=".js,text/javascript"
-                                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition cursor-pointer">
-
-                                    @error('js_file')
-                                        <p class="text-error text-small">
-                                            {{ $message }}
-                                        </p>
-                                    @enderror
-                                </div>
+                                <p class="text-small text-secondary/60">
+                                    Le fichier ZIP doit contenir les fichiers du template (HTML, CSS, JS et dossier assets).
+                                </p>
 
                             </div>
 
