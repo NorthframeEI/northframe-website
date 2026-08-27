@@ -12,6 +12,7 @@ use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\QuoteItemController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\PortfolioController;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 
@@ -58,6 +59,11 @@ Route::domain(config('app.admin_domain'))
             Route::get('/category/{category}/edit', [TemplateCategoryController::class, 'editCategory'])->name('edit-category'); // Show the form to edit a specific category
             Route::put('/category/{category}', [TemplateCategoryController::class, 'updateCategory'])->name('update-category'); // Handle the form submission to update a specific category
             Route::delete('/category/{category}', [TemplateCategoryController::class, 'deleteCategory'])->name('delete-category'); // Delete a specific category    
+
+            //Portfolio Management
+            Route::get('/portfolio', [PortfolioController::class, 'index'])->name('list-portfolio');
+            Route::get('/create-portfolio', [PortfolioController::class, 'create'])->name('create-portfolio');
+            Route::post('/create-portfolio', [PortfolioController::class, 'store'])->name('store-portfolio');
 
             //Quote Management
             Route::resource('quotes', QuoteController::class);

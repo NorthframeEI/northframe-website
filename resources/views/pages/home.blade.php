@@ -270,7 +270,10 @@
             Des sites web conçus pour allier performance, clarté et expérience utilisateur.
         </h3>
         <div class="flex flex-wrap justify-center gap-[10px]  pt-3">
-            <a href="#"
+            @foreach ($projects as $project)
+                <x-card-portfolio :project="$project" />
+            @endforeach
+            {{-- <a href="#"
                 class="relative w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px]
           hover:shadow-hover hover:-translate-y-2 transition-all duration-300 ease-out hover:scale-[1.02]
           border border-primary/5 hover:border-hover pointer-events-none">
@@ -346,7 +349,7 @@
 
 
                 </div>
-            </a>
+            </a> --}}
         </div>
     </section>
     <!--Process Section -->
@@ -421,220 +424,221 @@
     </section>
 
     <!--FAQ Section-->
-<section id="questions-frequentes" class="p-[10px] scroll-mt-20">
+    <section id="questions-frequentes" class="p-[10px] scroll-mt-20">
 
-    <h2 class="text-h2 text-primary text-center">
-        Questions fréquentes
-    </h2>
-
-    <p class="text-h3 text-secondary text-center">
-        Vous avez une question sur la création de votre site internet ou le déroulement d'un projet ?
-        Retrouvez ici les réponses aux questions les plus fréquentes.
-    </p>
-
-    <div id="accordion-card" data-accordion="collapse" class="max-w-4xl mx-auto px-[10px] py-[10px]">
-
-        <!-- 1 -->
-        <h2 id="accordion-card-heading-1">
-            <button type="button"
-                class="flex items-center justify-between w-full p-5 rounded-[12px] bg-surface shadow-lg border border-primary/5 hover:border-hover transition-all duration-200 text-left"
-                data-accordion-target="#accordion-card-body-1" aria-expanded="false"
-                aria-controls="accordion-card-body-1">
-
-                <span class="text-label text-primary">
-                    Combien de temps faut-il pour créer un site internet ?
-                </span>
-
-                <svg data-accordion-icon class="w-5 h-5 shrink-0 transition-transform text-primary" 
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" d="m5 9 7 7 7-7"/>
-                </svg>
-            </button>
+        <h2 class="text-h2 text-primary text-center">
+            Questions fréquentes
         </h2>
 
-        <div id="accordion-card-body-1"
-            class="hidden rounded-b-[12px] border border-full border-primary/5 shadow-lg"
-            aria-labelledby="accordion-card-heading-1">
-            <div class="p-5">
-                <p class="text-label text-secondary">
-                    Une landing page est généralement livrée sous <strong>5 à 7 jours ouvrés</strong>.
-                    Un site vitrine nécessite en moyenne <strong>10 à 15 jours ouvrés</strong> selon les fonctionnalités et les contenus à intégrer.
-                </p>
+        <p class="text-h3 text-secondary text-center">
+            Vous avez une question sur la création de votre site internet ou le déroulement d'un projet ?
+            Retrouvez ici les réponses aux questions les plus fréquentes.
+        </p>
+
+        <div id="accordion-card" data-accordion="collapse" class="max-w-4xl mx-auto px-[10px] py-[10px]">
+
+            <!-- 1 -->
+            <h2 id="accordion-card-heading-1">
+                <button type="button"
+                    class="flex items-center justify-between w-full p-5 rounded-[12px] bg-surface shadow-lg border border-primary/5 hover:border-hover transition-all duration-200 text-left"
+                    data-accordion-target="#accordion-card-body-1" aria-expanded="false"
+                    aria-controls="accordion-card-body-1">
+
+                    <span class="text-label text-primary">
+                        Combien de temps faut-il pour créer un site internet ?
+                    </span>
+
+                    <svg data-accordion-icon class="w-5 h-5 shrink-0 transition-transform text-primary"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m5 9 7 7 7-7" />
+                    </svg>
+                </button>
+            </h2>
+
+            <div id="accordion-card-body-1" class="hidden rounded-b-[12px] border border-full border-primary/5 shadow-lg"
+                aria-labelledby="accordion-card-heading-1">
+                <div class="p-5">
+                    <p class="text-label text-secondary">
+                        Une landing page est généralement livrée sous <strong>5 à 7 jours ouvrés</strong>.
+                        Un site vitrine nécessite en moyenne <strong>10 à 15 jours ouvrés</strong> selon les fonctionnalités
+                        et les contenus à intégrer.
+                    </p>
+                </div>
             </div>
+
+            <!-- 2 -->
+            <h2 id="accordion-card-heading-2" class="mt-4">
+                <button type="button"
+                    class="flex items-center justify-between w-full p-5 rounded-[12px] bg-surface shadow-lg border border-primary/5 hover:border-hover transition-all duration-200 text-left"
+                    data-accordion-target="#accordion-card-body-2" aria-expanded="false"
+                    aria-controls="accordion-card-body-2">
+
+                    <span class="text-label text-primary">
+                        Le site sera-t-il compatible avec les mobiles ?
+                    </span>
+
+                    <svg data-accordion-icon class="w-5 h-5 shrink-0 transition-transform text-primary"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m5 9 7 7 7-7" />
+                    </svg>
+                </button>
+            </h2>
+
+            <div id="accordion-card-body-2" class="hidden rounded-b-[12px] border border-t-0 border-primary/5 shadow-lg">
+                <div class="p-5">
+                    <p class="text-label text-secondary">
+                        Oui. Tous les sites sont développés en responsive afin d'offrir une expérience optimale sur
+                        ordinateur, tablette et smartphone.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 3 -->
+            <h2 id="accordion-card-heading-3" class="mt-4">
+                <button type="button"
+                    class="flex items-center justify-between w-full p-5 rounded-[12px] bg-surface shadow-lg border border-primary/5 hover:border-hover transition-all duration-200 text-left"
+                    data-accordion-target="#accordion-card-body-3" aria-expanded="false"
+                    aria-controls="accordion-card-body-3">
+
+                    <span class="text-label text-primary">
+                        Puis-je demander des modifications pendant le développement ?
+                    </span>
+
+                    <svg data-accordion-icon class="w-5 h-5 shrink-0 transition-transform text-primary"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m5 9 7 7 7-7" />
+                    </svg>
+                </button>
+            </h2>
+
+            <div id="accordion-card-body-3" class="hidden rounded-b-[12px] border border-t-0 border-primary/5 shadow-lg">
+                <div class="p-5">
+                    <p class="text-label text-secondary">
+                        Oui. Des ajustements sont prévus durant le développement afin que le résultat corresponde à vos
+                        attentes avant la mise en ligne.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 4 -->
+            <h2 id="accordion-card-heading-4" class="mt-4">
+                <button type="button"
+                    class="flex items-center justify-between w-full p-5 rounded-[12px] bg-surface shadow-lg border border-primary/5 hover:border-hover transition-all duration-200 text-left"
+                    data-accordion-target="#accordion-card-body-4" aria-expanded="false"
+                    aria-controls="accordion-card-body-4">
+
+                    <span class="text-label text-primary">
+                        L'hébergement et le nom de domaine sont-ils inclus ?
+                    </span>
+
+                    <svg data-accordion-icon class="w-5 h-5 shrink-0 transition-transform text-primary"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m5 9 7 7 7-7" />
+                    </svg>
+                </button>
+            </h2>
+
+            <div id="accordion-card-body-4" class="hidden rounded-b-[12px] border border-t-0 border-primary/5 shadow-lg">
+                <div class="p-5">
+                    <p class="text-label text-secondary">
+                        Non, mais je peux vous accompagner dans le choix d'un hébergement fiable et d'un nom de domaine
+                        adapté à votre activité.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 5 -->
+            <h2 id="accordion-card-heading-5" class="mt-4">
+                <button type="button"
+                    class="flex items-center justify-between w-full p-5 rounded-[12px] bg-surface shadow-lg border border-primary/5 hover:border-hover transition-all duration-200 text-left"
+                    data-accordion-target="#accordion-card-body-5" aria-expanded="false"
+                    aria-controls="accordion-card-body-5">
+
+                    <span class="text-label text-primary">
+                        Comment se déroule un projet ?
+                    </span>
+
+                    <svg data-accordion-icon class="w-5 h-5 shrink-0 transition-transform text-primary"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m5 9 7 7 7-7" />
+                    </svg>
+                </button>
+            </h2>
+
+            <div id="accordion-card-body-5" class="hidden rounded-b-[12px] border border-t-0 border-primary/5 shadow-lg">
+                <div class="p-5">
+                    <p class="text-label text-secondary">
+                        Après un premier échange, nous définissons ensemble vos besoins. Je réalise ensuite le
+                        développement, vous présente une version de validation puis procède à la mise en ligne une fois le
+                        projet validé.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 6 -->
+            <h2 id="accordion-card-heading-6" class="mt-4">
+                <button type="button"
+                    class="flex items-center justify-between w-full p-5 rounded-[12px] bg-surface shadow-lg border border-primary/5 hover:border-hover transition-all duration-200 text-left"
+                    data-accordion-target="#accordion-card-body-6" aria-expanded="false"
+                    aria-controls="accordion-card-body-6">
+
+                    <span class="text-label text-primary">
+                        Proposez-vous une maintenance après la mise en ligne ?
+                    </span>
+
+                    <svg data-accordion-icon class="w-5 h-5 shrink-0 transition-transform text-primary"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m5 9 7 7 7-7" />
+                    </svg>
+                </button>
+            </h2>
+
+            <div id="accordion-card-body-6" class="hidden rounded-b-[12px] border border-t-0 border-primary/5 shadow-lg">
+                <div class="p-5">
+                    <p class="text-label text-secondary">
+                        Oui. Je propose une formule de maintenance comprenant les mises à jour, les corrections techniques
+                        et le suivi du bon fonctionnement de votre site.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 7 -->
+            <h2 id="accordion-card-heading-7" class="mt-4">
+                <button type="button"
+                    class="flex items-center justify-between w-full p-5 rounded-[12px] bg-surface shadow-lg border border-primary/5 hover:border-hover transition-all duration-200 text-left"
+                    data-accordion-target="#accordion-card-body-7" aria-expanded="false"
+                    aria-controls="accordion-card-body-7">
+
+                    <span class="text-label text-primary">
+                        Travaillez-vous uniquement avec des entreprises à Arras ?
+                    </span>
+
+                    <svg data-accordion-icon class="w-5 h-5 shrink-0 transition-transform text-primary"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m5 9 7 7 7-7" />
+                    </svg>
+                </button>
+            </h2>
+
+            <div id="accordion-card-body-7" class="hidden rounded-b-[12px] border border-t-0 border-primary/5 shadow-lg">
+                <div class="p-5">
+                    <p class="text-label text-secondary">
+                        Basé à Arras, j'accompagne des entreprises, indépendants et associations partout en France. Les
+                        échanges peuvent se faire à distance ou en présentiel selon vos besoins.
+                    </p>
+                </div>
+            </div>
+
         </div>
 
-        <!-- 2 -->
-        <h2 id="accordion-card-heading-2" class="mt-4">
-            <button type="button"
-                class="flex items-center justify-between w-full p-5 rounded-[12px] bg-surface shadow-lg border border-primary/5 hover:border-hover transition-all duration-200 text-left"
-                data-accordion-target="#accordion-card-body-2" aria-expanded="false"
-                aria-controls="accordion-card-body-2">
-
-                <span class="text-label text-primary">
-                    Le site sera-t-il compatible avec les mobiles ?
-                </span>
-
-                 <svg data-accordion-icon class="w-5 h-5 shrink-0 transition-transform text-primary"
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" d="m5 9 7 7 7-7"/>
-                </svg>
-            </button>
-        </h2>
-
-        <div id="accordion-card-body-2"
-            class="hidden rounded-b-[12px] border border-t-0 border-primary/5 shadow-lg">
-            <div class="p-5">
-                <p class="text-label text-secondary">
-                    Oui. Tous les sites sont développés en responsive afin d'offrir une expérience optimale sur ordinateur, tablette et smartphone.
-                </p>
-            </div>
-        </div>
-
-        <!-- 3 -->
-        <h2 id="accordion-card-heading-3" class="mt-4">
-            <button type="button"
-                class="flex items-center justify-between w-full p-5 rounded-[12px] bg-surface shadow-lg border border-primary/5 hover:border-hover transition-all duration-200 text-left"
-                data-accordion-target="#accordion-card-body-3" aria-expanded="false"
-                aria-controls="accordion-card-body-3">
-
-                <span class="text-label text-primary">
-                    Puis-je demander des modifications pendant le développement ?
-                </span>
-
-                <svg data-accordion-icon class="w-5 h-5 shrink-0 transition-transform text-primary"
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" d="m5 9 7 7 7-7"/>
-                </svg>
-            </button>
-        </h2>
-
-        <div id="accordion-card-body-3"
-            class="hidden rounded-b-[12px] border border-t-0 border-primary/5 shadow-lg">
-            <div class="p-5">
-                <p class="text-label text-secondary">
-                    Oui. Des ajustements sont prévus durant le développement afin que le résultat corresponde à vos attentes avant la mise en ligne.
-                </p>
-            </div>
-        </div>
-
-        <!-- 4 -->
-        <h2 id="accordion-card-heading-4" class="mt-4">
-            <button type="button"
-                class="flex items-center justify-between w-full p-5 rounded-[12px] bg-surface shadow-lg border border-primary/5 hover:border-hover transition-all duration-200 text-left"
-                data-accordion-target="#accordion-card-body-4" aria-expanded="false"
-                aria-controls="accordion-card-body-4">
-
-                <span class="text-label text-primary">
-                    L'hébergement et le nom de domaine sont-ils inclus ?
-                </span>
-
-                 <svg data-accordion-icon class="w-5 h-5 shrink-0 transition-transform text-primary"
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" d="m5 9 7 7 7-7"/>
-                </svg>
-            </button>
-        </h2>
-
-        <div id="accordion-card-body-4"
-            class="hidden rounded-b-[12px] border border-t-0 border-primary/5 shadow-lg">
-            <div class="p-5">
-                <p class="text-label text-secondary">
-                    Non, mais je peux vous accompagner dans le choix d'un hébergement fiable et d'un nom de domaine adapté à votre activité.
-                </p>
-            </div>
-        </div>
-
-        <!-- 5 -->
-        <h2 id="accordion-card-heading-5" class="mt-4">
-            <button type="button"
-                class="flex items-center justify-between w-full p-5 rounded-[12px] bg-surface shadow-lg border border-primary/5 hover:border-hover transition-all duration-200 text-left"
-                data-accordion-target="#accordion-card-body-5" aria-expanded="false"
-                aria-controls="accordion-card-body-5">
-
-                <span class="text-label text-primary">
-                    Comment se déroule un projet ?
-                </span>
-
-                 <svg data-accordion-icon class="w-5 h-5 shrink-0 transition-transform text-primary"
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" d="m5 9 7 7 7-7"/>
-                </svg>
-            </button>
-        </h2>
-
-        <div id="accordion-card-body-5"
-            class="hidden rounded-b-[12px] border border-t-0 border-primary/5 shadow-lg">
-            <div class="p-5">
-                <p class="text-label text-secondary">
-                    Après un premier échange, nous définissons ensemble vos besoins. Je réalise ensuite le développement, vous présente une version de validation puis procède à la mise en ligne une fois le projet validé.
-                </p>
-            </div>
-        </div>
-
-        <!-- 6 -->
-        <h2 id="accordion-card-heading-6" class="mt-4">
-            <button type="button"
-                class="flex items-center justify-between w-full p-5 rounded-[12px] bg-surface shadow-lg border border-primary/5 hover:border-hover transition-all duration-200 text-left"
-                data-accordion-target="#accordion-card-body-6" aria-expanded="false"
-                aria-controls="accordion-card-body-6">
-
-                <span class="text-label text-primary">
-                    Proposez-vous une maintenance après la mise en ligne ?
-                </span>
-
-                 <svg data-accordion-icon class="w-5 h-5 shrink-0 transition-transform text-primary"
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" d="m5 9 7 7 7-7"/>
-                </svg>
-            </button>
-        </h2>
-
-        <div id="accordion-card-body-6"
-            class="hidden rounded-b-[12px] border border-t-0 border-primary/5 shadow-lg">
-            <div class="p-5">
-                <p class="text-label text-secondary">
-                    Oui. Je propose une formule de maintenance comprenant les mises à jour, les corrections techniques et le suivi du bon fonctionnement de votre site.
-                </p>
-            </div>
-        </div>
-
-        <!-- 7 -->
-        <h2 id="accordion-card-heading-7" class="mt-4">
-            <button type="button"
-                class="flex items-center justify-between w-full p-5 rounded-[12px] bg-surface shadow-lg border border-primary/5 hover:border-hover transition-all duration-200 text-left"
-                data-accordion-target="#accordion-card-body-7" aria-expanded="false"
-                aria-controls="accordion-card-body-7">
-
-                <span class="text-label text-primary">
-                    Travaillez-vous uniquement avec des entreprises à Arras ?
-                </span>
-
-                 <svg data-accordion-icon class="w-5 h-5 shrink-0 transition-transform text-primary"
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" d="m5 9 7 7 7-7"/>
-                </svg>
-            </button>
-        </h2>
-
-        <div id="accordion-card-body-7"
-            class="hidden rounded-b-[12px] border border-t-0 border-primary/5 shadow-lg">
-            <div class="p-5">
-                <p class="text-label text-secondary">
-                    Basé à Arras, j'accompagne des entreprises, indépendants et associations partout en France. Les échanges peuvent se faire à distance ou en présentiel selon vos besoins.
-                </p>
-            </div>
-        </div>
-
-    </div>
-
-</section>
+    </section>
     <!--CTA Final Section-->
     <section id="ctaFinal" class="p-[10px] scroll-mt-20">
         <h2 class="text-h2 text-primary text-center">

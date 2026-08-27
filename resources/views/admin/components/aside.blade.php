@@ -12,7 +12,7 @@
                 <img src="{{ asset('icon/admin/templates.svg') }}" class="w-5 h-5" alt="">
             </button>
 
-            <button data-menu="services"
+            <button data-menu="contenu"
                 class="menu-btn h-10 w-10 flex items-center justify-center rounded-base hover:bg-brand/40 cursor-pointer">
                 <img src="{{ asset('icon/admin/contenu.svg') }}" class="w-5 h-5" alt="">
             </button>
@@ -74,16 +74,33 @@
                 </nav>
             </div>
 
-            <div data-panel="services" class="menu-panel hidden">
-                <h2 class="mb-6 px-2 text-lg font-semibold">Services</h2>
+            <div data-panel="contenu" class="menu-panel hidden">
+                <div class="mb-6">
 
-                <a href="#" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
-                    Liste services
-                </a>
+                    <h2 class="mb-6 px-2 text-lg font-semibold">Services</h2>
 
-                <a href="#" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
-                    Ajouter service
-                </a>
+                    <a href="#" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
+                        Liste des services
+                    </a>
+
+                    <a href="#" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
+                        Ajouter un service
+                    </a>
+                </div>
+                {{-- SEPARATION --}}
+                <div class="mx-2 my-5 border-t border-primary/10"></div>
+                <div class="mb-6">
+
+                    <h2 class="mb-6 px-2 text-lg font-semibold">Portfolio</h2>
+
+                    <a href="{{route('list-portfolio')}}" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
+                        Liste de mes réalisations
+                    </a>
+
+                    <a href="{{route('create-portfolio')}}" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
+                        Ajouter une réalisation
+                    </a>
+                </div>
             </div>
 
             <div data-panel="factures" class="menu-panel hidden">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PortfolioProject;
 use App\Models\Template;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,8 @@ class PagesController extends Controller
 {
     public function home()
     {
-        return view('pages.home');
+        $projects = PortfolioProject::with('tags')->latest()->get();
+        return view('pages.home', compact('projects'));
     }
 
     public function contact()
