@@ -1,7 +1,8 @@
-<a href="{{ $project->url }}"
+<a @if (!$project->authorization_pending) href="{{ $project->url }}" @endif
     class="relative w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px]
           hover:shadow-hover hover:-translate-y-2 transition-all duration-300 ease-out hover:scale-[1.02]
-          border border-primary/5 hover:border-hover {{ $project->authorization_pending ? 'pointer-events-none' : '' }}" target="_blank">
+          border border-primary/5 hover:border-hover {{ $project->authorization_pending ? 'pointer-events-none' : '' }}"
+    target="_blank">
 
     <!-- Badge overlay -->
     @if ($project->authorization_pending)

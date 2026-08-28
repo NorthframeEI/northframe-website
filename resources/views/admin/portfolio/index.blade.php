@@ -24,7 +24,23 @@
                 </a>
 
             </div>
+            <div class="w-full">
+                @if (session('success'))
+                    <div class="p-4 bg-success/30 border border-success text-success rounded-lg">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
+                @if ($errors->any())
+                    <div class="p-4 bg-error/30 border border-error text-error rounded-lg">
+                        <ul class="space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>• {{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
             <div class="bg-surface border border-primary/5 rounded-[12px] overflow-hidden">
 
                 <table class="w-full">
@@ -172,12 +188,12 @@
 
                                     <div class="flex justify-end gap-3">
 
-                                        <a href="#"
+                                        <a href="{{ route('edit-portfolio', $project->id) }}"
                                             class="text-brand text-small hover:underline">
                                             Modifier
                                         </a>
 
-                                        <form action="#" method="POST"
+                                        <form action="{{ route('delete-portfolio', $project->id) }}" method="POST"
                                             onclick="return confirm('Supprimer cette réalisation ?')">
 
                                             @csrf

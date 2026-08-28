@@ -34,6 +34,6 @@
                     @endif
                 </div>
 
-                <x-admin.portfolio-form :action="route('store-portfolio')" />
+                <x-admin.portfolio-form :project="$project" :action="route('update-portfolio', $project)" method="PUT" />
     </section>
 @endsection

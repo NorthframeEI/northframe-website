@@ -64,6 +64,9 @@ Route::domain(config('app.admin_domain'))
             Route::get('/portfolio', [PortfolioController::class, 'index'])->name('list-portfolio');
             Route::get('/create-portfolio', [PortfolioController::class, 'create'])->name('create-portfolio');
             Route::post('/create-portfolio', [PortfolioController::class, 'store'])->name('store-portfolio');
+            Route::get('/portfolio/{project}/edit', [PortfolioController::class, 'editPortfolio'])->name('edit-portfolio');
+            Route::put('/portfolio/{project}', [PortfolioController::class, 'updatePortfolio'])->name('update-portfolio');
+            Route::delete('/portfolio/{project}', [PortfolioController::class, 'deletePortfolio'])->name('delete-portfolio');
 
             //Quote Management
             Route::resource('quotes', QuoteController::class);
