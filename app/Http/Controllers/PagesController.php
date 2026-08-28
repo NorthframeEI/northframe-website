@@ -10,7 +10,11 @@ class PagesController extends Controller
 {
     public function home()
     {
-        $projects = PortfolioProject::with('tags')->latest()->get();
+        $projects = PortfolioProject::with('tags')
+            ->where('is_visible', true)
+            ->latest()
+            ->take(6)
+            ->get();
         return view('pages.home', compact('projects'));
     }
 

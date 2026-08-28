@@ -231,7 +231,9 @@
                 </table>
 
             </div>
-
+            <div class="mt-6">
+                {{ $projects->links() }}
+            </div>
         </div>
 
     </section>

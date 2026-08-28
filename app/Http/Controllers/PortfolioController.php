@@ -9,7 +9,9 @@ class PortfolioController extends Controller
 {
     public function index()
     {
-        $projects = PortfolioProject::with('tags')->get();
+        $projects = PortfolioProject::with('tags')
+        ->latest()
+        ->paginate(8);
         return view('admin.portfolio.index', compact('projects'));
     }
 

@@ -269,11 +269,11 @@
         <h3 class="text-h3 text-secondary text-center">
             Des sites web conçus pour allier performance, clarté et expérience utilisateur.
         </h3>
-        <div class="flex flex-wrap justify-center gap-[10px]  pt-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[10px] pt-3">
             @foreach ($projects as $project)
                 <x-card-portfolio :project="$project" />
             @endforeach
-           
+
         </div>
     </section>
     <!--Process Section -->
