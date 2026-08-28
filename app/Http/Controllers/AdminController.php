@@ -61,10 +61,10 @@ class AdminController extends Controller
 
         // A adapter plus tard
         if ($acreActive) {
-            $urssafRate = 12.8;
-            $taxRate = 7.2;
+            $urssafRate = 13;
+            $taxRate = 7;
         } else {
-            $urssafRate = 25.6;
+            $urssafRate = 25.8;
             $taxRate = 9.4;
         }
 
