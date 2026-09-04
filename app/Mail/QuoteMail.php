@@ -28,7 +28,7 @@ class QuoteMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Votre devis ' . $this->quote->number . ' - NorthFrame',
+            subject: 'Votre devis ' . $this->quote->number .' - ' . $this->quote->subject,
         );
     }
 

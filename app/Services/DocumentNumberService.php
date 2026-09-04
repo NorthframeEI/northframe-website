@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\DepositInvoices;
 use App\Models\Invoice;
 use App\Models\Quote;
 
@@ -41,5 +42,23 @@ class DocumentNumberService
         }
 
         return sprintf('FAC-%s-%04d', $year, $number);
+    }
+
+    public static function nextDepositInvoiceNumber(): string
+    {
+        $year = now()->year;
+
+        $last = DepositInvoices::whereYear('issued_at', $year)
+            ->orderByDesc('id')
+            ->first();
+
+        $number = 1;
+
+        if ($last) {
+            $lastNumber = intval(substr($last->number, -4));
+            $number = $lastNumber + 1;
+        }
+
+        return sprintf('AC-%s-%04d', $year, $number);
     }
 }

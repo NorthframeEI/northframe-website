@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DepositInvoiceController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TemplateController;
@@ -96,6 +97,25 @@ Route::domain(config('app.admin_domain'))
             Route::post('/quotes/{quote}/convert', [QuoteController::class, 'convertToInvoice'])
                 ->name('quotes-convert'); // Convert a specific quote to an invoice
 
+            //Deposit Invoices Management
+            Route::get('/deposit-invoices/{depositInvoice}', [DepositInvoiceController::class, 'show'])
+                ->name('deposit-invoices-show');
+
+                //Route a revoir
+            Route::get('/deposit-invoices', [DepositInvoiceController::class, 'index'])
+                ->name('list-deposit-invoices');
+
+            Route::get('/deposit-invoices/{depositInvoice}', [DepositInvoiceController::class, 'show'])
+                ->name('deposit-invoices-show');
+
+            Route::get('/deposit-invoices/{depositInvoice}/preview', [DepositInvoiceController::class, 'preview'])
+                ->name('deposit-invoices-preview');
+
+            Route::post('/deposit-invoices/{depositInvoice}/generate-pdf', [DepositInvoiceController::class, 'generatePdf'])
+                ->name('deposit-invoices-generate-pdf');
+
+            Route::post('/deposit-invoices/{depositInvoice}/send', [DepositInvoiceController::class, 'send'])
+                ->name('deposit-invoices-send');
 
             //Invoice Management
             Route::get('/invoices', [InvoiceController::class, 'listInvoices'])->name('list-invoices'); // List all invoices

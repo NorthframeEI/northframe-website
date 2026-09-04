@@ -13,6 +13,7 @@ class Quote extends Model
     protected $fillable = [
         'customer_id',
         'number',
+        'subject',
         'issued_at',
         'status',
         'subtotal',
@@ -41,5 +42,13 @@ class Quote extends Model
     public function isExpired(): bool
     {
         return $this->valid_until->isPast() && $this->status === 'sent';
+    }
+
+    /**
+     * Les factures d'acompte associées au devis.
+     */
+    public function depositInvoices(): HasMany
+    {
+        return $this->hasMany(DepositInvoices::class);
     }
 }

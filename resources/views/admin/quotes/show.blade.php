@@ -139,25 +139,45 @@
             <div
                 class="w-full max-w-[900px] mx-auto mb-6 rounded-[12px] bg-surface shadow-lg px-[20px] md:px-[34px] py-[24px] border border-primary/5">
 
-                <p class="text-secondary">
-                    <strong>Client :</strong> {{ $quote->customer->company_name }}
-                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                <p class="text-secondary">
-                    <strong>Email :</strong> {{ $quote->customer->email }}
-                </p>
+                    {{-- Client --}}
+                    <div>
+                        <p class="text-secondary">
+                            <strong>Client :</strong> {{ $quote->customer->company_name }}
+                        </p>
 
-                <p class="text-secondary">
-                    <strong>Date émission :</strong> {{ $quote->issued_at->format('d/m/Y') }}
-                </p>
+                        <p class="text-secondary mt-2">
+                            <strong>Email :</strong> {{ $quote->customer->email }}
+                        </p>
+                        <p class="text-secondary mt-2">
+                            <strong>SIRET :</strong> {{ $quote->customer->siret }}
+                        </p>
 
-                <p class="text-secondary">
-                    <strong>Validité :</strong> {{ $quote->valid_until->format('d/m/Y') }}
-                </p>
+                        <p class="text-secondary mt-2">
+                            <strong>Objet :</strong> {{ $quote->subject }}
+                        </p>
+                    </div>
 
-                <div class="mt-4">
+                    {{-- Dates --}}
+                    <div class="md:text-right">
+                        <p class="text-secondary">
+                            <strong>Date d'émission :</strong>
+                            {{ $quote->issued_at->format('d/m/Y') }}
+                        </p>
+
+                        <p class="text-secondary mt-2">
+                            <strong>Validité :</strong>
+                            {{ $quote->valid_until->format('d/m/Y') }}
+                        </p>
+                    </div>
+
+                </div>
+
+                {{-- Total --}}
+                <div class="mt-6 pt-6 border-t border-primary/5">
                     <h2 class="text-h2 text-primary">
-                        Total : {{ $quote->total }} €
+                        Total : {{ number_format($quote->total, 2, ',', ' ') }} €
                     </h2>
                 </div>
 

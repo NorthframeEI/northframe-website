@@ -6,6 +6,7 @@ use App\Mail\QuoteMail;
 use Illuminate\Http\Request;
 use App\Models\Quote;
 use App\Models\Customer;
+use App\Models\DepositInvoices;
 use App\Models\Invoice;
 use App\Services\DocumentNumberService;
 use Carbon\Carbon;
@@ -29,8 +30,26 @@ class QuoteController extends Controller
 
     public function store(Request $request)
     {
+        $request->merge([
+            'siret' => preg_replace('/\s+/', '', $request->siret),
+        ]);
+
+        $validated = $request->validate([
+            'company_name' => ['required', 'string', 'max:255'],
+            'siret' => ['required', 'digits:14'],
+            'contact_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'postal_code' => ['required', 'string', 'max:10'],
+            'city' => ['required', 'string', 'max:255'],
+            'country' => ['required', 'string', 'max:255'],
+            'subject' => ['required', 'string', 'max:255'],
+            'issued_at' => ['required', 'date'],
+        ]);
         $customer = Customer::create([
             'company_name' => $request->company_name,
+            'siret' => $request->siret,
             'contact_name' => $request->contact_name,
             'email' => $request->email,
             'phone' => $request->phone,
@@ -45,6 +64,7 @@ class QuoteController extends Controller
         $quote = Quote::create([
             'customer_id' => $customer->id,
             'number' => DocumentNumberService::nextQuoteNumber(),
+            'subject' => $request->subject,
             'issued_at' => $issuedAt,
             'valid_until' => $issuedAt->copy()->addDays(30),
             'status' => 'draft',
@@ -140,6 +160,8 @@ class QuoteController extends Controller
             'status' => 'accepted',
         ]);
 
+
+
         return back()->with('success', 'Le devis a été accepté.');
     }
 
@@ -161,7 +183,7 @@ class QuoteController extends Controller
         );
 
 
-        $invoice = DB::transaction(function () use ($quote) {
+        $depositInvoice = DB::transaction(function () use ($quote) {
 
             $invoice = Invoice::create([
                 'customer_id' => $quote->customer_id,
@@ -189,19 +211,26 @@ class QuoteController extends Controller
                     'total' => $item->total,
                 ]);
             }
-
+            $depositInvoice = DepositInvoices::create([
+                'quote_id' => $quote->id,
+                'invoice_id' => $invoice->id,
+                'number' => DocumentNumberService::nextDepositInvoiceNumber(),
+                'amount' => $quote->total * 0.50,
+                'status' => 'draft',
+                'issued_at' => now(),
+            ]);
 
             $quote->update([
                 'status' => 'converted',
             ]);
 
 
-            return $invoice;
+            return $depositInvoice;
         });
 
 
         return redirect()
-            ->route('invoices-show', $invoice)
+            ->route('deposit-invoices-show', $depositInvoice)
             ->with('success', 'Le devis a été transformé en facture.');
     }
 }

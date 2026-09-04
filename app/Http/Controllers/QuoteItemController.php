@@ -13,6 +13,7 @@ class QuoteItemController extends Controller
     {
         $request->validate([
             'designation' => 'required',
+            'description' => 'nullable',
             'quantity' => 'required|numeric|min:1',
             'unit_price' => 'required|numeric|min:0',
             'type' => [
@@ -29,6 +30,7 @@ class QuoteItemController extends Controller
 
         $item = $quote->items()->create([
             'designation' => $request->designation,
+            'description' => $request->description,
             'quantity' => $request->quantity,
             'unit_price' => $request->unit_price,
             'total' => $request->quantity * $request->unit_price,

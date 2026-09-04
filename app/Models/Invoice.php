@@ -47,4 +47,12 @@ class Invoice extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    /**
+     * Les factures d'acompte associées à la facture.
+     */
+    public function depositInvoices(): HasMany
+    {
+        return $this->hasMany(DepositInvoices::class);
+    }
 }

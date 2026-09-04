@@ -58,6 +58,17 @@
 
                         </div>
                     </div>
+                    {{-- SIRET --}}
+                    <div class="mb-6">
+
+                        <div class="flex flex-col gap-4">
+
+                            <input type="text" name="siret" placeholder="Numéro SIRET"
+                                class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+
+                            
+                        </div>
+                    </div>
 
                     {{-- ADRESSE --}}
                     <div class="mb-6">
@@ -89,8 +100,17 @@
                         <h3 class="text-h3 text-primary mb-4">Informations devis</h3>
 
                         <div class="flex flex-col gap-4">
-
                             <input type="date" name="issued_at" value="{{ now()->toDateString() }}"
+                                class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
+
+                            
+                        </div>
+                    </div>
+                     <div class="mb-6">
+
+                        <div class="flex flex-col gap-4">
+
+                            <input type="text" name="subject" placeholder="Sujet du devis"
                                 class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
 
                             

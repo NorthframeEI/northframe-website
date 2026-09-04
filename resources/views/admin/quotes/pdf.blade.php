@@ -48,13 +48,13 @@
             <td>
                 <div style="line-height:1.7;">
                     <strong style="font-size:20px;color:#0B1220;">Northframe</strong><br>
-
+                    Antoine Padé - EI <br>
                     112Q Rue de Cambrai<br>
                     62000 Arras<br>
 
                     contact@northframe.fr<br>
 
-                    SIRET : 104 701 727 00018
+                    SIRET : 10470172700018
                 </div>
             </td>
 
@@ -67,16 +67,34 @@
 
                     <br><br>
 
-                    <strong>{{ $quote->customer->company_name }}</strong><br>
+                    @if ($quote->customer->company_name)
+                        <strong>{{ $quote->customer->company_name }}</strong><br>
+                    @endif
 
-                    {{ $quote->customer->contact_name }}<br>
+                    @if ($quote->customer->contact_name)
+                        {{ $quote->customer->contact_name }}<br>
+                    @endif
 
-                    {{ $quote->customer->address }}<br>
+                    @if ($quote->customer->address)
+                        {{ $quote->customer->address }}<br>
+                    @endif
 
-                    {{ $quote->customer->postal_code }}
-                    {{ $quote->customer->city }}<br>
+                    @if ($quote->customer->postal_code || $quote->customer->city)
+                        {{ $quote->customer->postal_code }}
+                        {{ $quote->customer->city }}<br>
+                    @endif
 
-                    {{ $quote->customer->email }}
+                    @if ($quote->customer->email)
+                        {{ $quote->customer->email }}<br>
+                    @endif
+
+                    @if ($quote->customer->phone)
+                        {{ $quote->customer->phone }}<br>
+                    @endif
+
+                    @if ($quote->customer->siret)
+                        SIRET : {{ $quote->customer->siret }}
+                    @endif
 
                 </div>
 
@@ -95,7 +113,7 @@
 
         <br>
 
-        Création d'un site internet pour
+        {{ $quote->subject }} pour
         <strong>{{ $quote->customer->company_name }}</strong>.
 
         <br>
