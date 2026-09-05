@@ -93,11 +93,13 @@
 
                     <h2 class="mb-6 px-2 text-lg font-semibold">Portfolio</h2>
 
-                    <a href="{{route('list-portfolio')}}" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
+                    <a href="{{ route('list-portfolio') }}"
+                        class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
                         Liste de mes réalisations
                     </a>
 
-                    <a href="{{route('create-portfolio')}}" class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
+                    <a href="{{ route('create-portfolio') }}"
+                        class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
                         Ajouter une réalisation
                     </a>
                 </div>
@@ -124,6 +126,23 @@
 
                 </div>
 
+                {{-- SEPARATION --}}
+                <div class="mx-2 my-5 border-t border-primary/10"></div>
+
+
+                {{-- FACTURES --}}
+                <div>
+
+                    <h2 class="mb-3 px-2 text-lg font-semibold text-primary">
+                        Factures d'acompte
+                    </h2>
+
+                    <a href="{{ route('list-deposit-invoices') }}"
+                        class="block rounded-base px-3 py-2 text-body hover:bg-brand/40 hover:text-muted">
+                        Liste des factures d'acompte
+                    </a>
+
+                </div>
 
                 {{-- SEPARATION --}}
                 <div class="mx-2 my-5 border-t border-primary/10"></div>

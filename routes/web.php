@@ -100,20 +100,14 @@ Route::domain(config('app.admin_domain'))
             //Deposit Invoices Management
             Route::get('/deposit-invoices/{depositInvoice}', [DepositInvoiceController::class, 'show'])
                 ->name('deposit-invoices-show');
-
-                //Route a revoir
             Route::get('/deposit-invoices', [DepositInvoiceController::class, 'index'])
                 ->name('list-deposit-invoices');
-
-            Route::get('/deposit-invoices/{depositInvoice}', [DepositInvoiceController::class, 'show'])
-                ->name('deposit-invoices-show');
-
             Route::get('/deposit-invoices/{depositInvoice}/preview', [DepositInvoiceController::class, 'preview'])
                 ->name('deposit-invoices-preview');
-
             Route::post('/deposit-invoices/{depositInvoice}/generate-pdf', [DepositInvoiceController::class, 'generatePdf'])
                 ->name('deposit-invoices-generate-pdf');
-
+            Route::get('/deposit-invoices/{depositInvoice}/pdf', [DepositInvoiceController::class, 'previewPdf'])
+                ->name('deposit-invoices-pdf'); // Preview PDF for a specific quote
             Route::post('/deposit-invoices/{depositInvoice}/send', [DepositInvoiceController::class, 'send'])
                 ->name('deposit-invoices-send');
 

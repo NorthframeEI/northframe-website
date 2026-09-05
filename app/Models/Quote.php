@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Customer;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Quote extends Model
 {
@@ -47,8 +48,8 @@ class Quote extends Model
     /**
      * Les factures d'acompte associées au devis.
      */
-    public function depositInvoices(): HasMany
+    public function depositInvoice(): HasOne
     {
-        return $this->hasMany(DepositInvoices::class);
+        return $this->hasOne(DepositInvoices::class);
     }
 }

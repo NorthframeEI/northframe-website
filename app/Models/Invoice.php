@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Invoice extends Model
 {
@@ -51,8 +52,8 @@ class Invoice extends Model
     /**
      * Les factures d'acompte associées à la facture.
      */
-    public function depositInvoices(): HasMany
+    public function depositInvoice(): HasOne
     {
-        return $this->hasMany(DepositInvoices::class);
+        return $this->hasOne(DepositInvoices::class);
     }
 }

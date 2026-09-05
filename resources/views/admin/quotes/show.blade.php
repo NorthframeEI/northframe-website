@@ -114,6 +114,17 @@
 
                 </div>
             @endif
+
+            @if ($quote->depositInvoice)
+                <div class="w-full flex justify-center mb-8">
+                    <a href="{{ route('deposit-invoices-show', $quote->depositInvoice) }}" 
+                        class="text-primary bg-primary/0 border border-brand/100 hover:bg-brand/20 px-[20px] py-[10px] rounded-[12px]">
+
+                        Voir la facture d'acompte associée
+
+                    </a>
+                </div>
+            @endif
             {{-- ALERTS --}}
             <div class="w-full max-w-[900px] mx-auto mb-6">
 

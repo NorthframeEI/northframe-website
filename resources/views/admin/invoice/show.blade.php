@@ -40,7 +40,7 @@
 
             {{-- ACTIONS --}}
 
-            <div class="w-full flex flex-wrap gap-3 justify-center mb-8">
+            <div class="w-full flex flex-wrap gap-3 justify-center mb-4">
 
                 @if ($invoice->status === 'cancelled')
                     <a href="{{ route('invoices-cancelled-preview', $invoice) }}" target="_blank"
@@ -64,12 +64,13 @@
 
                     </a>
                 @endif
+
                 @php
                     $pdfExists = Storage::disk('private')->exists('invoices/' . $invoice->number . '.pdf');
                 @endphp
+
                 @if ($invoice->status === 'draft')
                     <form method="POST" action="{{ route('invoices-generate-pdf', $invoice) }}">
-
                         @csrf
 
                         <button type="submit"
@@ -78,12 +79,10 @@
                             Générer PDF facture
 
                         </button>
-
                     </form>
 
                     @if ($pdfExists)
                         <form method="POST" action="{{ route('invoices-sent', $invoice) }}">
-
                             @csrf
 
                             <button type="submit"
@@ -92,18 +91,18 @@
                                 Envoyer la facture
 
                             </button>
-
                         </form>
                     @endif
                 @endif
+
                 @php
                     $pdfPaidExists = Storage::disk('private')->exists(
                         'invoices/' . $invoice->number . '-acquittee.pdf',
                     );
                 @endphp
+
                 @if ($invoice->status === 'paid')
                     <form method="POST" action="{{ route('invoices-generate-paid-pdf', $invoice) }}">
-
                         @csrf
 
                         <button type="submit"
@@ -112,12 +111,10 @@
                             Générer PDF facture acquittée
 
                         </button>
-
                     </form>
 
                     @if ($pdfPaidExists)
                         <form method="POST" action="{{ route('invoices-paid-sent', $invoice) }}">
-
                             @csrf
 
                             <button type="submit"
@@ -126,18 +123,18 @@
                                 Envoyer la facture acquittée
 
                             </button>
-
                         </form>
                     @endif
                 @endif
+
                 @php
                     $pdfCancelledExists = Storage::disk('private')->exists(
                         'invoices/' . $invoice->number . '-annulee.pdf',
                     );
                 @endphp
+
                 @if ($invoice->status === 'cancelled')
                     <form method="POST" action="{{ route('invoices-generate-cancelled-pdf', $invoice) }}">
-
                         @csrf
 
                         <button type="submit"
@@ -146,12 +143,10 @@
                             Générer PDF facture annulée
 
                         </button>
-
                     </form>
 
                     @if ($pdfCancelledExists)
                         <form method="POST" action="{{ route('invoices-cancelled-sent', $invoice) }}">
-
                             @csrf
 
                             <button type="submit"
@@ -160,24 +155,36 @@
                                 Envoyer la facture annulée
 
                             </button>
-
                         </form>
                     @endif
                 @endif
+
                 @if (!in_array($invoice->status, ['paid', 'cancelled']))
                     <form method="POST" action="{{ route('invoices-cancelled', $invoice) }}">
                         @csrf
 
                         <button type="submit"
                             class="text-primary bg-error hover:bg-hover px-[20px] py-[10px] rounded-[12px] cursor-pointer">
-                            Annuler la facture
-                        </button>
 
+                            Annuler la facture
+
+                        </button>
                     </form>
                 @endif
 
-
             </div>
+
+            @if ($invoice->depositInvoice)
+                <div class="w-full flex justify-center mb-8">
+                    <a href="{{ route('deposit-invoices-show', $invoice->depositInvoice) }}"
+                        class="text-primary bg-primary/0 border border-brand/100 hover:bg-brand/20 px-[20px] py-[10px] rounded-[12px]">
+
+                        Voir la facture d'acompte associée
+
+                    </a>
+                </div>
+            @endif
+
 
 
             {{-- ALERTS --}}
@@ -460,7 +467,7 @@
                     'other' => 'Autre',
                 ];
             @endphp
-            @if ($invoice->status === 'sent' || $invoice->status === 'partially_paid' || $invoice->status === 'overdue')
+            @if ($invoice->status !== 'paid' || $invoice->status !== 'cancelled')
                 {{-- FORM AJOUT PAIEMENT --}}
                 <div
                     class="w-full mx-auto mb-6 rounded-[12px] bg-surface shadow-lg px-[20px] md:px-[34px] py-[24px] border border-primary/5">
@@ -529,6 +536,13 @@
                                 class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
 
                         </div>
+
+                        {{-- Paiement d'acompte --}} <div class="flex items-center gap-3"> <input type="checkbox"
+                                name="is_deposit" value="1" id="is_deposit"
+                                {{ old('is_deposit') ? 'checked' : '' }}
+                                class="w-4 h-4 rounded border border-secondary/30 bg-dark text-brand focus:ring-brand cursor-pointer">
+                            <label for="is_deposit" class="text-secondary cursor-pointer"> Ce paiement correspond à un
+                                acompte </label> </div>
 
                         <button type="submit"
                             class="text-primary text-button-inter bg-brand hover:bg-hover px-[20px] py-[20px] rounded-[12px] w-fit cursor-pointer">

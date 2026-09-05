@@ -15,6 +15,7 @@ class DepositInvoices extends Model
         'status',
         'issued_at',
         'sent_at',
+        'pdf_path',
     ];
 
     protected $casts = [

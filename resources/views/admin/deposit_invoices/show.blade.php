@@ -42,7 +42,7 @@
 
                 @php
                     $pdfExists = Storage::disk('private')->exists(
-                        'deposit_invoices/' . $depositInvoice->number . '.pdf'
+                        'deposit_invoices/' . $depositInvoice->number . '.pdf',
                     );
                 @endphp
 
@@ -59,9 +59,7 @@
 
                 {{-- GENERATE PDF --}}
                 @if (!$pdfExists)
-
-                    <form method="POST"
-                        action="{{ route('deposit-invoices-generate-pdf', $depositInvoice) }}">
+                    <form method="POST" action="{{ route('deposit-invoices-generate-pdf', $depositInvoice) }}">
 
                         @csrf
 
@@ -73,15 +71,12 @@
                         </button>
 
                     </form>
-
                 @endif
 
 
                 {{-- SEND --}}
                 @if ($pdfExists && $depositInvoice->status === 'draft')
-
-                    <form method="POST"
-                        action="{{ route('deposit-invoices-send', $depositInvoice) }}">
+                    <form method="POST" action="{{ route('deposit-invoices-send', $depositInvoice) }}">
 
                         @csrf
 
@@ -93,7 +88,6 @@
                         </button>
 
                     </form>
-
                 @endif
 
             </div>
@@ -103,13 +97,11 @@
             <div class="w-full max-w-[900px] mx-auto mb-6">
 
                 @if (session('success'))
-
                     <div class="p-4 bg-success/30 border border-success text-success rounded-lg">
 
                         {{ session('success') }}
 
                     </div>
-
                 @endif
 
 
@@ -120,9 +112,7 @@
                         <ul class="space-y-1">
 
                             @foreach ($errors->all() as $error)
-
                                 <li>• {{ $error }}</li>
-
                             @endforeach
 
                         </ul>
@@ -239,10 +229,40 @@
 
             </div>
 
+            {{-- LIEN VERS LE DEVIS --}}
+            @if ($depositInvoice->quote)
+                <div
+                    class="w-full max-w-[900px] mx-auto rounded-[12px] bg-surface shadow-lg px-[20px] md:px-[34px] py-[24px] border border-primary/5">
+
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+                        <div>
+
+                            <p class="text-secondary">
+                                <strong>Devis associé</strong>
+                            </p>
+
+                            <p class="text-primary mt-2">
+                                {{ $depositInvoice->quote->number }}
+                            </p>
+
+                        </div>
+
+                        <a href="{{ route('show-quote', $depositInvoice->quote) }}"
+                            class="text-primary bg-surface border border-primary/10 hover:bg-hover px-[20px] py-[10px] rounded-[12px] text-center">
+
+                            Voir le devis
+
+                        </a>
+
+                    </div>
+
+                </div>
+            @endif
+            <br>
 
             {{-- LIEN VERS LA FACTURE --}}
             @if ($depositInvoice->invoice)
-
                 <div
                     class="w-full max-w-[900px] mx-auto rounded-[12px] bg-surface shadow-lg px-[20px] md:px-[34px] py-[24px] border border-primary/5">
 
@@ -270,7 +290,6 @@
                     </div>
 
                 </div>
-
             @endif
 
         </div>

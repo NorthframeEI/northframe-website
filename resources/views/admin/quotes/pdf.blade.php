@@ -308,6 +308,9 @@
 
                 • Les abonnements récurrents seront facturés selon la période indiquée.
 
+                <br>
+
+                • <strong>Devis gratuit.</strong>
             </td>
 
 
@@ -332,7 +335,25 @@
                         </td>
 
                     </tr>
+                    <tr>
+                        <td style="padding:8px;border:1px solid #DDD;font-size:12px;color:#666;">
+                            Acompte à la commande (50 %)
+                        </td>
 
+                        <td align="right" style="padding:8px;border:1px solid #DDD;font-size:12px;">
+                            {{ number_format($quote->total * 0.5, 2, ',', ' ') }} €
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding:8px;border:1px solid #DDD;font-size:12px;color:#666;">
+                            Solde à la livraison
+                        </td>
+
+                        <td align="right" style="padding:8px;border:1px solid #DDD;font-size:12px;">
+                            {{ number_format($quote->total * 0.5, 2, ',', ' ') }} €
+                        </td>
+                    </tr>
                 </table>
 
 
