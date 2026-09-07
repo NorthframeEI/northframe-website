@@ -80,6 +80,7 @@ class DepositInvoiceController extends Controller
 
         $depositInvoice->update([
             'status' => 'sent',
+            'sent_at' => now(),
         ]);
 
         return back()->with('success', 'Le devis a été envoyé au client.');
