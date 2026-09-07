@@ -31,7 +31,7 @@ class InvoiceCancelledMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Votre facture annulée ' . $this->invoice->number . ' - NorthFrame',
+            subject: 'Votre facture annulée ' . $this->invoice->number .' - ' . $this->invoice->quote->subject,
         );
     }
 

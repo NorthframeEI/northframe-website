@@ -31,7 +31,7 @@ class InvoiceMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Votre facture ' . $this->invoice->number . ' - NorthFrame',
+            subject: 'Votre facture ' . $this->invoice->number . ' - ' . $this->invoice->quote->subject,
         );
     }
 
