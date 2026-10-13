@@ -102,6 +102,10 @@
                                             Site Vitrine
                                         @elseif($type_projet === 'landing')
                                             Landing Page
+                                        @elseif($type_projet === 'maintenance_ponctuelle')
+                                            Maintenance Ponctuelle
+                                        @elseif($type_projet === 'conseil')
+                                            Je ne sais pas encore / J'ai besoin de conseils
                                         @else
                                             {{ ucfirst($type_projet) }}
                                         @endif

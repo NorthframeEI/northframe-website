@@ -77,187 +77,307 @@
         <h2 class="text-h2 text-primary text-center">
             Mes services
         </h2>
-        <div class="flex flex-wrap justify-center gap-[10px]  pt-3">
-            <div
-                class="relative w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5 flex flex-col">
+        {{-- PRESTATIONS PRINCIPALES --}}
+        <section class="w-full pt-3">
+            <div class="flex flex-wrap justify-center gap-[10px]">
 
-
+                {{-- LANDING PAGE --}}
                 <div
-                    class="absolute top-4 -right-4 z-20 bg-brand/70 backdrop-blur-sm text-primary text-small px-5 py-2 rounded-full shadow-lg whitespace-nowrap">
-                    5 à 7 jours
-                </div>
-                <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/rocket.svg') }}" alt="Landing page">
-                <div class="px-6 py-4 flex flex-col flex-1 gap-[10px]">
-                    <div class="text-card-title text-primary text-center ">Landing page</div>
-                    <p class="text-label text-secondary text-center">
-                        Une page stratégique pensée pour convertir vos visiteurs en clients grâce à un message clair et
-                        impactant.
-                    </p>
-                    <ul class="list-disc pl-5 text-h3-footer text-secondary whitespace-nowrap">
-                        <li>
-                            Design orienté conversion
-                        </li>
-                        <li>
-                            Structure optimisée pour vendre
-                        </li>
-                        <li>
-                            Intégration rapide et légère
-                        </li>
-                        <li>
-                            Responsive mobile
-                        </li>
-                        <li>
-                            Mise en ligne incluse
-                        </li>
-                    </ul>
-                    <div class="mt-auto">
-                        <p class="text-card-price text-primary text-center">
-                            À partir de 400€
-                        </p>
-                        <div class="flex gap-[10px] px-[10px] py-[10px] justify-center">
-                            <a href="{{ route('contact', ['projet' => 'landing']) }}"
-                                class="flex items-center justify-center bg-brand hover:bg-hover text-primary text-button  cursor-pointer rounded-[10px] gap-[10px]  px-[12px] h-[48px] transition-all duration-200 whitespace-nowrap">
-                                Choisir cette offre
-                            </a>
-                            <a href="{{ route('template') }}"
-                                class="flex items-center justify-center border border-secondary hover:border-hover text-primary hover:text-hover text-button  cursor-pointer rounded-[10px] gap-[10px]  px-[12px] h-[48px] transition-all duration-200 whitespace-nowrap">
-                                Voir les templates
-                            </a>
-                        </div>
+                    class="relative w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5 flex flex-col">
+
+                    <div
+                        class="absolute top-4 -right-4 z-20 bg-brand/70 backdrop-blur-sm text-primary text-small px-5 py-2 rounded-full shadow-lg whitespace-nowrap">
+                        5 à 7 jours
                     </div>
 
-                </div>
-            </div>
-            <div
-                class="relative w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5 flex flex-col">
+                    <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/rocket.svg') }}" alt="Landing page">
 
+                    <div class="px-6 py-4 flex flex-col flex-1 gap-[10px]">
+                        <div class="text-card-title text-primary text-center">
+                            Landing page
+                        </div>
 
-                <div
-                    class="absolute top-4 -right-4 z-20 bg-brand/70 backdrop-blur-sm text-primary text-small px-5 py-2 rounded-full shadow-lg whitespace-nowrap">
-                    10 à 15 jours
-                </div>
-                <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/globe.svg') }}" alt="Site vitrine">
-                <div class="px-6 py-4 flex flex-col flex-1 gap-[10px]">
-                    <div class="text-card-title text-primary text-center ">Site vitrine professionnel</div>
-                    <p class="text-label text-secondary text-center">
-                        Donnez une image crédible et moderne de votre activité avec un site rapide, clair et pensé pour
-                        convertir vos visiteurs en clients.
-                    </p>
-                    <ul class="list-disc pl-5 text-h3-footer text-secondary whitespace-nowrap">
-                        <li>
-                            Design sur mesure
-                        </li>
-                        <li>
-                            Site responsive (mobile, tablette, desktop)
-                        </li>
-                        <li>
-                            Développement optimisé pour les performances
-                        </li>
-                        <li>
-                            SEO de base optimisé
-                        </li>
-                        <li>
-                            Mise en ligne incluse
-                        </li>
-                    </ul>
-                    <div class="mt-auto">
-                        <p class="text-card-price text-primary text-center">
-                            À partir de 1100€
+                        <p class="text-label text-secondary text-center">
+                            Une page stratégique pensée pour convertir vos visiteurs en clients grâce à un message clair et
+                            impactant.
                         </p>
-                        <div class="flex gap-[10px] px-[10px] py-[10px]">
-                            <a href="{{ route('contact', ['projet' => 'vitrine']) }}"
-                                class="flex items-center justify-center w-fit mx-auto bg-brand hover:bg-hover text-primary text-button  cursor-pointer rounded-[10px] gap-[10px]  px-[12px] h-[48px] transition-all duration-200">Choisir
-                                cette offre</a>
+
+                        <ul class="list-disc pl-5 text-h3-footer text-secondary">
+                            <li>Design orienté conversion</li>
+                            <li>Structure optimisée pour vendre</li>
+                            <li>Intégration rapide et légère</li>
+                            <li>Responsive mobile</li>
+                            <li>Mise en ligne incluse</li>
+                        </ul>
+
+                        <div class="mt-auto">
+                            <p class="text-card-price text-primary text-center">
+                                800 €
+                            </p>
+
+                            <div class="flex gap-[10px] px-[10px] py-[10px] justify-center">
+                                <a href="{{ route('contact', ['projet' => 'landing']) }}"
+                                    class="flex items-center justify-center bg-brand hover:bg-hover text-primary text-button  cursor-pointer rounded-[10px] gap-[10px]  px-[12px] h-[48px] transition-all duration-200 whitespace-nowrap">
+                                    Choisir cette offre
+                                </a>
+                                <a href="{{ route('template') }}"
+                                    class="flex items-center justify-center border border-secondary hover:border-hover text-primary hover:text-hover text-button  cursor-pointer rounded-[10px] gap-[10px]  px-[12px] h-[48px] transition-all duration-200 whitespace-nowrap">
+                                    Voir les templates
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-
-            <div
-                class="relative w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5 flex flex-col">
-
-
+                {{-- SITE VITRINE --}}
                 <div
-                    class="absolute top-4 -right-4 z-20 bg-brand/70 backdrop-blur-sm text-primary text-small px-5 py-2 rounded-full shadow-lg whitespace-nowrap">
-                    Selon planning
-                </div>
-                <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/users-round.svg') }}" alt="Site vitrine">
-                <div class="px-6 py-4 flex flex-col flex-1 gap-[10px]">
-                    <div class="text-card-title text-primary text-center ">Renfort technique / Freelance</div>
-                    <p class="text-label text-secondary text-center">
-                        Besoin d’un développeur pour renforcer votre équipe sur une mission ponctuelle ou sur plusieurs
-                        semaines ?
-                        J’interviens directement sur vos projets pour accélérer vos développements et fiabiliser vos
-                        livraisons.
-                    </p>
+                    class="relative w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5 flex flex-col">
 
-                    <ul class="list-disc pl-5 text-h3-footer text-secondary">
-                        <li>Développement Laravel & PHP</li>
-                        <li>JavaScript & interfaces modernes</li>
-                        <li>Intégration responsive Tailwind CSS</li>
-                        <li>Développement de fonctionnalités</li>
-                        <li>Maintenance et corrections techniques</li>
-                        <li>Collaboration avec vos équipes existantes</li>
-                    </ul>
-                    <div class="mt-auto">
-                        <p class="text-card-price text-primary text-center">
-                            À partir de 200€/jour
+                    <div
+                        class="absolute top-4 -right-4 z-20 bg-brand/70 backdrop-blur-sm text-primary text-small px-5 py-2 rounded-full shadow-lg whitespace-nowrap">
+                        10 à 15 jours
+                    </div>
+
+                    <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/globe.svg') }}" alt="Site vitrine">
+
+                    <div class="px-6 py-4 flex flex-col flex-1 gap-[10px]">
+                        <div class="text-card-title text-primary text-center">
+                            Site vitrine professionnel
+                        </div>
+
+                        <p class="text-label text-secondary text-center">
+                            Donnez une image crédible et moderne de votre activité avec un site rapide, clair et pensé pour
+                            convertir vos visiteurs en clients.
                         </p>
-                        <div class="flex gap-[10px] px-[10px] py-[10px]">
-                            <a href="{{ route('contact', ['projet' => 'freelance']) }}"
-                                class="flex items-center justify-center w-fit mx-auto bg-brand hover:bg-hover text-primary text-button  cursor-pointer rounded-[10px] gap-[10px]  px-[12px] h-[48px] transition-all duration-200">Choisir
-                                cette offre</a>
+
+                        <ul class="list-disc pl-5 text-h3-footer text-secondary">
+                            <li>Design sur mesure</li>
+                            <li>Site responsive (mobile, tablette, desktop)</li>
+                            <li>Développement optimisé pour les performances</li>
+                            <li>SEO de base optimisé</li>
+                            <li>Mise en ligne incluse</li>
+                        </ul>
+
+                        <div class="mt-auto">
+                            <p class="text-card-price text-primary text-center">
+                                1 500 €
+                            </p>
+
+                            <div class="flex gap-[10px] px-[10px] py-[10px]">
+                                <a href="{{ route('contact', ['projet' => 'vitrine']) }}"
+                                    class="flex items-center justify-center w-fit mx-auto bg-brand hover:bg-hover text-primary text-button cursor-pointer rounded-[10px] gap-[10px] px-[12px] h-[48px] transition-all duration-200">
+                                    Choisir cette offre
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div
-                class="relative w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5 flex flex-col">
 
-
+                {{-- REFONTE DE SITE --}}
                 <div
-                    class="absolute top-4 -right-4 z-20 bg-brand/70 backdrop-blur-sm text-primary text-small px-5 py-2 rounded-full shadow-lg whitespace-nowrap">
-                    Support 24h
-                </div>
-                <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/cog.svg') }}" alt="Site vitrine">
-                <div class="px-6 py-4 flex flex-col flex-1 gap-[10px]">
-                    <div class="text-card-title text-primary text-center ">Maintenance</div>
-                    <p class="text-label text-secondary text-center">
-                        Assurez la stabilité et la sécurité de votre site avec un suivi régulier, des mises à jour
-                        techniques et des corrections en cas de besoin.
-                    </p>
-                    <ul class="list-disc pl-5 text-h3-footer text-secondary whitespace-nowrap">
-                        <li>
-                            Mises à jour régulières du site
-                        </li>
-                        <li>
-                            Corrections techniques
-                        </li>
-                        <li>
-                            Sécurité et surveillance
-                        </li>
-                        <li>
-                            Support en cas de problème
-                        </li>
-                        <li class="hidden">
-                            Sauvegardes (optionnel si tu veux l’ajouter plus tard)
-                        </li>
-                    </ul>
+                    class="relative w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5 flex flex-col">
 
-                    <div class="mt-auto">
-                        <p class="text-card-price text-primary text-center">
-                            29€/mois
+                    <div
+                        class="absolute top-4 -right-4 z-20 bg-brand/70 backdrop-blur-sm text-primary text-small px-5 py-2 rounded-full shadow-lg whitespace-nowrap">
+                        10 à 20 jours
+                    </div>
+
+                    <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/refresh-ccw.svg') }}" alt="Refonte de site">
+
+                    <div class="px-6 py-4 flex flex-col flex-1 gap-[10px]">
+                        <div class="text-card-title text-primary text-center">
+                            Refonte de site
+                        </div>
+
+                        <p class="text-label text-secondary text-center">
+                            Modernisation d'un site existant pour améliorer son design, son expérience utilisateur et ses
+                            performances, tout en préservant son référencement.
                         </p>
-                        <div class="h-[68px] flex items-center justify-center">
-                            <span class="text-label text-secondary">
-                                Option recommandée
-                            </span>
+
+                        <ul class="list-disc pl-5 text-h3-footer text-secondary">
+                            <li>Audit de l'existant</li>
+                            <li>Refonte graphique</li>
+                            <li>Reprise des contenus</li>
+                            <li>SEO et redirections selon les besoins</li>
+                            <li>Mise en ligne incluse</li>
+                        </ul>
+
+                        <div class="mt-auto">
+                            <p class="text-card-price text-primary text-center">
+                                Sur devis
+                            </p>
+
+                            <div class="flex gap-[10px] px-[10px] py-[10px]">
+                                <a href="{{ route('contact', ['projet' => 'refonte']) }}"
+                                    class="flex items-center justify-center w-fit mx-auto bg-brand hover:bg-hover text-primary text-button cursor-pointer rounded-[10px] gap-[10px] px-[12px] h-[48px] transition-all duration-200">
+                                    Choisir cette offre
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
-        </div>
+        </section>
+
+
+        {{-- SÉPARATION ENTRE LES DEUX GROUPES --}}
+        <section class="w-full mt-16 pt-8 border-t border-primary/10">
+
+            <div class="text-center mb-8">
+                <h3 class="text-card-title text-primary">
+                    Services complémentaires
+                </h3>
+
+                <p class="text-label text-secondary mt-2">
+                    Des solutions pour accompagner vos projets et maintenir vos sites web.
+                </p>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-[10px]">
+
+                {{-- FREELANCE --}}
+                <div
+                    class="relative w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5 flex flex-col">
+
+                    <div
+                        class="absolute top-4 -right-4 z-20 bg-brand/70 backdrop-blur-sm text-primary text-small px-5 py-2 rounded-full shadow-lg whitespace-nowrap">
+                        Selon planning
+                    </div>
+
+                    <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/users-round.svg') }}"
+                        alt="Renfort technique et freelance">
+
+                    <div class="px-6 py-4 flex flex-col flex-1 gap-[10px]">
+                        <div class="text-card-title text-primary text-center">
+                            Renfort technique / Freelance
+                        </div>
+
+                        <p class="text-label text-secondary text-center">
+                            Besoin d'un développeur pour renforcer votre équipe sur une mission ponctuelle ou sur plusieurs
+                            semaines ? J'interviens sur vos projets pour accélérer vos développements et fiabiliser vos
+                            livraisons.
+                        </p>
+
+                        <ul class="list-disc pl-5 text-h3-footer text-secondary">
+                            <li>Développement Laravel & PHP</li>
+                            <li>JavaScript et interfaces modernes</li>
+                            <li>Intégration responsive Tailwind CSS</li>
+                            <li>Développement de fonctionnalités</li>
+                            <li>Maintenance et corrections techniques</li>
+                            <li>Collaboration avec vos équipes existantes</li>
+                        </ul>
+
+                        <div class="mt-auto">
+                            <p class="text-card-price text-primary text-center">
+                                À partir de 200 €/jour à distance
+                            </p>
+
+                            <div class="flex gap-[10px] px-[10px] py-[10px]">
+                                <a href="{{ route('contact', ['projet' => 'freelance']) }}"
+                                    class="flex items-center justify-center w-fit mx-auto bg-brand hover:bg-hover text-primary text-button cursor-pointer rounded-[10px] gap-[10px] px-[12px] h-[48px] transition-all duration-200">
+                                    Me contacter
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- MAINTENANCE MENSUELLE --}}
+                <div
+                    class="relative w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5 flex flex-col">
+
+                    <div
+                        class="absolute top-4 -right-4 z-20 bg-brand/70 backdrop-blur-sm text-primary text-small px-5 py-2 rounded-full shadow-lg whitespace-nowrap">
+                        Suivi régulier
+                    </div>
+
+                    <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/cog.svg') }}"
+                        alt="Maintenance de site web">
+
+                    <div class="px-6 py-4 flex flex-col flex-1 gap-[10px]">
+                        <div class="text-card-title text-primary text-center">
+                            Maintenance mensuelle
+                        </div>
+
+                        <p class="text-label text-secondary text-center">
+                            Assurez la stabilité et la sécurité de votre site avec un suivi régulier, des mises à jour
+                            techniques et des corrections en cas de besoin.
+                        </p>
+
+                        <ul class="list-disc pl-5 text-h3-footer text-secondary">
+                            <li>Mises à jour régulières du site</li>
+                            <li>Corrections techniques</li>
+                            <li>Sécurité et surveillance</li>
+                            <li>Support en cas de problème</li>
+                        </ul>
+
+                        <div class="mt-auto">
+                            <p class="text-card-price text-primary text-center">
+                                29 €/mois
+                            </p>
+
+                            <div class="h-[68px] flex items-center justify-center">
+                                <span class="text-label text-secondary">
+                                    Option recommandée
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- MAINTENANCE PONCTUELLE --}}
+                <div
+                    class="relative w-full max-w-sm rounded-[12px] bg-surface overflow-hidden shadow-lg px-[16px] py-[24px] border border-primary/5 flex flex-col">
+
+                    <div
+                        class="absolute top-4 -right-4 z-20 bg-brand/70 backdrop-blur-sm text-primary text-small px-5 py-2 rounded-full shadow-lg whitespace-nowrap">
+                        Sans abonnement
+                    </div>
+
+                    <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/wrench.svg') }}"
+                        alt="Intervention ponctuelle">
+
+                    <div class="px-6 py-4 flex flex-col flex-1 gap-[10px]">
+                        <div class="text-card-title text-primary text-center">
+                            Maintenance ponctuelle
+                        </div>
+
+                        <p class="text-label text-secondary text-center">
+                            Besoin d'une modification ou d'une correction sur votre site ? Je peux intervenir
+                            ponctuellement,
+                            sans engagement ni abonnement mensuel.
+                        </p>
+
+                        <ul class="list-disc pl-5 text-h3-footer text-secondary">
+                            <li>Modification de texte ou d'image</li>
+                            <li>Correction d'un bug simple</li>
+                            <li>Petite modification de mise en page</li>
+                            <li>Intervention jusqu'à 1 heure</li>
+                            <li>Devis pour les demandes plus importantes</li>
+                        </ul>
+
+                        <div class="mt-auto">
+                            <p class="text-card-price text-primary text-center">
+                                100 € / intervention
+                            </p>
+
+                            <p class="text-label text-secondary text-center mt-2">
+                                Intervention simple, jusqu'à 1 heure de travail.
+                            </p>
+
+                            <div class="flex gap-[10px] px-[10px] py-[10px]">
+                                <a href="{{ route('contact', ['projet' => 'maintenance_ponctuelle']) }}"
+                                    class="flex items-center justify-center w-fit mx-auto bg-brand hover:bg-hover text-primary text-button cursor-pointer rounded-[10px] gap-[10px] px-[12px] h-[48px] transition-all duration-200">
+                                    Demander une intervention
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
 
     </section>
 

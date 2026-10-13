@@ -35,6 +35,12 @@ class ContactMail extends Mailable
             $typeProjet = "Landing Page";
         }elseif($this->type_projet === 'freelance'){
             $typeProjet = "Renfort technique/Freelance";
+        }elseif($this->type_projet === 'refonte'){
+            $typeProjet = "Refonte de site";
+        }elseif($this->type_projet === 'maintenance_ponctuelle'){
+            $typeProjet = "Maintenance Ponctuelle";
+        }elseif($this->type_projet === 'conseil'){
+            $typeProjet = "Demande de conseil";
         }
         return new Envelope(
             subject: "[Northframe] {$typeProjet} - {$this->entreprise}"

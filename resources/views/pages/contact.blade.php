@@ -124,9 +124,20 @@
                                     {{ old('type_projet', request('projet')) === 'landing' ? 'selected' : '' }}>
                                     Landing page
                                 </option>
+                                <option value="refonte"
+                                    {{ old('type_projet', request('projet')) === 'refonte' ? 'selected' : '' }}>
+                                    Refonte de site
+                                </option>
                                 <option value="freelance"
                                     {{ old('type_projet', request('projet')) === 'freelance' ? 'selected' : '' }}>
                                     Renfort technique / Freelance
+                                </option>
+                                <option value="maintenance_ponctuelle"
+                                    {{ old('type_projet', request('projet')) === 'maintenance_ponctuelle' ? 'selected' : '' }}>
+                                    Maintenance Ponctuelle
+                                </option>
+                                <option value="conseil" {{ old('type_projet', request('projet')) === 'conseil' ? 'selected' : '' }}>
+                                    Je ne sais pas encore / J'ai besoin de conseils
                                 </option>
                             </select>
 
