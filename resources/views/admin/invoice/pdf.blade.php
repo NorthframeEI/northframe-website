@@ -31,11 +31,11 @@
                 <div style="margin-top:20px;line-height:1.8;">
 
                     <strong>Date d'émission :</strong>
-                    {{ $invoice->issued_at->format('d/m/Y') }}
+                    {{ optional($invoice->issued_at)->format('d/m/Y') }}
                     <br>
 
                     <strong>Date d'échéance :</strong>
-                    {{ $invoice->due_date->format('d/m/Y') }}
+                    {{ optional($invoice->due_date)->format('d/m/Y') }}
 
                 </div>
 
@@ -200,7 +200,7 @@
 
                 <br>
 
-                • Paiement à effectuer avant le {{ $invoice->due_date->format('d/m/Y') }}.
+                • Paiement à effectuer avant le {{ optional($invoice->due_date)->format('d/m/Y') }}.
 
                 <br>
 
@@ -338,7 +338,7 @@
                     {{ $invoice->vat_notice }}
 
                     <br>
-                    Paiement exigible avant le {{ $invoice->due_date->format('d/m/Y') }}.
+                    Paiement exigible avant le {{ optional($invoice->due_date)->format('d/m/Y') }}.
                     <br>
 
                     En cas de retard de paiement, des pénalités pourront être appliquées conformément aux dispositions

@@ -194,8 +194,6 @@ class QuoteController extends Controller
                 'discount' => $quote->discount ?? 0,
                 'total' => $quote->total,
                 'paid_amount' => 0,
-                'issued_at' => now(),
-                'due_date' => now()->addDays(30),
                 'notes' => $quote->notes,
                 'vat_notice' => 'TVA non applicable, art. 293 B du CGI',
             ]);

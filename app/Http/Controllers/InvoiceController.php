@@ -19,15 +19,18 @@ class InvoiceController extends Controller
 
     public function showInvoice(Invoice $invoice)
     {
-        if (
-            $invoice->status !== 'paid' &&
-            $invoice->status !== 'cancelled' &&
-            $invoice->due_date->isPast()
-        ) {
-            $invoice->update([
-                'status' => 'overdue',
-            ]);
+        if (isset($invoice->due_date)) {
+            if (
+                $invoice->status !== 'paid' &&
+                $invoice->status !== 'cancelled' &&
+                $invoice->due_date->isPast()
+            ) {
+                $invoice->update([
+                    'status' => 'overdue',
+                ]);
+            }
         }
+
 
         return view('admin.invoice.show', compact('invoice'));
     }
@@ -55,6 +58,11 @@ class InvoiceController extends Controller
 
     public function generatePdf(Invoice $invoice)
     {
+        $invoice->update([
+            'issued_at' => now(),
+            'due_date' => now()->addDays(30),
+        ]);
+
         $pdf = Pdf::loadView('admin.invoice.pdf', [
             'invoice' => $invoice->load(['customer', 'items'])
         ]);
@@ -99,7 +107,7 @@ class InvoiceController extends Controller
         if ($invoice->status === 'cancelled') {
             return back()->with('error', 'Cette facture est déjà annulée.');
         }
-        
+
         if ($invoice->paid_amount > 0) {
             return back()->with(
                 'error',
