@@ -9,6 +9,24 @@
         $fmt = fn ($value) => number_format($value, 2, ',', ' ') . ' €';
         $date = fn ($value) => $value ? Carbon::parse($value)->format('d/m/Y') : '—';
 
+        // Évolution par rapport à la période précédente
+        $delta = function ($pct, $label) {
+            if ($pct === null) {
+                return '<span class="text-secondary">Pas de comparaison avec ' . e($label) . '</span>';
+            }
+
+            $class = $pct > 0 ? 'text-success' : ($pct < 0 ? 'text-error' : 'text-secondary');
+            $sign = $pct > 0 ? '+' : '';
+
+            return '<span class="' . $class . '">' . $sign . $pct . ' %</span> '
+                . '<span class="text-secondary">vs ' . e($label) . '</span>';
+        };
+
+        $periodUrl = fn ($month, $year) => request()->fullUrlWithQuery(['month' => $month, 'year' => $year]);
+
+        $navLink = 'px-3 py-2 rounded-[8px] text-secondary hover:text-primary hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand';
+        $navOff = 'px-3 py-2 text-secondary/30 cursor-not-allowed';
+
         $statusStyles = [
             'draft' => 'bg-secondary/20 text-secondary',
             'sent' => 'bg-brand/20 text-brand',
@@ -29,18 +47,76 @@
 
         $monthLabels = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
         $chartMax = max($monthlyPaidChart) ?: 1;
-        $currentMonthIndex = now()->month - 1;
+        $selectedMonthIndex = $period['month'] - 1;
     @endphp
 
     <div class="max-w-[1400px] mx-auto px-6 py-8">
 
-        <div class="mb-8">
+        {{-- =========================
+        EN-TÊTE + FILTRE DE PÉRIODE
+        ========================== --}}
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+
             <h1 class="text-h1 text-primary">
                 Dashboard
             </h1>
-            <p class="text-secondary mt-2">
-                {{ now()->translatedFormat('F Y') }}
-            </p>
+
+            <div class="flex flex-wrap items-center gap-3">
+
+                {{-- Mois --}}
+                <div class="flex items-center bg-surface border border-primary/5 rounded-[12px] p-1">
+
+                    @if ($period['prev'])
+                        <a href="{{ $periodUrl($period['prev']['month'], $period['prev']['year']) }}"
+                            aria-label="Mois précédent" class="{{ $navLink }}">‹</a>
+                    @else
+                        <span class="{{ $navOff }}" aria-hidden="true">‹</span>
+                    @endif
+
+                    <span class="px-4 py-2 text-primary font-medium capitalize min-w-[150px] text-center">
+                        {{ $period['label'] }}
+                    </span>
+
+                    @if ($period['next'])
+                        <a href="{{ $periodUrl($period['next']['month'], $period['next']['year']) }}"
+                            aria-label="Mois suivant" class="{{ $navLink }}">›</a>
+                    @else
+                        <span class="{{ $navOff }}" aria-hidden="true">›</span>
+                    @endif
+
+                </div>
+
+                {{-- Année --}}
+                <div class="flex items-center bg-surface border border-primary/5 rounded-[12px] p-1">
+
+                    @if ($period['prevYear'])
+                        <a href="{{ $periodUrl($period['month'], $period['prevYear']) }}"
+                            aria-label="Année précédente" class="{{ $navLink }}">‹</a>
+                    @else
+                        <span class="{{ $navOff }}" aria-hidden="true">‹</span>
+                    @endif
+
+                    <span class="px-4 py-2 text-primary font-medium min-w-[70px] text-center">
+                        {{ $period['year'] }}
+                    </span>
+
+                    @if ($period['nextYear'])
+                        <a href="{{ $periodUrl($period['month'], $period['nextYear']) }}"
+                            aria-label="Année suivante" class="{{ $navLink }}">›</a>
+                    @else
+                        <span class="{{ $navOff }}" aria-hidden="true">›</span>
+                    @endif
+
+                </div>
+
+                @unless ($period['isCurrent'])
+                    <a href="{{ request()->url() }}" class="text-brand text-sm hover:underline">
+                        Revenir à ce mois-ci
+                    </a>
+                @endunless
+
+            </div>
+
         </div>
 
         {{-- =========================
@@ -55,21 +131,21 @@
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
 
                 <div class="bg-surface rounded-[12px] border border-primary/5 p-6">
-                    <p class="text-secondary">Facturé ce mois-ci</p>
+                    <p class="text-secondary">Facturé en <span class="lowercase">{{ $period['label'] }}</span></p>
                     <p class="text-h2 text-primary mt-3">{{ $fmt($monthlyRevenue) }}</p>
-                    <p class="text-secondary text-sm mt-3">Factures émises uniquement</p>
+                    <p class="text-sm mt-3">{!! $delta($monthlyRevenueDelta, $prevMonthLabel) !!}</p>
                 </div>
 
                 <div class="bg-surface rounded-[12px] border border-primary/5 p-6">
-                    <p class="text-secondary">Facturé cette année</p>
+                    <p class="text-secondary">Facturé en {{ $period['year'] }}</p>
                     <p class="text-h2 text-primary mt-3">{{ $fmt($yearRevenue) }}</p>
-                    <p class="text-secondary text-sm mt-3">Factures émises uniquement</p>
+                    <p class="text-sm mt-3">{!! $delta($yearRevenueDelta, $prevYearLabel) !!}</p>
                 </div>
 
                 <div class="bg-surface rounded-[12px] border border-primary/5 p-6">
                     <p class="text-secondary">À encaisser</p>
                     <p class="text-h2 text-warning mt-3">{{ $fmt($totalOutstanding) }}</p>
-                    <p class="text-secondary text-sm mt-3">Toutes années confondues</p>
+                    <p class="text-secondary text-sm mt-3">À ce jour, toutes années confondues</p>
                 </div>
 
                 <div class="bg-surface rounded-[12px] border border-primary/5 p-6">
@@ -104,15 +180,15 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 
                 <div class="bg-surface rounded-[12px] border border-primary/5 p-6">
-                    <p class="text-secondary">Encaissé ce mois-ci</p>
+                    <p class="text-secondary">Encaissé en <span class="lowercase">{{ $period['label'] }}</span></p>
                     <p class="text-h2 text-success mt-3">{{ $fmt($monthPaid) }}</p>
-                    <p class="text-secondary text-sm mt-3">Paiements reçus ce mois-ci</p>
+                    <p class="text-sm mt-3">{!! $delta($monthPaidDelta, $prevMonthLabel) !!}</p>
                 </div>
 
                 <div class="bg-surface rounded-[12px] border border-primary/5 p-6">
-                    <p class="text-secondary">Encaissé cette année</p>
+                    <p class="text-secondary">Encaissé en {{ $period['year'] }}</p>
                     <p class="text-h2 text-success mt-3">{{ $fmt($yearPaid) }}</p>
-                    <p class="text-secondary text-sm mt-3">Paiements reçus depuis janvier</p>
+                    <p class="text-sm mt-3">{!! $delta($yearPaidDelta, $prevYearLabel) !!}</p>
                 </div>
 
             </div>
@@ -121,20 +197,24 @@
             <div class="bg-surface rounded-[12px] border border-primary/5 p-6 mb-6">
 
                 <h3 class="text-h3 text-primary mb-6">
-                    Encaissements par mois
+                    Encaissements {{ $period['year'] }}
                 </h3>
 
                 <div class="flex items-stretch gap-2 h-48">
                     @foreach ($monthlyPaidChart as $index => $value)
-                        <div class="flex-1 flex flex-col" title="{{ $monthLabels[$index] }} : {{ $fmt($value) }}">
+                        <a href="{{ $periodUrl($index + 1, $period['year']) }}"
+                            class="flex-1 flex flex-col group focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand rounded"
+                            title="{{ $monthLabels[$index] }} : {{ $fmt($value) }}"
+                            @if ($index + 1 > now()->month && $period['year'] === now()->year) aria-disabled="true" tabindex="-1" @endif>
                             <div class="flex-1 flex items-end">
-                                <div class="w-full rounded-t {{ $index === $currentMonthIndex ? 'bg-success' : 'bg-success/30' }}"
+                                <div class="w-full rounded-t {{ $index === $selectedMonthIndex ? 'bg-success' : 'bg-success/30 group-hover:bg-success/50' }}"
                                     style="height: {{ round(($value / $chartMax) * 100) }}%; min-height: 2px;"></div>
                             </div>
-                            <span class="text-secondary text-xs text-center mt-2">
+                            <span
+                                class="text-xs text-center mt-2 {{ $index === $selectedMonthIndex ? 'text-primary font-medium' : 'text-secondary' }}">
                                 {{ $monthLabels[$index] }}
                             </span>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
 
@@ -184,9 +264,10 @@
         ========================== --}}
         <div class="bg-surface rounded-[12px] border border-primary/5 p-6 mb-10">
 
-            <h2 class="text-h3 text-primary mb-5">
+            <h2 class="text-h3 text-primary mb-1">
                 À traiter
             </h2>
+            <p class="text-secondary text-sm mb-5">À ce jour</p>
 
             <div class="space-y-4">
 
