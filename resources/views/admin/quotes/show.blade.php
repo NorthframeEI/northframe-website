@@ -74,8 +74,28 @@
 
                 {{-- ACCEPTED --}}
                 @if ($quote->status === 'accepted')
-                    <form method="POST" action="{{ route('quotes-convert', $quote) }}">
+                    <form method="POST" action="{{ route('quotes-convert', $quote) }}" class="space-y-4">
                         @csrf
+
+                        <fieldset class="space-y-2">
+                            <legend class="text-label text-primary mb-2">Type de facturation</legend>
+
+                            <label class="flex items-center gap-[10px] text-body text-secondary cursor-pointer">
+                                <input type="radio" name="with_deposit" value="1"
+                                    {{ old('with_deposit', '1') === '1' ? 'checked' : '' }}>
+                                Avec facture d’acompte (50 %)
+                            </label>
+
+                            <label class="flex items-center gap-[10px] text-body text-secondary cursor-pointer">
+                                <input type="radio" name="with_deposit" value="0"
+                                    {{ old('with_deposit') === '0' ? 'checked' : '' }}>
+                                Sans acompte (facture directe)
+                            </label>
+                        </fieldset>
+
+                        @error('with_deposit')
+                            <p class="text-error" role="alert">{{ $message }}</p>
+                        @enderror
 
                         <button type="submit"
                             class="text-primary bg-brand hover:bg-hover px-[20px] py-[10px] rounded-[12px] cursor-pointer">
@@ -117,7 +137,7 @@
 
             @if ($quote->depositInvoice)
                 <div class="w-full flex justify-center mb-8">
-                    <a href="{{ route('deposit-invoices-show', $quote->depositInvoice) }}" 
+                    <a href="{{ route('deposit-invoices-show', $quote->depositInvoice) }}"
                         class="text-primary bg-primary/0 border border-brand/100 hover:bg-brand/20 px-[20px] py-[10px] rounded-[12px]">
 
                         Voir la facture d'acompte associée

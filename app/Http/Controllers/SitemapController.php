@@ -7,12 +7,14 @@ use Illuminate\Http\Request;
 
 class SitemapController extends Controller
 {
-     public function index()
+    public function index()
     {
-        $templates = Template::where('is_active', true)->get();
+        $templates = Template::where('is_active', true)
+            ->select('slug', 'updated_at')
+            ->get();
 
         return response()
             ->view('sitemap', compact('templates'))
-            ->header('Content-Type', 'text/xml');
+            ->header('Content-Type', 'application/xml; charset=UTF-8');
     }
 }

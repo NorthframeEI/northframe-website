@@ -174,7 +174,7 @@ class QuoteController extends Controller
         return back()->with('success', 'Le devis a été refusé.');
     }
 
-    public function convertToInvoice(Quote $quote)
+    public function convertToInvoice(Request $request, Quote $quote)
     {
         abort_unless(
             $quote->status === 'accepted',
@@ -182,8 +182,13 @@ class QuoteController extends Controller
             'Ce devis ne peut pas être transformé en facture.'
         );
 
+        $request->validate([
+            'with_deposit' => ['required', 'boolean'],
+        ]);
 
-        $depositInvoice = DB::transaction(function () use ($quote) {
+        $withDeposit = $request->boolean('with_deposit');
+
+        [$invoice, $depositInvoice] = DB::transaction(function () use ($quote, $withDeposit) {
 
             $invoice = Invoice::create([
                 'customer_id' => $quote->customer_id,
@@ -198,9 +203,7 @@ class QuoteController extends Controller
                 'vat_notice' => 'TVA non applicable, art. 293 B du CGI',
             ]);
 
-
             foreach ($quote->items->where('type', 'one_time') as $item) {
-
                 $invoice->items()->create([
                     'designation' => $item->designation,
                     'description' => $item->description,
@@ -209,26 +212,35 @@ class QuoteController extends Controller
                     'total' => $item->total,
                 ]);
             }
-            $depositInvoice = DepositInvoices::create([
-                'quote_id' => $quote->id,
-                'invoice_id' => $invoice->id,
-                'number' => DocumentNumberService::nextDepositInvoiceNumber(),
-                'amount' => $quote->total * 0.50,
-                'status' => 'draft',
-                'issued_at' => now(),
-            ]);
+
+            $depositInvoice = null;
+
+            if ($withDeposit) {
+                $depositInvoice = DepositInvoices::create([
+                    'quote_id' => $quote->id,
+                    'invoice_id' => $invoice->id,
+                    'number' => DocumentNumberService::nextDepositInvoiceNumber(),
+                    'amount' => round($quote->total * 0.50, 2),
+                    'status' => 'draft',
+                    'issued_at' => now(),
+                ]);
+            }
 
             $quote->update([
                 'status' => 'converted',
             ]);
 
-
-            return $depositInvoice;
+            return [$invoice, $depositInvoice];
         });
 
+        if ($depositInvoice) {
+            return redirect()
+                ->route('deposit-invoices-show', $depositInvoice)
+                ->with('success', 'Le devis a été transformé en facture avec facture d’acompte.');
+        }
 
         return redirect()
-            ->route('deposit-invoices-show', $depositInvoice)
+            ->route('invoices-show', $invoice)
             ->with('success', 'Le devis a été transformé en facture.');
     }
 }

@@ -65,24 +65,24 @@ class AdminController extends Controller
         | - "paiement": paiement rattaché à une facture non annulée
         */
 
-        $issued = fn () => Invoice::whereNotNull('issued_at')
+        $issued = fn() => Invoice::whereNotNull('issued_at')
             ->where('status', '!=', 'cancelled');
 
-        $payments = fn () => Payment::whereHas(
+        $payments = fn() => Payment::whereHas(
             'invoice',
-            fn ($q) => $q->where('status', '!=', 'cancelled')
+            fn($q) => $q->where('status', '!=', 'cancelled')
         );
 
-        $revenueBetween = fn ($start, $end) => $issued()
+        $revenueBetween = fn($start, $end) => $issued()
             ->whereBetween('issued_at', [$start, $end])
             ->sum('total');
 
-        $paidBetween = fn ($start, $end) => $payments()
+        $paidBetween = fn($start, $end) => $payments()
             ->whereBetween('paid_at', [$start, $end])
             ->sum('amount');
 
         // Évolution en % (null si la période précédente est à zéro)
-        $variation = fn ($current, $previous) => $previous > 0
+        $variation = fn($current, $previous) => $previous > 0
             ? (int) round((($current - $previous) / $previous) * 100)
             : null;
 
@@ -102,15 +102,48 @@ class AdminController extends Controller
         $monthPaidDelta      = $variation($monthPaid, $paidBetween($prevMonthStart, $prevMonthEnd));
         $yearPaidDelta       = $variation($yearPaid, $paidBetween($prevYearStart, $prevYearEnd));
 
+        $ceiling         = (float) config('business.micro.ceiling');
+        $vatThreshold    = (float) config('business.micro.vat_threshold');
+        $vatRaised       = (float) config('business.micro.vat_threshold_raised');
+        $activityStart   = config('business.micro.activity_start');
+        $ceilingProrated = false;
+
+        if ($activityStart) {
+            $startDate = Carbon::parse($activityStart)->startOfDay();
+
+            if ($startDate->year === $year) {
+                $days = (int) abs($startDate->diffInDays($yearEnd->copy()->startOfDay())) + 1;
+                $ceiling = round($ceiling * $days / 365);
+                $ceilingProrated = true;
+            }
+        }
+
+        $vatStatus = match (true) {
+            $yearPaid >= $vatRaised => 'raised',
+            $yearPaid >= $vatThreshold => 'over',
+            $yearPaid >= $vatThreshold * 0.8 => 'near',
+            default => 'ok',
+        };
+
+        $limits = [
+            'ceiling'         => $ceiling,
+            'ceilingPercent'  => $ceiling > 0 ? ($yearPaid / $ceiling) * 100 : 0,
+            'ceilingProrated' => $ceilingProrated,
+            'vat'             => $vatThreshold,
+            'vatRaised'       => $vatRaised,
+            'vatPercent'      => $vatThreshold > 0 ? ($yearPaid / $vatThreshold) * 100 : 0,
+            'vatStatus'       => $vatStatus,
+        ];
+
         // Encaissements mois par mois sur l'année sélectionnée (graphique)
         $paidByMonth = $payments()
             ->whereBetween('paid_at', [$yearStart, $yearEnd])
             ->get(['amount', 'paid_at'])
-            ->groupBy(fn ($p) => $p->paid_at->month)
-            ->map(fn ($group) => (float) $group->sum('amount'));
+            ->groupBy(fn($p) => $p->paid_at->month)
+            ->map(fn($group) => (float) $group->sum('amount'));
 
         $monthlyPaidChart = collect(range(1, 12))
-            ->map(fn ($m) => $paidByMonth[$m] ?? 0)
+            ->map(fn($m) => $paidByMonth[$m] ?? 0)
             ->all();
 
         /*
@@ -125,7 +158,7 @@ class AdminController extends Controller
             ->selectRaw('COALESCE(SUM(total - paid_amount), 0) as remaining')
             ->value('remaining');
 
-        $overdueQuery = fn () => Invoice::whereIn('status', $outstandingStatuses)
+        $overdueQuery = fn() => Invoice::whereIn('status', $outstandingStatuses)
             ->whereNotNull('due_date')
             ->whereDate('due_date', '<', today());
 
@@ -149,17 +182,61 @@ class AdminController extends Controller
         $acreActive  = $monthEnd->lessThanOrEqualTo($acreEndDate->copy()->endOfDay());
 
         // À adapter plus tard
-        if ($acreActive) {
-            $urssafRate = 13;
-            $taxRate    = 7;
-        } else {
-            $urssafRate = 25.8;
-            $taxRate    = 9.4;
-        }
+        $ratesAt = fn(Carbon $date) => $date->lessThanOrEqualTo($acreEndDate->copy()->endOfDay())
+            ? ['urssaf' => 13, 'tax' => 7]
+            : ['urssaf' => 25.8, 'tax' => 9.4];
+
+        ['urssaf' => $urssafRate, 'tax' => $taxRate] = $ratesAt($monthEnd);
 
         $monthUrssaf    = $monthPaid * ($urssafRate / 100);
         $monthTaxes     = $monthPaid * ($taxRate / 100);
         $monthAvailable = $monthPaid - $monthUrssaf - $monthTaxes;
+
+        /*
+        |----------------------------------------------------------------------
+        | A Declarer
+        |----------------------------------------------------------------------
+        */
+        $frequency = config('business.declaration', 'monthly');
+        $today = $now->copy()->startOfDay();
+
+        $periodOf = fn(Carbon $d) => $frequency === 'quarterly'
+            ? [$d->copy()->firstOfQuarter()->startOfDay(), $d->copy()->lastOfQuarter()->endOfDay()]
+            : [$d->copy()->startOfMonth(), $d->copy()->endOfMonth()];
+
+        $buildDeclaration = function (Carbon $start, Carbon $end) use ($paidBetween, $ratesAt, $frequency) {
+            $amount = $paidBetween($start, $end);
+            $rates  = $ratesAt($end);
+            $urssaf = $amount * $rates['urssaf'] / 100;
+            $tax    = $amount * $rates['tax'] / 100;
+
+            return [
+                'label'    => $frequency === 'quarterly'
+                    ? 'T' . $start->quarter . ' ' . $start->year
+                    : $start->copy()->locale('fr')->translatedFormat('F Y'),
+                // dernier jour du mois qui suit la fin de la période
+                'deadline' => $end->copy()->addMonthNoOverflow()->endOfMonth(),
+                'amount'   => $amount,
+                'urssaf'   => $urssaf,
+                'tax'      => $tax,
+                'total'    => $urssaf + $tax,
+            ];
+        };
+
+        [$curStart, $curEnd] = $periodOf($now);
+        $previous = $frequency === 'quarterly' ? $now->copy()->subMonthsNoOverflow(3) : $now->copy()->subMonthNoOverflow();
+        [$prevStart, $prevEnd] = $periodOf($previous);
+
+        // Période close dont l'échéance n'est pas passée
+        $declarationDue = $buildDeclaration($prevStart, $prevEnd);
+        if ($declarationDue['deadline']->lt($today)) {
+            $declarationDue = null;
+        } else {
+            $declarationDue['daysLeft'] = (int) abs($today->diffInDays($declarationDue['deadline']->copy()->startOfDay()));
+        }
+
+        // Période en cours
+        $declarationCurrent = $buildDeclaration($curStart, $curEnd);
 
         /*
         |----------------------------------------------------------------------
@@ -241,7 +318,12 @@ class AdminController extends Controller
 
             'latestInvoices',
             'latestInvoicesToCollect',
-            'latestQuotes'
+            'latestQuotes',
+
+            'limits',
+            'frequency',
+            'declarationDue',
+            'declarationCurrent',
         ));
     }
 }

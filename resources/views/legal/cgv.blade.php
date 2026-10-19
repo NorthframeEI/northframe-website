@@ -55,21 +55,30 @@
                     <h2 class="text-h2 text-primary">4. Prix et paiement</h2>
 
                     <p class="text-body text-secondary">
-                        Les prix sont exprimés en euros et peuvent être soumis à la TVA
-                        selon le régime applicable.
+                        Les prix sont exprimés en euros. TVA non applicable, article 293 B du CGI.
                     </p>
 
                     <p class="text-body text-secondary">
-                        Le paiement s’effectue en deux étapes :
+                        Les modalités de paiement dépendent de la prestation :
                     </p>
 
                     <ul class="list-disc pl-6 space-y-2 text-body text-secondary">
-                        <li>50% d’acompte à la validation du devis</li>
-                        <li>50% restants à la livraison du projet</li>
+                        <li>Landing page et templates : paiement intégral à la commande, avant le démarrage.</li>
+                        <li>Site vitrine et refonte : 50 % d’acompte à la validation du devis, 50 % à la livraison.</li>
+                        <li>Renfort technique / freelance : facturation mensuelle à terme échu, sur la base des jours
+                            travaillés, payable à 30 jours.</li>
+                        <li>Maintenance mensuelle : facturation mensuelle, à l’avance.</li>
+                        <li>Maintenance ponctuelle : facturation à l’issue de l’intervention.</li>
                     </ul>
 
                     <p class="text-body text-secondary">
-                        Les factures sont payables à réception.
+                        Sauf mention contraire, les factures sont payables à réception.
+                    </p>
+
+                    <p class="text-body text-secondary">
+                        En cas de retard de paiement, des pénalités calculées à trois fois le taux d’intérêt légal
+                        seront exigibles, ainsi qu’une indemnité forfaitaire de 40 € pour frais de recouvrement
+                        pour les clients professionnels.
                     </p>
                 </div>
 

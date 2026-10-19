@@ -13,6 +13,7 @@
                     sites modernes et
                     performants.</h3>
                 <p class="text-footer text-secondary">contact@northframe.fr</p>
+                <p class="text-footer text-secondary">06 12 53 50 93</p>
                 <div class="flex items-center gap-3">
                     <a href="https://www.linkedin.com/in/antoine-pad%C3%A9-565540174/"
                         class="hover:opacity-70 transition" target="_blank">

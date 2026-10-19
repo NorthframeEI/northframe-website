@@ -6,8 +6,8 @@
     @php
         use Carbon\Carbon;
 
-        $fmt = fn ($value) => number_format($value, 2, ',', ' ') . ' €';
-        $date = fn ($value) => $value ? Carbon::parse($value)->format('d/m/Y') : '—';
+        $fmt = fn($value) => number_format($value, 2, ',', ' ') . ' €';
+        $date = fn($value) => $value ? Carbon::parse($value)->format('d/m/Y') : '—';
 
         // Évolution par rapport à la période précédente
         $delta = function ($pct, $label) {
@@ -18,13 +18,21 @@
             $class = $pct > 0 ? 'text-success' : ($pct < 0 ? 'text-error' : 'text-secondary');
             $sign = $pct > 0 ? '+' : '';
 
-            return '<span class="' . $class . '">' . $sign . $pct . ' %</span> '
-                . '<span class="text-secondary">vs ' . e($label) . '</span>';
+            return '<span class="' .
+                $class .
+                '">' .
+                $sign .
+                $pct .
+                ' %</span> ' .
+                '<span class="text-secondary">vs ' .
+                e($label) .
+                '</span>';
         };
 
-        $periodUrl = fn ($month, $year) => request()->fullUrlWithQuery(['month' => $month, 'year' => $year]);
+        $periodUrl = fn($month, $year) => request()->fullUrlWithQuery(['month' => $month, 'year' => $year]);
 
-        $navLink = 'px-3 py-2 rounded-[8px] text-secondary hover:text-primary hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand';
+        $navLink =
+            'px-3 py-2 rounded-[8px] text-secondary hover:text-primary hover:bg-primary/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand';
         $navOff = 'px-3 py-2 text-secondary/30 cursor-not-allowed';
 
         $statusStyles = [
@@ -90,8 +98,8 @@
                 <div class="flex items-center bg-surface border border-primary/5 rounded-[12px] p-1">
 
                     @if ($period['prevYear'])
-                        <a href="{{ $periodUrl($period['month'], $period['prevYear']) }}"
-                            aria-label="Année précédente" class="{{ $navLink }}">‹</a>
+                        <a href="{{ $periodUrl($period['month'], $period['prevYear']) }}" aria-label="Année précédente"
+                            class="{{ $navLink }}">‹</a>
                     @else
                         <span class="{{ $navOff }}" aria-hidden="true">‹</span>
                     @endif
@@ -101,8 +109,8 @@
                     </span>
 
                     @if ($period['nextYear'])
-                        <a href="{{ $periodUrl($period['month'], $period['nextYear']) }}"
-                            aria-label="Année suivante" class="{{ $navLink }}">›</a>
+                        <a href="{{ $periodUrl($period['month'], $period['nextYear']) }}" aria-label="Année suivante"
+                            class="{{ $navLink }}">›</a>
                     @else
                         <span class="{{ $navOff }}" aria-hidden="true">›</span>
                     @endif
@@ -258,6 +266,196 @@
 
         </div>
 
+        {{-- =========================
+PLAFONDS
+========================== --}}
+        @php
+            $barColor = fn($pct) => $pct >= 100 ? 'bg-error' : ($pct >= 80 ? 'bg-warning' : 'bg-success');
+            $ceilingLeft = $limits['ceiling'] - $yearPaid;
+            $vatLeft = $limits['vat'] - $yearPaid;
+        @endphp
+
+        <div class="mb-10">
+
+            <h2 class="text-h2 text-primary mb-1">Plafonds {{ $period['year'] }}</h2>
+            <p class="text-secondary text-sm mb-6">Calculés sur le chiffre d'affaires encaissé, hors taxes</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                {{-- Plafond micro --}}
+                <div class="bg-surface rounded-[12px] border border-primary/5 p-6">
+
+                    <p class="text-secondary">Plafond micro-entreprise</p>
+                    <p class="text-h2 text-primary mt-3">
+                        {{ $fmt($yearPaid) }}
+                        <span class="text-secondary text-base">sur {{ $fmt($limits['ceiling']) }}</span>
+                    </p>
+
+                    <div class="h-3 rounded-full bg-primary/5 overflow-hidden mt-4" role="progressbar"
+                        aria-label="Progression vers le plafond micro-entreprise"
+                        aria-valuenow="{{ min(100, round($limits['ceilingPercent'])) }}" aria-valuemin="0"
+                        aria-valuemax="100">
+                        <div class="h-full rounded-full {{ $barColor($limits['ceilingPercent']) }}"
+                            style="width: {{ min(100, $limits['ceilingPercent']) }}%"></div>
+                    </div>
+
+                    <p class="text-sm mt-3 {{ $ceilingLeft < 0 ? 'text-error' : 'text-secondary' }}">
+                        {{ number_format($limits['ceilingPercent'], 0, ',', ' ') }} % ·
+                        @if ($ceilingLeft >= 0)
+                            Il reste {{ $fmt($ceilingLeft) }} avant le plafond
+                        @else
+                            Plafond dépassé de {{ $fmt(abs($ceilingLeft)) }}
+                        @endif
+                    </p>
+
+                    @if ($limits['ceilingProrated'])
+                        <p class="text-secondary text-sm mt-1">Plafond calculé au prorata de la première année d'activité
+                        </p>
+                    @endif
+
+                </div>
+
+                {{-- Franchise de TVA --}}
+                <div class="bg-surface rounded-[12px] border border-primary/5 p-6">
+
+                    <p class="text-secondary">Franchise en base de TVA</p>
+                    <p class="text-h2 text-primary mt-3">
+                        {{ $fmt($yearPaid) }}
+                        <span class="text-secondary text-base">sur {{ $fmt($limits['vat']) }}</span>
+                    </p>
+
+                    <div class="h-3 rounded-full bg-primary/5 overflow-hidden mt-4" role="progressbar"
+                        aria-label="Progression vers le seuil de franchise de TVA"
+                        aria-valuenow="{{ min(100, round($limits['vatPercent'])) }}" aria-valuemin="0"
+                        aria-valuemax="100">
+                        <div class="h-full rounded-full {{ $limits['vatStatus'] === 'raised' ? 'bg-error' : ($limits['vatStatus'] === 'ok' ? 'bg-success' : 'bg-warning') }}"
+                            style="width: {{ min(100, $limits['vatPercent']) }}%"></div>
+                    </div>
+
+                    <p class="text-sm mt-3 {{ $limits['vatStatus'] === 'raised' ? 'text-error' : 'text-secondary' }}">
+                        {{ number_format($limits['vatPercent'], 0, ',', ' ') }} % ·
+                        @if ($vatLeft >= 0)
+                            Il reste {{ $fmt($vatLeft) }} avant le seuil
+                        @else
+                            Seuil dépassé de {{ $fmt(abs($vatLeft)) }}
+                        @endif
+                    </p>
+
+                    @if ($limits['vatStatus'] === 'over')
+                        <p class="text-warning text-sm mt-1">
+                            Entre {{ $fmt($limits['vat']) }} et {{ $fmt($limits['vatRaised']) }} : la TVA s'applique à
+                            partir du 1er janvier suivant.
+                        </p>
+                    @elseif ($limits['vatStatus'] === 'raised')
+                        <p class="text-error text-sm mt-1">
+                            Au-delà de {{ $fmt($limits['vatRaised']) }} : la TVA s'applique dès le mois du dépassement.
+                        </p>
+                    @endif
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        {{-- =========================
+À DÉCLARER
+========================== --}}
+        <div class="mb-10">
+
+            <h2 class="text-h2 text-primary mb-1">À déclarer</h2>
+            <p class="text-secondary text-sm mb-6">
+                À ce jour · déclaration {{ $frequency === 'quarterly' ? 'trimestrielle' : 'mensuelle' }}
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                {{-- Déclaration à faire --}}
+                <div class="bg-surface rounded-[12px] border border-primary/5 p-6">
+
+                    @if ($declarationDue)
+                        @php
+                            $daysClass =
+                                $declarationDue['daysLeft'] <= 3
+                                    ? 'text-error'
+                                    : ($declarationDue['daysLeft'] <= 7
+                                        ? 'text-warning'
+                                        : 'text-secondary');
+                        @endphp
+
+                        <p class="text-secondary">À déclarer : <span
+                                class="lowercase">{{ $declarationDue['label'] }}</span></p>
+                        <p class="text-sm mt-1 {{ $daysClass }}">
+                            Avant le {{ $declarationDue['deadline']->format('d/m/Y') }}
+                            @if ($declarationDue['daysLeft'] === 0)
+                                (aujourd'hui)
+                            @else
+                                ({{ $declarationDue['daysLeft'] }} j restants)
+                            @endif
+                        </p>
+
+                        <div class="space-y-3 mt-5">
+                            <div class="flex justify-between">
+                                <span class="text-secondary">Chiffre d'affaires encaissé</span>
+                                <strong class="text-primary">{{ $fmt($declarationDue['amount']) }}</strong>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-secondary">Cotisations URSSAF estimées</span>
+                                <strong class="text-warning">{{ $fmt($declarationDue['urssaf']) }}</strong>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-secondary">Impôt estimé</span>
+                                <strong class="text-warning">{{ $fmt($declarationDue['tax']) }}</strong>
+                            </div>
+                            <div class="flex justify-between border-t border-primary/5 pt-3">
+                                <span class="text-secondary">Total estimé à payer</span>
+                                <strong class="text-primary">{{ $fmt($declarationDue['total']) }}</strong>
+                            </div>
+                        </div>
+                    @else
+                        <p class="text-secondary">À déclarer</p>
+                        <p class="text-h3 text-primary mt-3">Aucune déclaration en attente</p>
+                        <p class="text-secondary text-sm mt-3">
+                            Prochaine échéance : {{ $declarationCurrent['deadline']->format('d/m/Y') }}
+                        </p>
+                    @endif
+
+                </div>
+
+                {{-- Période en cours --}}
+                <div class="bg-surface rounded-[12px] border border-primary/5 p-6">
+
+                    <p class="text-secondary">En cours : <span
+                            class="lowercase">{{ $declarationCurrent['label'] }}</span></p>
+                    <p class="text-secondary text-sm mt-1">
+                        À déclarer avant le {{ $declarationCurrent['deadline']->format('d/m/Y') }}
+                    </p>
+
+                    <div class="space-y-3 mt-5">
+                        <div class="flex justify-between">
+                            <span class="text-secondary">Chiffre d'affaires encaissé</span>
+                            <strong class="text-primary">{{ $fmt($declarationCurrent['amount']) }}</strong>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-secondary">Cotisations URSSAF estimées</span>
+                            <strong class="text-warning">{{ $fmt($declarationCurrent['urssaf']) }}</strong>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-secondary">Impôt estimé</span>
+                            <strong class="text-warning">{{ $fmt($declarationCurrent['tax']) }}</strong>
+                        </div>
+                        <div class="flex justify-between border-t border-primary/5 pt-3">
+                            <span class="text-secondary">Total estimé</span>
+                            <strong class="text-primary">{{ $fmt($declarationCurrent['total']) }}</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
 
         {{-- =========================
         À TRAITER
