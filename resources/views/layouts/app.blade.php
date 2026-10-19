@@ -6,18 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     @php
-        $pageTitle = View::yieldContent('title', 'Northframe - Création de sites web et landing pages');
+        $pageTitle = trim(View::yieldContent('title', 'Northframe - Création de sites web et landing pages'));
 
-        $metaDescription = View::yieldContent(
-            'meta_description',
-            'Northframe conçoit des sites vitrines et landing pages modernes, performants et pensés pour convertir.',
+        $metaDescription = trim(
+            View::yieldContent(
+                'meta_description',
+                'Northframe conçoit des sites vitrines et landing pages modernes, performants et pensés pour convertir.',
+            ),
         );
 
         $canonical = View::yieldContent('canonical', url()->current());
 
-        $ogTitle = View::yieldContent('og_title', $pageTitle);
+        $ogTitle = trim(View::yieldContent('og_title', $pageTitle));
 
-        $ogDescription = View::yieldContent('og_description', $metaDescription);
+        $ogDescription = trim(View::yieldContent('og_description', $metaDescription));
 
         $ogImage = View::yieldContent('og_image', asset('images/og-default.png'));
 
@@ -119,7 +121,7 @@
                         'Maintenance de site web',
                     ],
                     'availableLanguage' => 'fr',
-                    'telephone' => '0612535093',
+                    'telephone' => '+33612535093',
                     'email' => 'contact@northframe.fr',
                 ],
             ],
