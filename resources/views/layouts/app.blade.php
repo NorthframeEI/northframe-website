@@ -6,20 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     @php
-        $pageTitle = trim(View::yieldContent('title', 'Northframe - Création de sites web et landing pages'));
+        $pageTitle = View::yieldContent('title', 'Northframe - Création de sites web et landing pages');
 
-        $metaDescription = trim(
-            View::yieldContent(
-                'meta_description',
-                'Northframe conçoit des sites vitrines et landing pages modernes, performants et pensés pour convertir.',
-            ),
+        $metaDescription = View::yieldContent(
+            'meta_description',
+            'Northframe conçoit des sites vitrines et landing pages modernes, performants et pensés pour convertir.',
         );
 
         $canonical = View::yieldContent('canonical', url()->current());
 
-        $ogTitle = trim(View::yieldContent('og_title', $pageTitle));
+        $ogTitle = View::yieldContent('og_title', $pageTitle);
 
-        $ogDescription = trim(View::yieldContent('og_description', $metaDescription));
+        $ogDescription = View::yieldContent('og_description', $metaDescription);
 
         $ogImage = View::yieldContent('og_image', asset('images/og-default.png'));
 
