@@ -26,7 +26,7 @@
     @endphp
 
     {{-- SEO --}}
-    <title>{{ $pageTitle }}</title>
+    <title>{!! $pageTitle !!}</title>
 
     <meta name="description" content="{{ $metaDescription }}">
     @stack('head')

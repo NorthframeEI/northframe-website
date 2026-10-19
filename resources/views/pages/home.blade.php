@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Développeur web freelance à Arras | Sites vitrines et landing pages – Northframe')
+@section('title', 'Développeur web freelance à Arras | Sites vitrines & landing pages – Northframe')
 @section('meta_description',
     'Développeur web freelance Laravel à Arras : création de sites vitrines, landing pages et
     refontes rapides et optimisés SEO. Intervention dans un rayon de 50 km ou en remote partout en France.')
+
 @section('content')
     <!--Hero Section -->
     <section id="hero" aria-labelledby="hero-title" class="relative overflow-hidden pt-10 lg:pt-16">
