@@ -28,7 +28,7 @@
                     Gestion du devis et de ses lignes
                 </p>
             </div>
-            <div class="w-full max-w-[900px] mx-auto mb-6 flex flex-wrap gap-3 justify-center">
+            <div class="w-full max-w-[900px] mx-auto mb-6 flex flex-wrap gap-3 justify-center items-start">
 
                 @php
                     $pdfExists = Storage::disk('private')->exists('quotes/' . $quote->number . '.pdf');
@@ -74,7 +74,8 @@
 
                 {{-- ACCEPTED --}}
                 @if ($quote->status === 'accepted')
-                    <form method="POST" action="{{ route('quotes-convert', $quote) }}" class="space-y-4">
+                    <form method="POST" action="{{ route('quotes-convert', $quote) }}"
+                        class="w-full max-w-sm space-y-4 rounded-[12px] bg-surface border border-primary/10 p-[16px]">
                         @csrf
 
                         <fieldset class="space-y-2">
