@@ -46,6 +46,7 @@ class QuoteController extends Controller
             'country' => ['required', 'string', 'max:255'],
             'subject' => ['required', 'string', 'max:255'],
             'issued_at' => ['required', 'date'],
+            'requires_deposit' => ['required', 'boolean'],
         ]);
         $customer = Customer::create([
             'company_name' => $request->company_name,
@@ -71,6 +72,7 @@ class QuoteController extends Controller
             'subtotal' => 0,
             'discount' => 0,
             'total' => 0,
+            'requires_deposit' => $request->boolean('requires_deposit'),
         ]);
 
         return redirect()
@@ -182,11 +184,8 @@ class QuoteController extends Controller
             'Ce devis ne peut pas être transformé en facture.'
         );
 
-        $request->validate([
-            'with_deposit' => ['required', 'boolean'],
-        ]);
 
-        $withDeposit = $request->boolean('with_deposit');
+        $withDeposit = (bool) $quote->requires_deposit;
 
         [$invoice, $depositInvoice] = DB::transaction(function () use ($quote, $withDeposit) {
 

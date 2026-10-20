@@ -335,25 +335,38 @@
                         </td>
 
                     </tr>
-                    <tr>
-                        <td style="padding:8px;border:1px solid #DDD;font-size:12px;color:#666;">
-                            Acompte à la commande (50 %)
-                        </td>
+                    @if ($quote->requires_deposit)
+                        @php
+                            $deposit = round($quote->total * 0.5, 2);
+                            $balance = $quote->total - $deposit;
+                        @endphp
 
-                        <td align="right" style="padding:8px;border:1px solid #DDD;font-size:12px;">
-                            {{ number_format($quote->total * 0.5, 2, ',', ' ') }} €
-                        </td>
-                    </tr>
+                        <tr>
+                            <td style="padding:8px;border:1px solid #DDD;font-size:12px;color:#666;">
+                                Acompte à la commande (50 %)
+                            </td>
 
-                    <tr>
-                        <td style="padding:8px;border:1px solid #DDD;font-size:12px;color:#666;">
-                            Solde à la livraison
-                        </td>
+                            <td align="right" style="padding:8px;border:1px solid #DDD;font-size:12px;">
+                                {{ number_format($deposit, 2, ',', ' ') }} €
+                            </td>
+                        </tr>
 
-                        <td align="right" style="padding:8px;border:1px solid #DDD;font-size:12px;">
-                            {{ number_format($quote->total * 0.5, 2, ',', ' ') }} €
-                        </td>
-                    </tr>
+                        <tr>
+                            <td style="padding:8px;border:1px solid #DDD;font-size:12px;color:#666;">
+                                Solde à la livraison
+                            </td>
+
+                            <td align="right" style="padding:8px;border:1px solid #DDD;font-size:12px;">
+                                {{ number_format($balance, 2, ',', ' ') }} €
+                            </td>
+                        </tr>
+                    @else
+                        <tr>
+                            <td colspan="2" style="padding:8px;border:1px solid #DDD;font-size:12px;color:#666;">
+                                Paiement intégral à la commande, avant le démarrage du projet.
+                            </td>
+                        </tr>
+                    @endif
                 </table>
 
 

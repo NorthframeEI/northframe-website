@@ -74,33 +74,15 @@
 
                 {{-- ACCEPTED --}}
                 @if ($quote->status === 'accepted')
-                    <form method="POST" action="{{ route('quotes-convert', $quote) }}"
-                        class="w-full max-w-sm space-y-4 rounded-[12px] bg-surface border border-primary/10 p-[16px]">
+                    <form method="POST" action="{{ route('quotes-convert', $quote) }}">
                         @csrf
-
-                        <fieldset class="space-y-2">
-                            <legend class="text-label text-primary mb-2">Type de facturation</legend>
-
-                            <label class="flex items-center gap-[10px] text-body text-secondary cursor-pointer">
-                                <input type="radio" name="with_deposit" value="1"
-                                    {{ old('with_deposit', '1') === '1' ? 'checked' : '' }}>
-                                Avec facture d’acompte (50 %)
-                            </label>
-
-                            <label class="flex items-center gap-[10px] text-body text-secondary cursor-pointer">
-                                <input type="radio" name="with_deposit" value="0"
-                                    {{ old('with_deposit') === '0' ? 'checked' : '' }}>
-                                Sans acompte (facture directe)
-                            </label>
-                        </fieldset>
-
-                        @error('with_deposit')
-                            <p class="text-error" role="alert">{{ $message }}</p>
-                        @enderror
 
                         <button type="submit"
                             class="text-primary bg-brand hover:bg-hover px-[20px] py-[10px] rounded-[12px] cursor-pointer">
                             Transformer en facture
+                            <span class="block text-small text-primary/80">
+                                {{ $quote->requires_deposit ? 'avec facture d’acompte (50 %)' : 'paiement intégral, sans acompte' }}
+                            </span>
                         </button>
                     </form>
                 @endif

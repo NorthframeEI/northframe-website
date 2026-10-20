@@ -66,7 +66,7 @@
                             <input type="text" name="siret" placeholder="Numéro SIRET"
                                 class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
 
-                            
+
                         </div>
                     </div>
 
@@ -103,18 +103,36 @@
                             <input type="date" name="issued_at" value="{{ now()->toDateString() }}"
                                 class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
 
-                            
+
                         </div>
                     </div>
-                     <div class="mb-6">
+                    <div class="mb-6 flex flex-col gap-4">
 
-                        <div class="flex flex-col gap-4">
-
-                            <input type="text" name="subject" placeholder="Sujet du devis"
-                                class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
-
-                            
+                        <div>
+                            <label for="subject" class="sr-only">Sujet du devis</label>
+                            <input type="text" id="subject" name="subject" placeholder="Sujet du devis"
+                                value="{{ old('subject', $quote->subject ?? '') }}"
+                                class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-hover outline-none transition">
+                            @error('subject')
+                                <p class="mt-2 text-error" role="alert">{{ $message }}</p>
+                            @enderror
                         </div>
+
+                        <div>
+                            <input type="hidden" name="requires_deposit" value="0">
+                            <label for="requires_deposit"
+                                class="flex items-center gap-[10px] text-body text-secondary cursor-pointer">
+                                <input type="checkbox" id="requires_deposit" name="requires_deposit" value="1"
+                                    aria-describedby="requires_deposit_help"
+                                    class="w-[18px] h-[18px] accent-brand cursor-pointer"
+                                    {{ old('requires_deposit', $quote->requires_deposit ?? true) ? 'checked' : '' }}>
+                                Acompte de 50 % à la commande
+                            </label>
+                            <p id="requires_deposit_help" class="mt-1 pl-[28px] text-small text-muted">
+                                Décoche pour une landing page ou un paiement intégral au démarrage.
+                            </p>
+                        </div>
+
                     </div>
 
                     {{-- SUBMIT --}}

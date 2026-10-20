@@ -23,11 +23,13 @@ class Quote extends Model
         'valid_until',
         'notes',
         'vat_notice',
+        'requires_deposit',
     ];
 
     protected $casts = [
         'valid_until' => 'date',
         'issued_at' => 'date',
+        'requires_deposit' => 'boolean',
     ];
 
     public function customer(): BelongsTo
