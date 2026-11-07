@@ -271,7 +271,7 @@
 
                         <div class="mt-auto">
                             <p class="text-card-price text-primary text-center">
-                                À partir de 200 €/jour à distance </br> ou </br> ou sur site (Arras, 50 km) : sur devis
+                                À partir de 300 €/jour à distance </br> ou </br> ou sur site (Arras, 50 km) : sur devis
                             </p>
 
 

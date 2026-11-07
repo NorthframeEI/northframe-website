@@ -7,17 +7,13 @@
 
     <title>@yield('title')</title>
     <link rel="icon" href="{{ asset('favicon.ico') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    {{-- Fonts --}}
+    <link rel="preload" href="{{ asset('fonts/sora-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
     @vite(['resources/css/app.css', 'resources/js/admin/admin-app.js'])
 </head>
 
 <body class="min-h-screen flex bg-northframe">
-  
+
     {{-- NAVBAR --}}
     @include('admin.components.aside')
 
