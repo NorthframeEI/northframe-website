@@ -35,7 +35,8 @@
             </a>
 
             <!-- BURGER mobile -->
-            <button id="burger" class="md:hidden p-2 text-secondary outline-solid rounded-[10px]">
+            <button id="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false"
+                aria-controls="mobile-menu" class="md:hidden p-2 text-secondary outline-solid rounded-[10px]">
                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-width="2" d="M5 7h14M5 12h14M5 17h14" />
                 </svg>
