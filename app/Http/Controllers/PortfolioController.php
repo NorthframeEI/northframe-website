@@ -76,7 +76,7 @@ class PortfolioController extends Controller
             'title' => ['required', 'string'],
             'description' => ['required', 'string'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-            'url' => ['required', 'url'],
+            'url' => ['nullable', 'url'],
             'is_visible' => ['boolean'],
             'authorization_pending' => ['boolean'],
             'tags' => ['required', 'array', 'min:1'],
