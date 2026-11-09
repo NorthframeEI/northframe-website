@@ -10,7 +10,12 @@
             🔒 En attente d'autorisation
         </div>
     @endif
-    <img class="w-full aspect-video bg-white opacity-90" src="{{ asset($project->image) }}" alt="Site vitrine">
+    <img class="w-full aspect-video bg-white opacity-90" src="{{ asset($project->image) }}"
+        srcset="
+        {{ asset(str_replace('-800.webp', '-400.webp', $project->image)) }} 400w,
+        {{ asset($project->image) }} 800w
+    "
+        sizes="(max-width: 640px) 100vw, 397px" alt="Site vitrine">
 
     <div class="px-6 py-4 flex flex-col gap-[10px]">
 
