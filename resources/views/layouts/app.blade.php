@@ -56,9 +56,9 @@
     <meta name="theme-color" content="#0B1220">
 
     {{-- Fonts --}}
-
     <link rel="preload" href="{{ asset('fonts/sora-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
-
+    <link rel="preload" href="{{ asset('fonts/inter-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
+    
     {{-- CSS / JS --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
