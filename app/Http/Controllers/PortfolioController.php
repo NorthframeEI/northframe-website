@@ -93,7 +93,7 @@ class PortfolioController extends Controller
         $project->update([
             'title' => $validated['title'],
             'description' => $validated['description'],
-            'url' => $validated['url'],
+            'url' => $validated['url'] ?? null,
             'image' => $image,
             'is_visible' => $request->boolean('is_visible'),
             'authorization_pending' => $request->boolean('authorization_pending'),
