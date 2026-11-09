@@ -17,12 +17,10 @@
                 <p class="text-footer text-primary">06 12 53 50 93</p>
                 <div class="flex items-center gap-3">
                     <a href="https://www.linkedin.com/in/antoine-pad%C3%A9-565540174/"
-                        class="hover:opacity-70 transition" target="_blank">
-                        <img src="{{ asset('icon/linkedin.svg') }}" alt="" width="24" height="24">
-                    </a>
-                    <a href="https://www.github.com/a-pade" class="hover:opacity-70 transition" target="_blank">
-                        <img src="{{ asset('icon/github.svg') }}" alt="" width="24" height="24">
-                    </a>
+                        aria-label="Visiter mon profil LinkedIn" class="hover:opacity-70 transition" target="_blank"
+                        rel="noopener noreferrer">
+                        <a href="https://www.github.com/a-pade" aria-label="Visiter mon profil GitHub"
+                            class="hover:opacity-70 transition" target="_blank" rel="noopener noreferrer">
                 </div>
             </div>
             <!--Column Navigation-->
