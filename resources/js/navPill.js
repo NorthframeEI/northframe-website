@@ -37,14 +37,23 @@ export default function initNavPill() {
     // 👉 SET ACTIVE
     // =========================
     function setActive(link) {
-        if (!link) return;
+        if (!link || currentActive === link) return;
 
+        // Lecture des dimensions avant toute modification du DOM
+        const rect = link.getBoundingClientRect();
+        const parentRect = link.parentElement.getBoundingClientRect();
+
+        const x = rect.left - parentRect.left;
+        const width = rect.width;
+
+        // Modifications du DOM ensuite
         currentActive = link;
 
         links.forEach((l) => l.classList.remove("nav-active"));
         link.classList.add("nav-active");
 
-        movePill(link);
+        pill.style.opacity = 1;
+        pill.style.transform = `translateX(${x + width / 2 - 9}px)`;
     }
 
     // =========================
