@@ -46,7 +46,7 @@
 
     <!-- MENU MOBILE -->
     <div id="menu"
-        class="opacity-0 pointer-events-none translate-y-2 transition-all duration-300 md:hidden w-full px-4 pt-4 bg-surface">
+        class="opacity-0 pointer-events-none translate-y-2 transition-[opacity,transform] duration-300 md:hidden w-full px-4 pt-4 bg-surface">
 
         <div class="flex flex-col space-y-4 pb-3">
 
