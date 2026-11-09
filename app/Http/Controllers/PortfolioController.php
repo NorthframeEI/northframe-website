@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\PortfolioProject;
 use Illuminate\Http\Request;
+use App\Services\PortfolioImageService;
 
 class PortfolioController extends Controller
 {
     public function index()
     {
         $projects = PortfolioProject::with('tags')
-        ->latest()
-        ->paginate(8);
+            ->latest()
+            ->paginate(8);
         return view('admin.portfolio.index', compact('projects'));
     }
 
@@ -20,9 +21,9 @@ class PortfolioController extends Controller
         return view('admin.portfolio.create');
     }
 
-    public function store(Request $request)
-    {
 
+    public function store(Request $request, PortfolioImageService $imageService)
+    {
         $validated = $request->validate([
             'title' => ['required', 'string'],
             'description' => ['required', 'string'],
@@ -39,17 +40,13 @@ class PortfolioController extends Controller
             'tags.*' => ['required', 'string', 'max:50'],
         ]);
 
-        $image = $request->file('image');
-
-        $imageName = time() . '_' . $image->getClientOriginalName();
-
-        $image->move(public_path('screen_portfolio'), $imageName);
+        $imagePath = $imageService->store($request->file('image'));
 
         $project = PortfolioProject::create([
             'title' => $validated['title'],
             'description' => $validated['description'],
-            'image' => 'screen_portfolio/' . $imageName,
-            'url' => $validated['url'],
+            'image' => $imagePath,
+            'url' => $validated['url'] ?? null,
             'is_visible' => $request->boolean('is_visible'),
             'authorization_pending' => $request->boolean('authorization_pending'),
         ]);
@@ -62,8 +59,9 @@ class PortfolioController extends Controller
 
         return redirect()
             ->route('list-portfolio')
-            ->with('success', 'La réalisation a été ajouté au portfolio avec succès.');
+            ->with('success', 'La réalisation a été ajoutée au portfolio avec succès.');
     }
+
 
     public function editPortfolio(PortfolioProject $project)
     {
