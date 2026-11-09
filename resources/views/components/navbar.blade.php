@@ -5,11 +5,12 @@
         <!-- LOGO -->
         <a href="{{ route('home') }}" class="relative flex items-center group">
             <img src="{{ asset('logos/logo_navbar.svg') }}"
-                class="h-[36px] md:h-[68px] transition-opacity duration-1000 group-hover:opacity-0" alt="Northframe Logo">
+                class="h-[36px] md:h-[68px] transition-opacity duration-1000 group-hover:opacity-0" alt="Northframe Logo"
+                width="200" height="200">
 
             <img src="{{ asset('logos/logo_navbar_hover.svg') }}"
                 class="absolute h-[36px] md:h-[68px] opacity-0 transition-opacity duration-1000 group-hover:opacity-100"
-                alt="Northframe Logo">
+                alt="Northframe Logo" width="200" height="200">
         </a>
 
         <!-- MENU (desktop only inline) -->

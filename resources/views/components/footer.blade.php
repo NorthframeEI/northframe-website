@@ -7,7 +7,8 @@
             <!--Column logo-->
             <div class="flex flex-col gap-4 items-center">
                 <div class="flex items-center gap-3">
-                    <img src="{{ asset('logos/logo_cadre.svg') }}" alt="Northframe logo" class="h-[200px]">
+                    <img src="{{ asset('logos/logo_cadre.svg') }}" alt="Northframe logo" width="200" height="200"
+                        class="h-[200px] w-auto">
                 </div>
                 <h3 class="text-h3-footer text-primary max-w-md text-center">Développeur web freelance spécialisé en
                     sites modernes et
@@ -17,10 +18,10 @@
                 <div class="flex items-center gap-3">
                     <a href="https://www.linkedin.com/in/antoine-pad%C3%A9-565540174/"
                         class="hover:opacity-70 transition" target="_blank">
-                        <img src="{{ asset('icon/linkedin.svg') }}" alt="">
+                        <img src="{{ asset('icon/linkedin.svg') }}" alt="" width="24" height="24">
                     </a>
                     <a href="https://www.github.com/a-pade" class="hover:opacity-70 transition" target="_blank">
-                        <img src="{{ asset('icon/github.svg') }}" alt="">
+                        <img src="{{ asset('icon/github.svg') }}" alt="" width="24" height="24">
                     </a>
                 </div>
             </div>
@@ -58,7 +59,7 @@
                         <li><a href="{{ route('home') }}#ctaFinal" class="hover:opacity-70 transition">
                                 Contact
                             </a></li>
-                            <li><a href="{{ route('template') }}" class="hover:opacity-70 transition">
+                        <li><a href="{{ route('template') }}" class="hover:opacity-70 transition">
                                 Templates
                             </a></li>
                     </ul>
@@ -86,7 +87,7 @@
             <a href="{{ route('politique-confidentialite') }}" class="hover:opacity-70 hover:text-hover transition">
                 Politique de confidentialité
             </a>
-            
+
             <span>|</span>
 
             <a href="{{ route('cgv') }}" class="hover:opacity-70 hover:text-hover transition">
