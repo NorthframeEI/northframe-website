@@ -13,8 +13,8 @@
                 <h3 class="text-h3-footer text-primary max-w-md text-center">Développeur web freelance spécialisé en
                     sites modernes et
                     performants.</h3>
-                <p class="text-footer text-secondary">contact@northframe.fr</p>
-                <p class="text-footer text-secondary">06 12 53 50 93</p>
+                <p class="text-footer text-primary">contact@northframe.fr</p>
+                <p class="text-footer text-primary">06 12 53 50 93</p>
                 <div class="flex items-center gap-3">
                     <a href="https://www.linkedin.com/in/antoine-pad%C3%A9-565540174/"
                         class="hover:opacity-70 transition" target="_blank">
@@ -68,7 +68,7 @@
 
                     <!-- CTA desktop -->
                     <a href="{{ route('contact') }}"
-                        class="block text-brand outline-solid rounded-[10px] outline-brand text-label px-3 py-2 h-[38px] cursor-pointer hover:text-hover hover:outline-hover">
+                        class="block text-primary outline-solid rounded-[10px] outline-primary text-label px-3 py-2 h-[38px] cursor-pointer hover:text-hover hover:outline-hover">
                         Démarrer un projet
                     </a>
 
@@ -76,7 +76,7 @@
             </div>
         </div>
         <div
-            class="mt-10 border-t border-white/10 pt-6 pb-1 flex justify-center items-center gap-4 text-secondary text-footer">
+            class="mt-10 border-t border-white/10 pt-6 pb-1 flex justify-center items-center gap-4 text-primary text-footer">
 
             <a href="{{ route('mentions-legales') }}" class="hover:opacity-70 hover:text-hover transition">
                 Mentions légales

@@ -411,7 +411,7 @@
                 class="w-[240px] h-[240px] rounded-[12px] bg-surface shadow-lg p-[12px] border border-primary/5 flex flex-col justify-between">
 
                 <div class="flex flex-col gap-[10px]">
-                    <p class="text-brand/70 text-small" aria-hidden="true">[01]</p>
+                    <p class="text-brand text-small" aria-hidden="true">[01]</p>
                     <h3 class="text-card-title text-primary ">Analyse du besoin</h3>
                 </div>
                 <p class="text-button text-muted">
@@ -427,7 +427,7 @@
                 class="w-[240px] h-[240px] rounded-[12px] bg-surface shadow-lg p-[12px] border border-primary/5 flex flex-col justify-between">
 
                 <div class="flex flex-col gap-[10px]">
-                    <p class="text-brand/70 text-small" aria-hidden="true">[02]</p>
+                    <p class="text-brand text-small" aria-hidden="true">[02]</p>
                     <h3 class="text-card-title text-primary ">Conception</h3>
                 </div>
                 <p class="text-button text-muted">
@@ -442,7 +442,7 @@
                 class="w-[240px] h-[240px] rounded-[12px] bg-surface shadow-lg p-[12px] border border-primary/5 flex flex-col justify-between">
 
                 <div class="flex flex-col gap-[10px]">
-                    <p class="text-brand/70 text-small" aria-hidden="true">[03]</p>
+                    <p class="text-brand text-small" aria-hidden="true">[03]</p>
                     <h3 class="text-card-title text-primary ">Développement</h3>
                 </div>
                 <p class="text-button text-muted">
@@ -456,7 +456,7 @@
                 class="w-[240px] h-[240px] rounded-[12px] bg-surface shadow-lg p-[12px] border border-primary/5 flex flex-col justify-between">
 
                 <div class="flex flex-col gap-[10px]">
-                    <p class="text-brand/70 text-small" aria-hidden="true">[04]</p>
+                    <p class="text-brand text-small" aria-hidden="true">[04]</p>
                     <h3 class="text-card-title text-primary ">Mise en ligne</h3>
                 </div>
                 <p class="text-button text-muted">
