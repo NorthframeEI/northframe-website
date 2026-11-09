@@ -15,7 +15,7 @@
         {{ asset(str_replace('-800.webp', '-400.webp', $project->image)) }} 400w,
         {{ asset($project->image) }} 800w
     "
-        sizes="(max-width: 640px) 100vw, 397px" alt="Site vitrine">
+        sizes="(max-width: 640px) 100vw, 397px" alt="{{$project->title}}">
 
     <div class="px-6 py-4 flex flex-col gap-[10px]">
 
