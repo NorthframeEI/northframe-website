@@ -10,7 +10,7 @@
             🔒 En attente d'autorisation
         </div>
     @endif
-    <img class="w-full aspect-video bg-white opacity-90" src="{{ asset($project->image) }}"
+    <img class="w-full h-auto bg-white opacity-90" src="{{ asset($project->image) }}"
         srcset="
         {{ asset(str_replace('-800.webp', '-400.webp', $project->image)) }} 400w,
         {{ asset($project->image) }} 800w
