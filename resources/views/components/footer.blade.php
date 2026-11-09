@@ -19,8 +19,12 @@
                     <a href="https://www.linkedin.com/in/antoine-pad%C3%A9-565540174/"
                         aria-label="Visiter mon profil LinkedIn" class="hover:opacity-70 transition" target="_blank"
                         rel="noopener noreferrer">
-                        <a href="https://www.github.com/a-pade" aria-label="Visiter mon profil GitHub"
-                            class="hover:opacity-70 transition" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ asset('icon/linkedin.svg') }}" alt="" width="24" height="24">
+                    </a>
+                    <a href="https://www.github.com/a-pade" aria-label="Visiter mon profil GitHub"
+                        class="hover:opacity-70 transition" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ asset('icon/github.svg') }}" alt="" width="24" height="24">
+                    </a>
                 </div>
             </div>
             <!--Column Navigation-->
