@@ -70,43 +70,24 @@ class PortfolioController extends Controller
         return view('admin.portfolio.edit', compact('project'));
     }
 
-    public function updatePortfolio(Request $request, PortfolioProject $project)
+    public function updatePortfolio(Request $request, PortfolioProject $project, PortfolioImageService $imageService)
     {
-
         $validated = $request->validate([
             'title' => ['required', 'string'],
             'description' => ['required', 'string'],
-
-            'image' => [
-                'nullable',
-                'image',
-                'mimes:jpg,jpeg,png,webp',
-                'max:5120',
-            ],
-
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'url' => ['required', 'url'],
-
             'is_visible' => ['boolean'],
             'authorization_pending' => ['boolean'],
-
             'tags' => ['required', 'array', 'min:1'],
             'tags.*' => ['required', 'string', 'max:50'],
         ]);
 
-        $image = $project->image;
+        $oldImage = $project->image;
+        $image = $oldImage;
+
         if ($request->hasFile('image')) {
-            //Delete Old Image
-            if ($image && file_exists(public_path($image))) {
-                unlink(public_path($image));
-            }
-            //upload new image
-            $image = $request->file('image');
-
-            $imageName = time() . '_' . $image->getClientOriginalName();
-
-            $image->move(public_path('screen_portfolio'), $imageName);
-
-            $image =   $image = 'screen_portfolio/' . $imageName;
+            $image = $imageService->store($request->file('image'));
         }
 
         $project->update([
@@ -118,14 +99,18 @@ class PortfolioController extends Controller
             'authorization_pending' => $request->boolean('authorization_pending'),
         ]);
 
+        if ($request->hasFile('image')) {
+            $imageService->delete($oldImage);
+        }
+
         $project->tags()->delete();
 
         foreach ($validated['tags'] as $tag) {
-            $project->tags()->create([
-                'name' => $tag,
-            ]);
+            $project->tags()->create(['name' => $tag]);
         }
-        return redirect()->route('edit-portfolio', $project->id)->with('success', 'Portfolio updated successfully.');
+
+        return redirect()->route('edit-portfolio', $project->id)
+            ->with('success', 'Portfolio updated successfully.');
     }
 
     public function deletePortfolio(PortfolioProject $project)
