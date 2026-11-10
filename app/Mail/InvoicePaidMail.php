@@ -30,8 +30,10 @@ class InvoicePaidMail extends Mailable
      */
     public function envelope(): Envelope
     {
+        $subject = $this->invoice->subject_label;
+
         return new Envelope(
-            subject: 'Votre facture acquittée ' . $this->invoice->number  .' - ' . $this->invoice->quote->subject,
+            subject: 'Votre facture acquittée ' . $this->invoice->number . ($subject ? ' - ' . $subject : ''),
         );
     }
 
