@@ -211,6 +211,7 @@ class QuoteController extends Controller
                 'notes' => $quote->notes,
                 'vat_notice' => 'TVA non applicable, art. 293 B du CGI',
                 'type' => $quote->type,
+                'subject' => $quote->subject,
             ]);
 
             foreach ($quote->items->where('type', 'one_time') as $item) {

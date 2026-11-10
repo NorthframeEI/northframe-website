@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\DocumentType;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -24,6 +25,7 @@ class Invoice extends Model
         'due_date',
         'notes',
         'vat_notice',
+        'subject',
     ];
 
     protected $casts = [
@@ -58,5 +60,10 @@ class Invoice extends Model
     public function depositInvoice(): HasOne
     {
         return $this->hasOne(DepositInvoices::class);
+    }
+
+    protected function subjectLabel(): Attribute
+    {
+        return Attribute::get(fn() => $this->subject ?? $this->quote?->subject);
     }
 }
