@@ -14,6 +14,8 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use App\Enums\DocumentType;
+use Illuminate\Validation\Rule;
 
 
 class QuoteController extends Controller
@@ -47,6 +49,7 @@ class QuoteController extends Controller
             'subject' => ['required', 'string', 'max:255'],
             'issued_at' => ['required', 'date'],
             'requires_deposit' => ['required', 'boolean'],
+            'type' => ['required', Rule::enum(DocumentType::class)],
         ]);
         $customer = Customer::create([
             'company_name' => $request->company_name,
@@ -73,6 +76,7 @@ class QuoteController extends Controller
             'discount' => 0,
             'total' => 0,
             'requires_deposit' => $request->boolean('requires_deposit'),
+            'type' => $request->type,
         ]);
 
         return redirect()
@@ -200,6 +204,7 @@ class QuoteController extends Controller
                 'paid_amount' => 0,
                 'notes' => $quote->notes,
                 'vat_notice' => 'TVA non applicable, art. 293 B du CGI',
+                'type' => $quote->type,
             ]);
 
             foreach ($quote->items->where('type', 'one_time') as $item) {

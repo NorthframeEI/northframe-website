@@ -119,6 +119,24 @@
                         </div>
 
                         <div>
+                            @php $currentType = old('type', $quote->type?->value ?? ''); @endphp
+
+                            <label for="type" class="sr-only">Type de projet</label>
+                            <select id="type" name="type" required
+                                class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-hover outline-none transition">
+                                <option value="" disabled @selected($currentType === '')>Type de projet</option>
+                                @foreach (\App\Enums\DocumentType::cases() as $type)
+                                    <option value="{{ $type->value }}" @selected($currentType === $type->value)>
+                                        {{ $type->label() }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('type')
+                                <p class="mt-2 text-error" role="alert">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
                             <input type="hidden" name="requires_deposit" value="0">
                             <label for="requires_deposit"
                                 class="flex items-center gap-[10px] text-body text-secondary cursor-pointer">
