@@ -20,9 +20,15 @@ use Illuminate\Validation\Rule;
 
 class QuoteController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $quotes = Quote::all();
+        $filter = $request->query('type');
+
+        $quotes = Quote::with('customer')
+            ->when($filter === 'none', fn($q) => $q->whereNull('type'))
+            ->when(DocumentType::tryFrom((string) $filter), fn($q, $type) => $q->where('type', $type->value))
+            ->get();
+
         return view('admin.quotes.index', compact('quotes'));
     }
     public function create()

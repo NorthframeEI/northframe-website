@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\DocumentType;
 use App\Mail\InvoiceMail;
 use App\Models\Invoice;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -11,9 +12,15 @@ use Illuminate\Support\Facades\Storage;
 
 class InvoiceController extends Controller
 {
-    public function listInvoices()
+    public function listInvoices(Request $request)
     {
-        $invoices = Invoice::all();
+        $filter = $request->query('type');
+
+        $invoices = Invoice::with('customer')
+            ->when($filter === 'none', fn($q) => $q->whereNull('type'))
+            ->when(DocumentType::tryFrom((string) $filter), fn($q, $type) => $q->where('type', $type->value))
+            ->get();
+
         return view('admin.invoice.index', compact('invoices'));
     }
 
