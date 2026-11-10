@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\DocumentType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -12,6 +13,7 @@ class Invoice extends Model
     protected $fillable = [
         'customer_id',
         'quote_id',
+        'type',
         'number',
         'status',
         'subtotal',
@@ -27,6 +29,7 @@ class Invoice extends Model
     protected $casts = [
         'issued_at' => 'date',
         'due_date' => 'date',
+        'type' => DocumentType::class,
     ];
 
     public function customer(): BelongsTo

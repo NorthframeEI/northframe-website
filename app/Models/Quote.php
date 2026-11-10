@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\DocumentType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,6 +16,7 @@ class Quote extends Model
         'customer_id',
         'number',
         'subject',
+        'type',
         'issued_at',
         'status',
         'subtotal',
@@ -30,6 +32,7 @@ class Quote extends Model
         'valid_until' => 'date',
         'issued_at' => 'date',
         'requires_deposit' => 'boolean',
+        'type' => DocumentType::class,
     ];
 
     public function customer(): BelongsTo
