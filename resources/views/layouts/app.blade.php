@@ -22,7 +22,7 @@
         $ogImage = View::yieldContent('og_image', asset('images/og-default.png'));
 
         $robots = View::yieldContent('robots', 'index, follow');
-        $siteUrl = config('app.url');
+        $siteUrl = rtrim(config('app.url'), '/');
     @endphp
 
     {{-- SEO --}}
@@ -58,11 +58,12 @@
     {{-- Fonts --}}
     <link rel="preload" href="{{ asset('fonts/sora-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="{{ asset('fonts/inter-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
-    
+
     {{-- CSS / JS --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     {{-- Schema.org --}}
+
     @php
         $schema = [
             '@context' => 'https://schema.org',
@@ -73,54 +74,69 @@
                     'name' => 'Antoine Padé',
                     'url' => $siteUrl,
                     'jobTitle' => 'Développeur web freelance Laravel / PHP',
-                    'worksFor' => ['@id' => $siteUrl . '/#business'],
-                    'address' => [
-                        '@type' => 'PostalAddress',
-                        'addressLocality' => 'Arras',
-                        'addressRegion' => 'Hauts-de-France',
-                        'addressCountry' => 'FR',
+                    'worksFor' => [
+                        '@id' => $siteUrl . '/#business',
                     ],
-                    'knowsAbout' => ['Laravel', 'PHP', 'Tailwind CSS', 'SEO', 'Création de site web'],
+                    'knowsAbout' => [
+                        'Laravel',
+                        'PHP',
+                        'Tailwind CSS',
+                        'SEO',
+                        'Création de sites vitrines',
+                        'Création de landing pages',
+                        'Développement web',
+                    ],
+                    'knowsLanguage' => 'fr',
                     'sameAs' => [
                         'https://www.linkedin.com/in/antoine-pad%C3%A9-565540174/',
                         'https://github.com/apade17',
                     ],
                 ],
                 [
-                    '@type' => 'ProfessionalService',
+                    '@type' => 'Organization',
                     '@id' => $siteUrl . '/#business',
                     'name' => 'Northframe',
                     'url' => $siteUrl,
                     'logo' => asset('logos/logo_hero.svg'),
                     'image' => $ogImage,
                     'description' =>
-                        'Développeur web freelance à Arras : création de sites vitrines, landing pages, refonte de site, développement Laravel sur mesure et maintenance.',
-                    'founder' => ['@id' => $siteUrl . '/#person'],
-                    'address' => [
-                        '@type' => 'PostalAddress',
-                        'addressLocality' => 'Arras',
-                        'addressRegion' => 'Hauts-de-France',
-                        'addressCountry' => 'FR',
+                        'Développeur web freelance à Arras : création de sites vitrines, landing pages, refonte de sites web, développement Laravel sur mesure et maintenance.',
+                    'founder' => [
+                        '@id' => $siteUrl . '/#person',
+                    ],
+                    'location' => [
+                        '@type' => 'Place',
+                        'name' => 'Arras, Hauts-de-France, France',
                     ],
                     'areaServed' => [
-                        ['@type' => 'City', 'name' => 'Arras'],
-                        ['@type' => 'AdministrativeArea', 'name' => 'Pas-de-Calais'],
-                        ['@type' => 'Country', 'name' => 'France'],
+                        [
+                            '@type' => 'City',
+                            'name' => 'Arras',
+                        ],
+                        [
+                            '@type' => 'AdministrativeArea',
+                            'name' => 'Pas-de-Calais',
+                        ],
+                        [
+                            '@type' => 'Country',
+                            'name' => 'France',
+                        ],
                     ],
-                    'serviceType' => [
-                        'Création de site vitrine',
-                        'Création de landing page',
-                        'Refonte de site web',
+                    'knowsAbout' => [
+                        'Création de sites vitrines',
+                        'Création de landing pages',
+                        'Refonte de sites web',
                         'Développement Laravel',
-                        'Maintenance de site web',
+                        'Développement PHP',
+                        'Maintenance de sites web',
                     ],
-                    'availableLanguage' => 'fr',
                     'telephone' => '+33612535093',
                     'email' => 'contact@northframe.fr',
                 ],
             ],
         ];
     @endphp
+
     <script type="application/ld+json">{!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
 
 </head>

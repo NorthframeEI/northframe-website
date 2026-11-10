@@ -3,7 +3,7 @@
     hover:shadow-hover hover:-translate-y-2 transition-all duration-300 ease-out hover:scale-[1.02]
     border border-primary/5 hover:border-hover
     {{ $project->authorization_pending ? 'pointer-events-none' : '' }}"
-    target="_blank">
+    target="_blank" rel="noopener noreferrer">
     <!-- Badge overlay -->
     @if ($project->authorization_pending)
         <div class="absolute top-4 left-4 z-10 bg-black/80 text-primary text-small px-3 py-2 rounded-full">
@@ -15,28 +15,28 @@
         {{ asset(str_replace('-800.webp', '-400.webp', $project->image)) }} 400w,
         {{ asset($project->image) }} 800w
     "
-        sizes="(max-width: 640px) 100vw, 397px" alt="{{$project->title}}">
+        sizes="(max-width: 640px) 100vw, 397px"
+        alt="{{ $project->title }} – Capture d'écran du site réalisé par Northframe">
 
     <div class="px-6 py-4 flex flex-col gap-[10px]">
 
-        <div class="text-card-title text-primary text-center">
+        <h3 class="text-card-title text-primary text-center">
             {{ $project->title }}
-        </div>
+        </h3>
+
+        <p class="text-label text-secondary text-center">
+            {{ $project->description }}
+        </p>
 
         <div class="flex flex-wrap justify-center gap-[8px]">
-
-            <p class="text-label text-secondary text-center">
-                {{ $project->description }}
-            </p>
-
             @foreach ($project->tags as $tag)
                 <span
                     class="inline-block outline-solid outline-brand rounded-full px-3 py-1 text-sm font-semibold text-secondary">
                     #{{ $tag->name }}
                 </span>
             @endforeach
-
         </div>
+
     </div>
 
 </a>

@@ -8,7 +8,7 @@ export default function initAccordion() {
     buttons.forEach((button) => {
         button.addEventListener("click", () => {
             const targetSelector = button.getAttribute("data-accordion-target");
-            const target = document.querySelector(targetSelector);
+            const target = accordion.querySelector(targetSelector);
 
             if (!target) return;
 
@@ -17,7 +17,7 @@ export default function initAccordion() {
             // Ferme tout
             buttons.forEach((btn) => {
                 const selector = btn.getAttribute("data-accordion-target");
-                const body = document.querySelector(selector);
+                const body = accordion.querySelector(selector);
                 const icon = btn.querySelector("[data-accordion-icon]");
 
                 btn.setAttribute("aria-expanded", "false");
