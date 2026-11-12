@@ -4,17 +4,17 @@
 
     <url>
         <loc>{{ route('home') }}</loc>
-        <lastmod>2026-10-19</lastmod>
+        <lastmod>2026-11-12</lastmod>
     </url>
 
     <url>
         <loc>{{ route('template') }}</loc>
-        <lastmod>2026-10-19</lastmod>
+        <lastmod>2026-11-12</lastmod>
     </url>
 
     <url>
         <loc>{{ route('contact') }}</loc>
-        <lastmod>2026-10-19</lastmod>
+        <lastmod>2026-11-12</lastmod>
     </url>
 
     <url>
@@ -35,7 +35,7 @@
     @foreach ($templates as $template)
         <url>
             <loc>{{ route('detail-template', $template->slug) }}</loc>
-            <lastmod>{{ $template->updated_at->toAtomString() }}</lastmod>
+            <lastmod>{{ $template->updated_at->greaterThan(\Illuminate\Support\Carbon::parse('2026-11-12')) ? $template->updated_at->toAtomString() : '2026-11-12' }}</lastmod>
         </url>
     @endforeach
 
