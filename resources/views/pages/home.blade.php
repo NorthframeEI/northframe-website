@@ -422,7 +422,7 @@
         </p>
         <div class="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-[10px] justify-center mx-auto w-fit pt-3">
             <div
-                class="w-[260px] h-[260px] rounded-[12px] bg-surface shadow-lg p-[12px] border border-primary/5 flex flex-col justify-between">
+                class="w-[260px] min-h-[260px] rounded-[12px] bg-surface shadow-lg p-[12px] border border-primary/5 flex flex-col justify-between">
 
                 <div class="flex flex-col gap-[10px]">
                     <p class="text-[#60A5FA] text-small" aria-hidden="true">[01]</p>
@@ -437,7 +437,7 @@
 
             </div>
             <div
-                class="w-[260px] h-[260px] rounded-[12px] bg-surface shadow-lg p-[12px] border border-primary/5 flex flex-col justify-between">
+                class="w-[260px] min-h-[260px] rounded-[12px] bg-surface shadow-lg p-[12px] border border-primary/5 flex flex-col justify-between">
 
                 <div class="flex flex-col gap-[10px]">
                     <p class="text-[#60A5FA] text-small" aria-hidden="true">[02]</p>
@@ -451,7 +451,7 @@
                     alt="" aria-hidden="true">
             </div>
             <div
-                class="w-[260px] h-[260px] rounded-[12px] bg-surface shadow-lg p-[12px] border border-primary/5 flex flex-col justify-between">
+                class="w-[260px] min-h-[260px] rounded-[12px] bg-surface shadow-lg p-[12px] border border-primary/5 flex flex-col justify-between">
 
                 <div class="flex flex-col gap-[10px]">
                     <p class="text-[#60A5FA] text-small" aria-hidden="true">[03]</p>
@@ -465,7 +465,7 @@
                     alt="" aria-hidden="true">
             </div>
             <div
-                class="w-[260px] h-[260px] rounded-[12px] bg-surface shadow-lg p-[12px] border border-primary/5 flex flex-col justify-between">
+                class="w-[260px] min-h-[260px] rounded-[12px] bg-surface shadow-lg p-[12px] border border-primary/5 flex flex-col justify-between">
 
                 <div class="flex flex-col gap-[10px]">
                     <p class="text-[#60A5FA] text-small" aria-hidden="true">[04]</p>
