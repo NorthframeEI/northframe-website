@@ -17,10 +17,7 @@
                     </h1>
                 </div>
 
-                <a href="{{ route('create-quote') }}"
-                    class="text-primary text-button-inter bg-brand hover:bg-hover px-[12px] py-[16px] rounded-[12px]">
-                    Créer un devis
-                </a>
+
 
             </div>
             <div class="w-full mb-6">
@@ -40,20 +37,29 @@
                     </div>
                 @endif
             </div>
-            <form method="GET" class="mb-6 max-w-[260px]">
-                <label for="type-filter" class="sr-only">Filtrer par type</label>
-                <select id="type-filter" name="type" onchange="this.form.submit()"
-                    class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-hover outline-none transition">
-                    <option value="">Tous les types</option>
-                    @foreach (\App\Enums\DocumentType::cases() as $type)
-                        <option value="{{ $type->value }}" @selected(request('type') === $type->value)>
-                            {{ $type->label() }}
-                        </option>
-                    @endforeach
-                    <option value="none" @selected(request('type') === 'none')>Sans type</option>
-                </select>
-                <noscript><button type="submit" class="mt-2 text-brand">Filtrer</button></noscript>
-            </form>
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+
+                <form method="GET" class="w-full max-w-[260px]">
+                    <label for="type-filter" class="sr-only">Filtrer par type</label>
+                    <select id="type-filter" name="type" onchange="this.form.submit()"
+                        class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-hover outline-none transition">
+                        <option value="">Tous les types</option>
+                        @foreach (\App\Enums\DocumentType::cases() as $type)
+                            <option value="{{ $type->value }}" @selected(request('type') === $type->value)>
+                                {{ $type->label() }}
+                            </option>
+                        @endforeach
+                        <option value="none" @selected(request('type') === 'none')>Sans type</option>
+                    </select>
+                    <noscript><button type="submit" class="mt-2 text-brand">Filtrer</button></noscript>
+                </form>
+
+                <a href="{{ route('create-quote') }}"
+                    class="text-primary text-button-inter bg-brand hover:bg-hover px-[12px] py-[16px] rounded-[12px]">
+                    Créer un devis
+                </a>
+
+            </div>
             <div class="bg-surface border border-primary/5 rounded-[12px] overflow-hidden">
 
                 <table class="w-full">

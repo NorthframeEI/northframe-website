@@ -9,6 +9,10 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Customer;
+use App\Services\DocumentNumberService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class InvoiceController extends Controller
 {
@@ -126,5 +130,90 @@ class InvoiceController extends Controller
             'status' => 'cancelled',
         ]);
         return back()->with('success', 'Cette facture est annulée.');
+    }
+
+    public function create()
+    {
+        $customers = Customer::orderBy('company_name')->get(['id', 'company_name', 'contact_name']);
+
+        return view('admin.invoice.create', compact('customers'));
+    }
+
+    public function store(Request $request)
+    {
+        if ($request->filled('siret')) {
+            $request->merge(['siret' => preg_replace('/\s+/', '', $request->siret)]);
+        }
+
+        $validated = $request->validate([
+            'customer_id'  => ['nullable', 'exists:customers,id'],
+
+            // Nouveau client : obligatoire seulement si aucun client n'est choisi
+            'company_name' => ['required_without:customer_id', 'nullable', 'string', 'max:255'],
+            'siret'        => ['required_without:customer_id', 'nullable', 'digits:14'],
+            'contact_name' => ['required_without:customer_id', 'nullable', 'string', 'max:255'],
+            'email'        => ['required_without:customer_id', 'nullable', 'email', 'max:255'],
+            'phone'        => ['nullable', 'string', 'max:20'],
+            'address'      => ['nullable', 'string', 'max:255'],
+            'postal_code'  => ['required_without:customer_id', 'nullable', 'string', 'max:10'],
+            'city'         => ['required_without:customer_id', 'nullable', 'string', 'max:255'],
+            'country'      => ['required_without:customer_id', 'nullable', 'string', 'max:255'],
+
+            'subject'     => ['required', 'string', 'max:255'],
+            'type'        => ['required', Rule::enum(DocumentType::class)],
+
+            // Une seule ligne de prestation
+            'designation' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'quantity'    => ['required', 'numeric', 'min:0.01'],
+            'unit_price'  => ['required', 'numeric', 'min:0'],
+        ]);
+
+        $invoice = DB::transaction(function () use ($validated) {
+            $customer = ! empty($validated['customer_id'])
+                ? Customer::findOrFail($validated['customer_id'])
+                : Customer::firstOrCreate(
+                    ['siret' => $validated['siret']],
+                    [
+                        'company_name' => $validated['company_name'],
+                        'contact_name' => $validated['contact_name'],
+                        'email'        => $validated['email'],
+                        'phone'        => $validated['phone'] ?? null,
+                        'address'      => $validated['address'] ?? null,
+                        'postal_code'  => $validated['postal_code'],
+                        'city'         => $validated['city'],
+                        'country'      => $validated['country'],
+                    ]
+                );
+
+            $total = round($validated['quantity'] * $validated['unit_price'], 2);
+
+            $invoice = Invoice::create([
+                'customer_id' => $customer->id,
+                'type'        => $validated['type'],
+                'number'      => DocumentNumberService::nextInvoiceNumber(),
+                'subject'     => $validated['subject'],
+                'status'      => 'draft',
+                'subtotal'    => $total,
+                'discount'    => 0,
+                'total'       => $total,
+                'paid_amount' => 0,
+                'vat_notice'  => 'TVA non applicable, art. 293 B du CGI',
+            ]);
+
+            $invoice->items()->create([
+                'designation' => $validated['designation'],
+                'description' => $validated['description'] ?? null,
+                'quantity'    => $validated['quantity'],
+                'unit_price'  => $validated['unit_price'],
+                'total'       => $total,
+            ]);
+
+            return $invoice;
+        });
+
+        return redirect()
+            ->route('invoices-show', $invoice)
+            ->with('success', 'La facture a été créée en brouillon.');
     }
 }

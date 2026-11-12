@@ -222,44 +222,52 @@
                 <div class="grid grid-cols-2 gap-10">
 
 
+                    @php $customer = $invoice->customer; @endphp
+
                     <div>
 
                         <h2 class="text-primary text-body-bold mb-4">
                             Informations client
                         </h2>
 
-
                         <p class="text-primary">
-                            <strong>
-                                {{ $invoice->customer->company_name }}
-                            </strong>
+                            <strong>{{ $customer->company_name ?? $customer->contact_name }}</strong>
                         </p>
 
+                        @if ($customer->company_name && $customer->contact_name)
+                            <p class="text-secondary">{{ $customer->contact_name }}</p>
+                        @endif
 
-                        <p class="text-secondary">
-                            {{ $invoice->customer->contact_name }}
-                        </p>
+                        @if ($customer->address)
+                            <p class="text-secondary">{{ $customer->address }}</p>
+                        @endif
 
+                        @if ($customer->postal_code || $customer->city)
+                            <p class="text-secondary">{{ $customer->postal_code }} {{ $customer->city }}</p>
+                        @endif
 
-                        <p class="text-secondary">
-                            {{ $invoice->customer->address }}
-                        </p>
+                        @if ($customer->email)
+                            <p class="text-secondary">
+                                <a href="mailto:{{ $customer->email }}" class="hover:underline">{{ $customer->email }}</a>
+                            </p>
+                        @endif
 
+                        @if ($customer->phone)
+                            <p class="text-secondary">{{ $customer->phone }}</p>
+                        @endif
 
-                        <p class="text-secondary">
+                        @if ($customer->siret)
+                            <p class="text-secondary">SIRET : {{ $customer->siret }}</p>
+                        @endif
 
-                            {{ $invoice->customer->postal_code }}
-                            {{ $invoice->customer->city }}
-
-                        </p>
-
-
-                        <p class="text-secondary">
-
-                            {{ $invoice->customer->email }}
-
-                        </p>
-
+                        @if ($invoice->type)
+                            <p class="mt-4">
+                                <span
+                                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-brand/20 text-brand">
+                                    {{ $invoice->type->label() }}
+                                </span>
+                            </p>
+                        @endif
 
                     </div>
 
@@ -542,7 +550,8 @@
                                 {{ old('is_deposit') ? 'checked' : '' }}
                                 class="w-4 h-4 rounded border border-secondary/30 bg-dark text-brand focus:ring-brand cursor-pointer">
                             <label for="is_deposit" class="text-secondary cursor-pointer"> Ce paiement correspond à un
-                                acompte </label> </div>
+                                acompte </label>
+                        </div>
 
                         <button type="submit"
                             class="text-primary text-button-inter bg-brand hover:bg-hover px-[20px] py-[20px] rounded-[12px] w-fit cursor-pointer">

@@ -113,6 +113,8 @@ Route::domain(config('app.admin_domain'))
 
             //Invoice Management
             Route::get('/invoices', [InvoiceController::class, 'listInvoices'])->name('list-invoices'); // List all invoices
+            Route::get('/invoices/create', [InvoiceController::class, 'create'])->name('invoices-create');
+            Route::post('/invoices', [InvoiceController::class, 'store'])->name('invoices-store');
             Route::get('/invoices/{invoice}', [InvoiceController::class, 'showInvoice'])->name('invoices-show'); // Show a specific invoice
             Route::get('/invoices/{invoice}/pdf', [InvoiceController::class, 'previewInvoicePdf'])->name('invoices-preview-pdf'); // Preview PDF for a specific invoice
             Route::get('/invoices/{invoice}/preview', [InvoiceController::class, 'preview'])->name('invoices-preview'); // Preview a specific invoice
@@ -120,6 +122,7 @@ Route::domain(config('app.admin_domain'))
             Route::get('/invoices/{invoice}/pdf', [InvoiceController::class, 'previewPdf'])->name('invoices-preview-pdf'); // Preview PDF for a specific invoice
             Route::post('/invoices/{invoice}/sent', [InvoiceController::class, 'sentInvoice'])->name('invoices-sent'); //Mark a specific invoice as sent
             Route::post('/invoices/{invoice}/cancelled', [InvoiceController::class, 'cancelledInvoice'])->name('invoices-cancelled');
+
 
             //Payement Management
             Route::post('/invoices/{invoice}/payment', [PaymentsController::class, 'store'])->name('invoice-payments-store');

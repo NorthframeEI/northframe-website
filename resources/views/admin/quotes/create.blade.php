@@ -154,9 +154,9 @@
                     </div>
 
                     {{-- SUBMIT --}}
-                    <div class="flex flex-col gap-[10px] items-center">
+                    <div class="flex flex-col gap-[10px]">
                         <button type="submit"
-                            class="text-primary text-button-inter bg-brand hover:bg-hover px-[20px] py-[20px] rounded-[12px] w-fit cursor-pointer">
+                            class="text-primary text-button-inter bg-brand hover:bg-hover px-[20px] py-[20px] rounded-[12px] w-full cursor-pointer">
                             Créer devis
                         </button>
                     </div>
