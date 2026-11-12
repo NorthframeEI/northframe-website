@@ -29,7 +29,9 @@ class PaymentsController extends Controller
         $invoice->increment('paid_amount', $validated['amount']);
 
         // Mise à jour du statut
-        if (!$request->boolean('is_deposit')) {
+        $isDeposit = $request->boolean('is_deposit') && $invoice->depositInvoice !== null;
+
+        if (! $isDeposit) {
             if ($invoice->paid_amount >= $invoice->total) {
                 $invoice->update([
                     'status' => 'paid'
@@ -40,7 +42,8 @@ class PaymentsController extends Controller
                 ]);
             }
         }
-        if ($request->boolean('is_deposit')) {
+
+        if ($isDeposit) {
             $depositInvoice = $invoice->depositInvoice;
 
             if ($depositInvoice) {

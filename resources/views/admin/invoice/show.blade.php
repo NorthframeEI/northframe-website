@@ -544,14 +544,16 @@
                                 class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
 
                         </div>
+                        @if ($invoice->depositInvoice)
+                            {{-- Paiement d'acompte --}}
+                            <div class="flex items-center gap-3"> <input type="checkbox" name="is_deposit"
+                                    value="1" id="is_deposit" {{ old('is_deposit') ? 'checked' : '' }}
+                                    class="w-4 h-4 rounded border border-secondary/30 bg-dark text-brand focus:ring-brand cursor-pointer">
+                                <label for="is_deposit" class="text-secondary cursor-pointer"> Ce paiement correspond à un
+                                    acompte </label>
+                            </div>
+                        @endif
 
-                        {{-- Paiement d'acompte --}} <div class="flex items-center gap-3"> <input type="checkbox"
-                                name="is_deposit" value="1" id="is_deposit"
-                                {{ old('is_deposit') ? 'checked' : '' }}
-                                class="w-4 h-4 rounded border border-secondary/30 bg-dark text-brand focus:ring-brand cursor-pointer">
-                            <label for="is_deposit" class="text-secondary cursor-pointer"> Ce paiement correspond à un
-                                acompte </label>
-                        </div>
 
                         <button type="submit"
                             class="text-primary text-button-inter bg-brand hover:bg-hover px-[20px] py-[20px] rounded-[12px] w-fit cursor-pointer">
