@@ -1,9 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Contact - Création de site web et landing page - Northframe')
-@section('meta_description',
-    'Contactez Northframe pour créer un site vitrine, une landing page ou renforcer votre
-    équipe avec un développeur web freelance.')
+@section('title', 'Contact | Développeur web freelance - Northframe')
+@section('meta_description', 'Vous avez un projet de site vitrine, de landing page ou besoin d’un développeur web freelance ? Contactez Northframe pour en discuter.')
 @section('canonical', route('contact'))
 @section('content')
     <section id="introContact">
@@ -31,13 +29,13 @@
             <div class="w-full max-w-[700px]">
 
                 @if (session('success'))
-                    <div class="p-4 bg-success/30 border border-success text-success rounded-lg">
+                    <div role="status" class="p-4 bg-success/30 border border-success text-success rounded-lg">
                         {{ session('success') }}
                     </div>
                 @endif
 
                 @if ($errors->any())
-                    <div class="p-4 bg-error/30 border border-error text-error rounded-lg">
+                    <div role="alert" class="p-4 bg-error/30 border border-error text-error rounded-lg">
                         <ul class="space-y-1">
                             @foreach ($errors->all() as $error)
                                 <li>• {{ $error }}</li>
@@ -52,12 +50,15 @@
             <form action="{{ route('contact.post') }}" method="POST" autocomplete="on" novalidate
                 class="overflow-visible w-full max-w-[700px] rounded-[12px] bg-surface shadow-lg px-[20px] md:px-[34px] py-[24px] border border-primary/5">
                 @csrf
+                <h2 class="text-h2 text-primary text-center">
+                    Décrivez-nous votre projet
+                </h2>
                 <div class="flex flex-col gap-[24px] overflow-visible">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-[16px] overflow-visible">
 
                         <div class="flex flex-col gap-[6px]">
-                            <label class="text-label text-secondary">
+                            <label class="text-label text-secondary" for="nom">
                                 Votre nom <span class="text-red-500">*</span>
                             </label>
                             <input name="nom" autocomplete="name" type="text" value="{{ old('nom') }}"
@@ -70,7 +71,7 @@
                         </div>
 
                         <div class="flex flex-col gap-[6px]">
-                            <label class="text-label text-secondary">
+                            <label class="text-label text-secondary" for="email">
                                 Votre email <span class="text-red-500">*</span>
                             </label>
                             <input name="email" type="email" value="{{ old('email') }}"
@@ -93,7 +94,7 @@
 
                         <!-------------------------->
                         <div class="flex flex-col gap-[6px]">
-                            <label class="text-label text-secondary">
+                            <label class="text-label text-secondary" for="entreprise">
                                 Votre entreprise <span class="text-red-500">*</span>
                             </label>
                             <input name="entreprise" type="text" value="{{ old('entreprise') }}"
@@ -106,11 +107,11 @@
                         </div>
 
                         <div class="flex flex-col gap-[6px]">
-                            <label class="text-label text-secondary">
+                            <label class="text-label text-secondary" for="typeProjet">
                                 Type de projet <span class="text-red-500">*</span>
                             </label>
 
-                            <select id="typeProjet" name="type_projet"
+                            <select id="typeProjet" name="type_projet" required
                                 class="block w-full h-[48px] rounded-[10px] bg-dark px-3 text-secondary/70 border border-transparent focus:border-brand outline-none transition">
 
                                 <option value="">Sélectionnez le type de projet ...</option>
@@ -136,7 +137,8 @@
                                     {{ old('type_projet', request('projet')) === 'maintenance_ponctuelle' ? 'selected' : '' }}>
                                     Maintenance Ponctuelle
                                 </option>
-                                <option value="conseil" {{ old('type_projet', request('projet')) === 'conseil' ? 'selected' : '' }}>
+                                <option value="conseil"
+                                    {{ old('type_projet', request('projet')) === 'conseil' ? 'selected' : '' }}>
                                     Je ne sais pas encore / J'ai besoin de conseils
                                 </option>
                             </select>
@@ -150,7 +152,7 @@
 
                     <div id="templateField"
                         class="flex flex-col gap-[6px] {{ ($projet ?? '') === 'landing' ? '' : 'hidden' }}">
-                        <label class="text-label text-secondary">
+                        <label class="text-label text-secondary" for="template">
                             Template sélectionné
                         </label>
 
@@ -169,7 +171,7 @@
                     </div>
                     <!-- Message -->
                     <div class="flex flex-col gap-[6px]">
-                        <label class="text-label text-secondary">
+                        <label class="text-label text-secondary" for="contenuMessage">
                             Votre message <span class="text-red-500">*</span>
                         </label>
 
@@ -190,7 +192,7 @@
                         </button>
 
                         <p class="text-secondary text-button-inter">
-                            Réponse sous 24 à 48h.
+                            Je vous réponds sous 24 à 48 heures ouvrées.
                         </p>
 
                     </div>

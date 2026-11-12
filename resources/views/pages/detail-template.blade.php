@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', $template->title . ' - Template landing page - Northframe')
+@section('title', $template->title . ' | Template de landing page - Northframe')
 
 @section('meta_description', $template->short_description)
 
-@section('og_title', $template->title . ' - Template Northframe')
+@section('og_title', $template->title . ' | Template de landing page - Northframe')
 @section('og_description', $template->short_description)
 @section('og_image', asset('storage/' . $template->thumbnail_url))
 @section('canonical', route('detail-template', ['slug' => $template->slug]))
@@ -28,9 +28,9 @@
 
                 <!-- LEFT -->
                 <div>
-                    <h3 class="text-primary text-h3-hero">
+                    <p class="text-primary text-h3-hero">
                         Landing page - {{ $template->category->name }}
-                    </h3>
+                    </p>
                     <h1 class="text-primary text-h1-hero">
                         {{ $template->title }}
                     </h1>
@@ -57,7 +57,7 @@
                 <div class="w-full md:w-[500px]">
                     <img class="w-full h-auto aspect-video object-cover rounded-[12px]"
                         src="{{ asset('storage/' . $template->hero_image_url) }}"
-                        alt="{{ $template->title }} - aperçu du template">
+                        alt="Aperçu du template {{ $template->title }}" fetchpriority="high" decoding="async">
                 </div>
 
             </div>
@@ -81,14 +81,15 @@
                         <div
                             class="w-full h-[260px] bg-dark rounded-[12px] flex items-center justify-center overflow-hidden">
                             <img class="w-full h-full object-contain" src="{{ asset('storage/' . $section->image_url) }}"
-                                alt="{{ $template->title }} - section {{ $section->title }}">
+                                alt="{{ $template->title }} - section {{ $section->title }}" loading="lazy"
+                                decoding="async">
                         </div>
                     @endif
 
                     <div class="px-6 py-4 flex flex-col gap-[10px]">
-                        <div class="text-card-title text-primary text-center">
+                        <h3 class="text-card-title text-primary text-center">
                             {{ $section->title }}
-                        </div>
+                        </h3>
 
                         <p class="text-caption text-secondary text-center">
                             {{ $section->description }}
@@ -114,7 +115,7 @@
                     <img class="mx-auto w-[28px] h-[28px]" src="{{ asset('icon/badge-check.svg') }}" alt=""
                         aria-hidden="true">
                     <div class="px-6 py-4 flex flex-col gap-[10px]">
-                        <div class="text-card-title text-primary text-center ">{{ $benefit->title }}</div>
+                        <h3 class="text-card-title text-primary text-center ">{{ $benefit->title }}</h3>
                         <p class="text-caption text-secondary text-center">
                             {{ $benefit->description }}
                         </p>
@@ -132,8 +133,8 @@
         </h2>
 
         <h3 class="text-h3 text-secondary text-center">
-            Après sélection du template, nous adaptons les couleurs et le contenu à ton identité de marque lors de l’échange
-            de validation.
+            Une fois le template choisi, nous adaptons ses couleurs et son contenu à ton identité de marque lors de notre
+            échange de validation.
         </h3>
 
         <div class="flex justify-center mt-4">
