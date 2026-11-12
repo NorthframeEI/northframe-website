@@ -79,7 +79,7 @@
                         {{ $invoice->customer->address }}<br>
                     @endif
 
-                    @if ($invoice->customer->postal_code || $quote->customer->city)
+                    @if ($invoice->customer->postal_code || $invoice->customer->city)
                         {{ $invoice->customer->postal_code }}
                         {{ $invoice->customer->city }}<br>
                     @endif
