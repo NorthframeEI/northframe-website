@@ -102,21 +102,12 @@ class AdminController extends Controller
         $monthPaidDelta      = $variation($monthPaid, $paidBetween($prevMonthStart, $prevMonthEnd));
         $yearPaidDelta       = $variation($yearPaid, $paidBetween($prevYearStart, $prevYearEnd));
 
-        $ceiling         = (float) config('business.micro.ceiling');
-        $vatThreshold    = (float) config('business.micro.vat_threshold');
-        $vatRaised       = (float) config('business.micro.vat_threshold_raised');
-        $activityStart   = config('business.micro.activity_start');
-        $ceilingProrated = false;
+        $ceilingOverride = config("business.micro.ceiling_by_year.$year");
+        $ceiling         = (float) ($ceilingOverride ?? config('business.micro.ceiling'));
+        $ceilingProrated = $ceilingOverride !== null;
 
-        if ($activityStart) {
-            $startDate = Carbon::parse($activityStart)->startOfDay();
-
-            if ($startDate->year === $year) {
-                $days = (int) abs($startDate->diffInDays($yearEnd->copy()->startOfDay())) + 1;
-                $ceiling = round($ceiling * $days / 365);
-                $ceilingProrated = true;
-            }
-        }
+        $vatThreshold = (float) config('business.micro.vat_threshold');
+        $vatRaised    = (float) config('business.micro.vat_threshold_raised');
 
         $vatStatus = match (true) {
             $yearPaid >= $vatRaised => 'raised',
